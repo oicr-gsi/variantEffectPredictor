@@ -1,0 +1,39 @@
+{
+  "defaults": {
+    "description": "VEP workflow test",
+    "metrics_calculate": "calculate.sh",
+    "metrics_compare": "compare.sh",
+    "output_metrics_dir": "/.mounts/labs/gsi/testdata/vepWorkflow/1.0.0/output_metrics",
+    "parameters": {
+      "wdl_options": {
+        "write_to_cache": false,
+        "read_from_cache": false
+      }
+    }
+  },
+  "tests": [
+      {
+  "id": "vepWorkflow_onlyVEP",
+  "parameters": {
+    "wdl_inputs": {
+        "vepWorkflow.vcfFile": "/.mounts/labs/gsi/testdata/vepWorkflow/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+        "vepWorkflow.vcfIndex": "/.mounts/labs/gsi/testdata/vepWorkflow/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
+        "vepWorkflow.tumorName": "tumor",
+        "vepWorkflow.normalName": "norm"
+    }
+  }
+},
+{
+    "id": "vepWorkflow_MAF",
+    "parameters": {
+      "wdl_inputs": {
+          "vepWorkflow.vcfFile": "/.mounts/labs/gsi/testdata/vepWorkflow/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+          "vepWorkflow.vcfIndex": "/.mounts/labs/gsi/testdata/vepWorkflow/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
+          "vepWorkflow.toMAF": true,
+          "vepWorkflow.tumorName": "tumor",
+          "vepWorkflow.normalName": "norm"
+      }
+  }
+}
+  ]                                                                                                                                                                                                                                                                                                                                                                                          
+}
