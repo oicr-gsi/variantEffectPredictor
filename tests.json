@@ -16,8 +16,8 @@
   "id": "vepWorkflow_onlyVEP",
   "parameters": {
     "wdl_inputs": {
-        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/vepWorkflow/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
-        "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/vepWorkflow/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
+        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+        "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
         "variantEffectPredictor.tumorName": "tumor",
         "variantEffectPredictor.normalName": "norm"
     }
@@ -27,8 +27,8 @@
     "id": "vepWorkflow_MAF",
     "parameters": {
       "wdl_inputs": {
-          "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/vepWorkflow/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
-          "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/vepWorkflow/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
+          "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+          "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
           "variantEffectPredictor.toMAF": true,
           "variantEffectPredictor.tumorName": "tumor",
           "variantEffectPredictor.normalName": "norm"
