@@ -1,5 +1,5 @@
 version 1.0 
-workflow vepWorkflow {
+workflow variantEffectPredictor {
   input {
     File vcfFile
     File vcfIndex
