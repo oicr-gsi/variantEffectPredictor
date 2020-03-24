@@ -95,7 +95,7 @@ task targetBedTask {
   }
 
   parameter_meta {
-    vcfFile: "vcf input file"
+    vcfFile: "vcf input files"
     vcfIndex: "Index of the vcf file"
     targetBed: "Bed file with targets"
     modules: "Module needed to run UMI-tools extract"
