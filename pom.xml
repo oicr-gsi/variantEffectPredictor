@@ -10,12 +10,12 @@
         <relativePath/>
     </parent>
 
-    <artifactId>vepWorkflow</artifactId>
+    <artifactId>variantEffectPredictor</artifactId>
     <version>1.0</version>
 
     <properties>
         <workflow-description>Running the vep and vcf2maf software</workflow-description>
-        <wdl-workflow>vepWorkflow.wdl</wdl-workflow>
+        <wdl-workflow>variantEffectPredictor.wdl</wdl-workflow>
         <test-definition>tests.json</test-definition>
     </properties>
 
