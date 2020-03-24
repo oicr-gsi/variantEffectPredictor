@@ -1,4 +1,4 @@
-# vepWorkflow
+# variantEffectPredictor
 
 Using VEP to a vcf file and providing additional options as well
 
@@ -15,7 +15,7 @@ Using VEP to a vcf file and providing additional options as well
 
 ### Cromwell
 ```
-java -jar cromwell.jar run vepWorkflow.wdl --inputs inputs.json
+java -jar cromwell.jar run variantEffectPredictor.wdl --inputs inputs.json
 ```
 
 ### Inputs
