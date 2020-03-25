@@ -52,7 +52,7 @@ workflow variantEffectPredictor {
   meta {
     author: "Rishi Shah"
     email: "rshah@oicr.on.ca"
-    description: "Using VEP to a vcf file and providing additional options as well"
+    description: "Using VEP to a vcf file and providing additional option as well"
     dependencies: 
     [
       {
