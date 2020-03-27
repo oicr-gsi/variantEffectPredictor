@@ -7,4 +7,5 @@ set -o pipefail
 cd $1
 
 #find all files, return their md5sums to std out
-find . -name "*.vcf.gz" -exec md5sum {} +
+zcat *.vcf.gz | wc -l
+zcat *.vcf.gz | cut -f1 | sort | uniq | wc -l
