@@ -48,6 +48,15 @@ workflow variantEffectPredictor {
       }
     }
   }
+  parameter_meta {
+    vcfFile: "Input VCF file"
+    vcfIndex: "Input VCF Index File"
+    targetBed: "Bed target file"
+    custom: "Custom Appending"
+    toMAF: "Converting the MAF file to VEP" 
+    tumorName: "Name of the tumor"
+    normalName: "Name of the normal"
+  }
 
   meta {
     author: "Rishi Shah"
