@@ -18,36 +18,21 @@ workflow variantEffectPredictor {
              vcfIndex = vcfIndex, 
              targetBed = targetBed
     }
-    call vep as vepAfterBed {
-      input: vcfFile = targetBedTask.targetedVcf,
-             vcfIndex = vcfIndex,
-             customCommand = customCommand,
-             custom = custom
+  }
+  call vep {
+    input: vcfFile =    select_first([targetBedTask.targetedVcf, vcfFile]),
+           vcfIndex = select_first([targetBedTask.targetTbi, vcfIndex]),
+           customCommand = customCommand,
+           custom = custom
     }
     if (defined(toMAF) == true) {
-      call vcf2maf as vcf2mafAfterBed {
-      input: vcfFile = vepAfterBed.vepVcfOutput,
+      call vcf2maf {
+      input: vcfFile = vep.vepVcfOutput,
              tumorName = tumorName,
              normalName = normalName 
     }
   }
-  }
   
-  if (defined(targetBed) == false) {
-    call vep {
-      input: vcfFile = vcfFile,
-             vcfIndex = vcfIndex,
-             customCommand = customCommand,
-	     custom = custom
-    }
-    if (defined(toMAF) == true) {
-      call vcf2maf {
-        input: vcfFile = vep.vepVcfOutput,
-               tumorName = tumorName,
-               normalName = normalName
-      }
-    }
-  }
   parameter_meta {
     vcfFile: "Input VCF file"
     vcfIndex: "Input VCF Index File"
@@ -84,10 +69,8 @@ workflow variantEffectPredictor {
   }
 
   output {
-    File? outputVcf = vep.vepVcfOutput
+    File outputVcf = vep.vepVcfOutput
     File? outputMaf = vcf2maf.mafOutput
-    File? outputVcfBed = vepAfterBed.vepVcfOutput
-    File? outputMafBed = vcf2mafAfterBed.mafOutput
   }
 }
 
@@ -121,7 +104,7 @@ task targetBedTask {
                        > ~{basename}.targeted.vcf
     
     bgzip -c ~{basename}.targeted.vcf > ~{basename}.targeted.vcf.gz
-
+           
     tabix -p vcf ~{basename}.targeted.vcf.gz
   >>>
 
@@ -134,6 +117,7 @@ task targetBedTask {
 
   output {
     File targetedVcf = "~{basename}.targeted.vcf.gz"
+    File targetTbi = "~{basename}.targeted.vcf.gz"
   }
 
   meta {
