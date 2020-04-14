@@ -16,10 +16,16 @@
   "id": "vepWorkflow_onlyVEP",
   "parameters": {
     "wdl_inputs": {
-        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
-        "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
-        "variantEffectPredictor.tumorName": "tumor",
-        "variantEffectPredictor.normalName": "norm"
+       "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+       "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
+       "variantEffectPredictor.onlyTumor": false,
+       "variantEffectPredictor.toMAF": false,
+       "variantEffectPredictor.vepCacheModule": "vep-hg19-cache/92",
+       "variantEffectPredictor.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+       "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1 vcftools/0.1.16",
+       "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+       "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+       "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"
     }
   }
 },
@@ -27,11 +33,16 @@
     "id": "vepWorkflow_MAF",
     "parameters": {
       "wdl_inputs": {
-          "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
-          "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
-          "variantEffectPredictor.toMAF": true,
-          "variantEffectPredictor.tumorName": "tumor",
-          "variantEffectPredictor.normalName": "norm"
+         "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+         "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
+         "variantEffectPredictor.onlyTumor": true,
+         "variantEffectPredictor.toMAF": true,
+         "variantEffectPredictor.vepCacheModule": "vep-hg19-cache/92",
+         "variantEffectPredictor.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+         "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1 vcftools/0.1.16",
+         "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+         "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+         "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"
       }
   }
 }
