@@ -236,7 +236,6 @@ task tumorOnlyAlign {
   }
   command <<<
     set -euo pipefail
-    module load vcftools/0.1.16
     vcf-query -l ~{vcfFile} > sample_headers
     cat sample_headers | grep -v \"GATK\" | tr \"\\n\" \",\" > sample_names
     zcat ~{vcfFile} | sed 's/QSS\\,Number\\=A/QSS\\,Number\\=\\./' | bgzip -c > "~{basename}_input.vcf.gz"
@@ -354,7 +353,6 @@ task vcf2maf {
 
   command <<< 
     set -euo pipefail
-    module unload vcftools
     NORM=$(sed -n 1p ~{tumorNormalNames} )
     TUMR=$(sed -n 2p ~{tumorNormalNames} )
 
