@@ -229,7 +229,7 @@ task tumorOnlyAlign {
     vcfFile: "vcf input file"
     vcfIndex: "index file"
     basename: "base name"
-    modules: "Module needed to run UMI-tools extract"
+    modules: "Module needed to run program"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
     timeout: "hours before task timeout"
