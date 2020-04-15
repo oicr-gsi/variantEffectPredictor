@@ -17,7 +17,6 @@
   "parameters": {
     "wdl_inputs": {
        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
-       "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
        "variantEffectPredictor.onlyTumor": false,
        "variantEffectPredictor.toMAF": false,
        "variantEffectPredictor.vepCacheModule": "vep-hg19-cache/92",
@@ -34,7 +33,6 @@
     "parameters": {
       "wdl_inputs": {
          "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
-         "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
          "variantEffectPredictor.onlyTumor": true,
          "variantEffectPredictor.toMAF": true,
          "variantEffectPredictor.vepCacheModule": "vep-hg19-cache/92",
