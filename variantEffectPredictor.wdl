@@ -3,7 +3,7 @@ workflow variantEffectPredictor {
   input {
     File vcfFile
     File? targetBed
-    File? custom
+    String? custom
     Boolean toMAF
     Boolean onlyTumor
     String vepCacheModule
@@ -154,7 +154,7 @@ task vep {
     File vcfFile 
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String customCommand
-    File? custom
+    String? custom
     String vepCacheModule
     String vepCacheDir
     String modules = "vep/92.0 tabix/0.2.6 ~{vepCacheModule}"
