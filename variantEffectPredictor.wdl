@@ -2,7 +2,6 @@ version 1.0
 workflow variantEffectPredictor {
   input {
     File vcfFile
-    File vcfIndex
     File? targetBed
     File? custom
     Boolean toMAF
@@ -15,15 +14,13 @@ workflow variantEffectPredictor {
 
   if (defined(targetBed) == true) {
     call targetBedTask {
-      input: vcfFile = vcfFile,
-             vcfIndex = vcfIndex, 
+      input: vcfFile = vcfFile, 
              targetBed = targetBed
     }
   }
   
   call vep {
     input: vcfFile =  select_first([targetBedTask.targetedVcf, vcfFile]),
-           vcfIndex = select_first([targetBedTask.targetTbi, vcfIndex]),
            customCommand = customCommand,
            custom = custom,
            vepCacheModule = vepCacheModule,
@@ -52,7 +49,6 @@ workflow variantEffectPredictor {
     }
   parameter_meta {
     vcfFile: "Input VCF file"
-    vcfIndex: "Input VCF Index File"
     targetBed: "Bed target file"
     custom: "Custom Appending"
     toMAF: "Converting the MAF file to VEP" 
@@ -104,7 +100,6 @@ workflow variantEffectPredictor {
 task targetBedTask {
   input {
     File vcfFile 
-    File vcfIndex
     String basename = basename("~{vcfFile}", ".vcf.gz")
     File? targetBed
     String modules = "bedtools/2.27 tabix/0.2.6"
@@ -116,7 +111,6 @@ task targetBedTask {
 
   parameter_meta {
     vcfFile: "vcf input files"
-    vcfIndex: "Index of the vcf file"
     targetBed: "Bed file with targets"
     modules: "Module needed to run UMI-tools extract"
     jobMemory: "Memory allocated for this job (GB)"
@@ -158,7 +152,6 @@ task targetBedTask {
 task vep {
   input {
     File vcfFile 
-    File vcfIndex
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String customCommand
     File? custom
@@ -172,7 +165,6 @@ task vep {
 
   parameter_meta {
     vcfFile: "vcf input file"
-    vcfIndex: "Index of the vcf file"
     customCommand: "If the custom command is to be run"
     modules: "Module needed to run UMI-tools extract"
     custom: "Optional input for custom file"
