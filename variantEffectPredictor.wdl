@@ -55,7 +55,7 @@ workflow variantEffectPredictor {
     vcfFile: "Input VCF file"
     targetBed: "Bed target file"
     custom: "Custom Appending"
-    toMAF: "Converting the MAF file to VEP" 
+    toMAF: "Converts the MAF file to VEP" 
     tumorName: "Name of the tumor"
     normalName: "Name of the normal"
   }
