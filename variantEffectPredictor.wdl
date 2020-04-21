@@ -8,6 +8,8 @@ workflow variantEffectPredictor {
     Boolean onlyTumor
     String vepCacheModule
     String vepCacheDir
+    String pluginModule 
+    String pluginDir
   }
 
   String customCommand = if defined(custom) == true then "true" else "false"
@@ -24,7 +26,9 @@ workflow variantEffectPredictor {
            customCommand = customCommand,
            custom = custom,
            vepCacheModule = vepCacheModule,
-           vepCacheDir = vepCacheDir
+           vepCacheDir = vepCacheDir,
+           pluginModule = pluginModule, 
+           pluginDir = pluginDir
     }
   
   if (toMAF == true) {
@@ -157,7 +161,9 @@ task vep {
     String? custom
     String vepCacheModule
     String vepCacheDir
-    String modules = "vep/92.0 tabix/0.2.6 ~{vepCacheModule}"
+    String pluginModule
+    String pluginDir
+    String modules = "vep/92.0 tabix/0.2.6 ~{vepCacheModule} ~{pluginModule}"
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 6
@@ -177,7 +183,7 @@ task vep {
     set -euo pipefail
     if [ "~{customCommand}" == "true" ]; then 
       vep --offline --cache_version 92 --dir_cache ~{vepCacheDir} \
-          -i ~{vcfFile} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip --custom ~{custom} 
+          -i ~{vcfFile} --plugin dbNSFP,~{pluginDir},genename,clinvar_golden_stars,clinvar_clnsig,1000Gp3_AF,ExAC_AF,gnomAD_exomes_AF,gnomAD_genomes_AF,SIFT_pred,Polyphen2_HDIV_pred,MutationTaster_pred,FATHMM_pred,REVEL_score,CADD_phred,GERP++_RS -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip
     fi 
 
     if [ "~{customCommand}" == "false" ]; then 
