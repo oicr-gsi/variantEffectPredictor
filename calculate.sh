@@ -7,5 +7,7 @@ set -o pipefail
 cd $1
 
 #find all files, return their md5sums to std out
-zcat *.vcf.gz | wc -l
-zcat *.vcf.gz | cut -f1 | sort | uniq | wc -l
+ls | sort
+
+find -name *.vcf.gz | xargs zcat | grep -v ^# | md5sum | sort
+find -name *.maf.gz | md5sum | sort
