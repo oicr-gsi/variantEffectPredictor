@@ -1,6 +1,6 @@
 # variantEffectPredictor
 
-Using VEP to a vcf file and providing additional options as well
+Using VEP to a vcf file and providing additional option as well
 
 ## Overview
 
@@ -9,6 +9,7 @@ Using VEP to a vcf file and providing additional options as well
 * [bedtools 2.27](https://github.com/arq5x/bedtools)
 * [tabix 0.2.6](https://github.com/samtools/tabix)
 * [vep 92.0](https://github.com/Ensembl/ensembl-vep)
+* [vcftools 0.1.16](https://vcftools.github.io/index.html)
 
 
 ## Usage
@@ -24,67 +25,62 @@ java -jar cromwell.jar run variantEffectPredictor.wdl --inputs inputs.json
 Parameter|Value|Description
 ---|---|---
 `vcfFile`|File|Input VCF file
-`vcfIndex`|File|Input VCF Index File
-`tumorName`|String|Name of the tumor
-`normalName`|String|Name of the normal
+`toMAF`|Boolean|If true, generate the MAF file
+`onlyTumor`|Boolean|If true, run tumor only mode
+`vep.vepCacheDir`|String|Directory of cache files
+`vep.referenceFasta`|String|Reference fasta file
+`vep.modules`|String|Required environment modules
+`vcf2maf.modules`|String|Required environment modules
+`vcf2maf.referenceFasta`|String|Reference fasta file
+`vcf2maf.vepPath`|String|Path to vep script
+`vcf2maf.vepCacheDir`|String|Directory of vep cache files
+`vcf2maf.vcfFilter`|String|Filter for the vep module that is used in vcf2maf
 
 
 #### Optional workflow parameters:
 Parameter|Value|Default|Description
 ---|---|---|---
-`targetBed`|File?|None|Bed target file
-`custom`|File?|None|Custom Appending
-`toMAF`|Boolean?|None|Converting the MAF file to VEP
+`targetBed`|File?|None|Target bed file
 
 
 #### Optional task parameters:
 Parameter|Value|Default|Description
 ---|---|---|---
-`targetBedTask.basename`|String|basename("~{vcfFile}",".vcf.gz")|
-`targetBedTask.modules`|String|"bedtools/2.27 tabix/0.2.6"|Module needed to run UMI-tools extract
+`targetBedTask.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
+`targetBedTask.modules`|String|"bedtools/2.27 tabix/0.2.6"|Required environment modules
 `targetBedTask.jobMemory`|Int|32|Memory allocated for this job (GB)
 `targetBedTask.threads`|Int|4|Requested CPU threads
-`targetBedTask.timeout`|Int|6|hours before task timeout
-`vepAfterBed.basename`|String|basename("~{vcfFile}",".vcf.gz")|
-`vepAfterBed.cacheDir`|String|"$VEP_HG19_CACHE_ROOT/.vep"|
-`vepAfterBed.modules`|String|"vep/92.0 tabix/0.2.6 vep-hg19-cache/92"|
-`vepAfterBed.jobMemory`|Int|32|
-`vepAfterBed.threads`|Int|4|
-`vepAfterBed.timeout`|Int|6|
-`vcf2mafAfterBed.basename`|String|basename("~{vcfFile}",".vcf.gz")|
-`vcf2mafAfterBed.modules`|String|"vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1"|
-`vcf2mafAfterBed.referenceFasta`|String|"$HG19_ROOT/hg19_random.fa"|
-`vcf2mafAfterBed.vepPath`|String|"$VEP_ROOT/bin/"|
-`vcf2mafAfterBed.cacheDir`|String|"$VEP_HG19_CACHE_ROOT/.vep"|
-`vcf2mafAfterBed.vcfFilter`|String|"$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"|
-`vcf2mafAfterBed.jobMemory`|Int|32|
-`vcf2mafAfterBed.threads`|Int|4|
-`vcf2mafAfterBed.timeout`|Int|6|
-`vep.basename`|String|basename("~{vcfFile}",".vcf.gz")|
-`vep.cacheDir`|String|"$VEP_HG19_CACHE_ROOT/.vep"|
-`vep.modules`|String|"vep/92.0 tabix/0.2.6 vep-hg19-cache/92"|Module needed to run UMI-tools extract
+`targetBedTask.timeout`|Int|6|Hours before task timeout
+`vep.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
+`vep.addParam`|String?|None|Additional vep parameters
 `vep.jobMemory`|Int|32|Memory allocated for this job (GB)
 `vep.threads`|Int|4|Requested CPU threads
-`vep.timeout`|Int|6|hours before task timeout
-`vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|base name
-`vcf2maf.modules`|String|"vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1"|Module needed to run UMI-tools extract
-`vcf2maf.referenceFasta`|String|"$HG19_ROOT/hg19_random.fa"|Reference fasta file
-`vcf2maf.vepPath`|String|"$VEP_ROOT/bin/"|Path to vep script
-`vcf2maf.cacheDir`|String|"$VEP_HG19_CACHE_ROOT/.vep"|Dir of cache files
-`vcf2maf.vcfFilter`|String|"$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"|
+`vep.timeout`|Int|16|Hours before task timeout
+`tumorOnlyAlign.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
+`tumorOnlyAlign.modules`|String|"bcftools/1.9 tabix/0.2.6 vcftools/0.1.16"|Required environment modules
+`tumorOnlyAlign.jobMemory`|Int|32|Memory allocated for this job (GB)
+`tumorOnlyAlign.threads`|Int|4|Requested CPU threads
+`tumorOnlyAlign.timeout`|Int|6|Hours before task timeout
+`getSampleNames.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
+`getSampleNames.modules`|String|"vcftools/0.1.16"|Required environment modules
+`getSampleNames.jobMemory`|Int|32|Memory allocated for this job (GB)
+`getSampleNames.threads`|Int|4|Requested CPU threads
+`getSampleNames.timeout`|Int|6|Hours before task timeout
+`vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vcf2maf.jobMemory`|Int|32|Memory allocated for this job (GB)
 `vcf2maf.threads`|Int|4|Requested CPU threads
-`vcf2maf.timeout`|Int|6|hours before task timeout
+`vcf2maf.timeout`|Int|48|Hours before task timeout
 
 
 ### Outputs
 
 Output | Type | Description
 ---|---|---
-`outputVcf`|File?|vcf output file
-`outputMaf`|File?|optional maf output file
-`outputVcfBed`|File?|Same output for vcf after bed
-`outputMafBed`|File?|Same output for maf after bed
+`outputVcf`|File|Annotated vcf output file from vep
+`outputTbi`|File|Index of the annotated vcf output file from vep
+`outputMaf`|File?|Maf output file from vcf2maf(if toMAF is true)
+`outputTargetVcf`|File?|Vcf on target for the input vcf (if targetBed is given), non annotated
+`outputTargetTbi`|File?|Index of the vcf on target for the input vcf (if targetBed is given), non annotated
 
 
 ## Niassa + Cromwell
@@ -115,4 +111,4 @@ mvn clean verify \
 
 For support, please file an issue on the [Github project](https://github.com/oicr-gsi) or send an email to gsi@oicr.on.ca .
 
-_Generated with wdl_doc_gen (https://github.com/oicr-gsi/wdl_doc_gen/)_
+_Generated with generate-markdown-readme (https://github.com/oicr-gsi/gsi-wdl-tools/)_
