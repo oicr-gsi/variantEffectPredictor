@@ -3,7 +3,7 @@
     "description": "VEP workflow test",
     "metrics_calculate": "calculate.sh",
     "metrics_compare": "compare.sh",
-    "output_metrics_dir": "/.mounts/labs/gsi/testdata/variantEffectPredictor/1.0.0/output_metrics",
+    "output_metrics_dir": "/.mounts/labs/gsi/testdata/variantEffectPredictor/1.0/output_metrics",
     "parameters": {
       "wdl_options": {
         "write_to_cache": false,
@@ -19,32 +19,89 @@
        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
        "variantEffectPredictor.onlyTumor": false,
        "variantEffectPredictor.toMAF": false,
-       "variantEffectPredictor.vepCacheModule": "vep-hg19-cache/92",
-       "variantEffectPredictor.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
-       "variantEffectPredictor.pluginModule": "vep-dbnsfp-hg19/4.0",
-       "variantEffectPredictor.pluginDir": "$VEP_DBNSFP_HG19_ROOT/dbNSFP_hg19.gz",
+       "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
+       "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+       "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
        "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+       "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
        "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"
     }
   }
 },
 {
-    "id": "vepWorkflow_MAF",
+    "id": "vepWorkflow_toMAF_tumor_normal_hg19",
     "parameters": {
       "wdl_inputs": {
-         "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
-         "variantEffectPredictor.onlyTumor": true,
-         "variantEffectPredictor.toMAF": true,
-         "variantEffectPredictor.vepCacheModule": "vep-hg19-cache/92",
-         "variantEffectPredictor.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
-	 "variantEffectPredictor.pluginModule": "vep-dbnsfp-hg19/4.0",
-         "variantEffectPredictor.pluginDir": "$VEP_DBNSFP_HG19_ROOT/dbNSFP_hg19.gz",
-         "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
-         "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
-         "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
-         "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"
+        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+        "variantEffectPredictor.onlyTumor": false,
+        "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
+        "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+        "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
+        "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+        "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+        "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"
+      }
+  }
+},
+{
+    "id": "vepWorkflow_toMAF_tumor_only_hg19",
+    "parameters": {
+      "wdl_inputs": {
+        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/TGL08_0075_Lu_P_EX.mutect2.tumor_only.vcf.gz",
+        "variantEffectPredictor.onlyTumor": true,
+        "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/ensembl_v6_ccds_exons_onebed_intersectRegions_pad50.bed",
+        "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
+        "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+        "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
+        "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+        "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+        "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"
+      }
+  }
+},
+{
+    "id": "vepWorkflow_toMAF_tumor_normal_hg38",
+    "parameters": {
+      "wdl_inputs": {
+        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
+        "variantEffectPredictor.onlyTumor": false,
+        "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+        "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
+        "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+        "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
+        "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+        "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+        "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz"
+      }
+  }
+},
+{
+    "id": "vepWorkflow_toMAF_tumor_only_hg38",
+    "parameters": {
+      "wdl_inputs": {
+        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz",
+        "variantEffectPredictor.onlyTumor": true,
+        "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+        "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
+        "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+        "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
+        "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+        "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+        "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz"
       }
   }
 }
