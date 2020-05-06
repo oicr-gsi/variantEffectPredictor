@@ -3,16 +3,9 @@ workflow variantEffectPredictor {
   input {
     File vcfFile
     File? targetBed
-    String? custom
     Boolean toMAF
     Boolean onlyTumor
-    String vepCacheModule
-    String vepCacheDir
-    String pluginModule 
-    String pluginDir
   }
-
-  String customCommand = if defined(custom) == true then "true" else "false"
 
   if (defined(targetBed) == true) {
     call targetBedTask {
@@ -20,44 +13,33 @@ workflow variantEffectPredictor {
              targetBed = targetBed
     }
   }
-  
+
   call vep {
-    input: vcfFile =  select_first([targetBedTask.targetedVcf, vcfFile]),
-           customCommand = customCommand,
-           custom = custom,
-           vepCacheModule = vepCacheModule,
-           vepCacheDir = vepCacheDir,
-           pluginModule = pluginModule, 
-           pluginDir = pluginDir
-    }
-  
+      input: vcfFile =  select_first([targetBedTask.targetedVcf, vcfFile]),
+  }
+
   if (toMAF == true) {
     if (onlyTumor == true) {
       call tumorOnlyAlign {
-      input: vcfFile = vep.vepVcfOutput,
-             vcfIndex = vep.vepTbiOutput
+        input: vcfFile = select_first([targetBedTask.targetedVcf, vcfFile])    
       }
     }
 
     call getSampleNames {
-      input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf, vep.vepVcfOutput]),
-             vcfIndex = select_first([tumorOnlyAlign.unmatchedOutputTbi, vep.vepTbiOutput])
-      }
+      input: vcfFile = vcfFile
+    }
 
     call vcf2maf {
-      input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf, vep.vepVcfOutput]),
-             vcfIndex = select_first([tumorOnlyAlign.unmatchedOutputTbi, vep.vepTbiOutput]),
-             vepCacheDir = vepCacheDir,
+      input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf,targetBedTask.targetedVcf, vcfFile]),
              tumorNormalNames = getSampleNames.tumorNormalNames
       } 
     }
+
   parameter_meta {
     vcfFile: "Input VCF file"
-    targetBed: "Bed target file"
-    custom: "Custom Appending"
-    toMAF: "Converts the MAF file to VEP" 
-    tumorName: "Name of the tumor"
-    normalName: "Name of the normal"
+    targetBed: "Target bed file"
+    toMAF: "If true, generate the MAF file"
+    onlyTumor: "If true, run tumor only mode"
   }
 
   meta {
@@ -81,23 +63,24 @@ workflow variantEffectPredictor {
       {
         name: "vcftools/0.1.16",
         url: "https://vcftools.github.io/index.html"
-      },
-      {
-        name: "vep-hg19-cache/92"
-      },
-      {
-        name: "vep-hg19-exac/0.3.1"
       }
     ]
     output_meta: {
-      outputVcf: "vcf output file",
-      outputMaf: "optional maf output file"
+      outputVcf: "Annotated vcf output file from vep",
+      outputTbi: "Index of the annotated vcf output file from vep",
+      outputMaf: "Maf output file from vcf2maf(if toMAF is true)",
+      outputTargetVcf: "Vcf on target for the input vcf (if targetBed is given), non annotated",
+      outputTargetTbi: "Index of the vcf on target for the input vcf (if targetBed is given), non annotated"
     }
   }
 
   output {
     File outputVcf = vep.vepVcfOutput
+    File outputTbi = vep.vepTbiOutput
     File? outputMaf = vcf2maf.mafOutput
+    File? outputTargetVcf = targetBedTask.targetedVcf
+    File? outputTargetTbi = targetBedTask.targetTbi
+
   }
 }
 
@@ -110,20 +93,22 @@ task targetBedTask {
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 6
-    
+ 
   }
 
   parameter_meta {
-    vcfFile: "vcf input files"
+    vcfFile: "Vcf input files"
     targetBed: "Bed file with targets"
-    modules: "Module needed to run UMI-tools extract"
+    basename: "Base name"
+    modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
-    timeout: "hours before task timeout"
+    timeout: "Hours before task timeout"
   }
 
   command <<<
     set -euo pipefail
+
     bedtools intersect -header \
                        -a ~{vcfFile} \
                        -b ~{targetBed} \
@@ -148,7 +133,8 @@ task targetBedTask {
 
   meta {
     output_meta: {
-      targetedVcf: "Vcf input targeted with BED file"
+      targetedVcf: "Vcf input targeted with BED file",
+      targetTbi: "Index of the input vcf on target"
     }
   }
 }
@@ -157,38 +143,38 @@ task vep {
   input {
     File vcfFile 
     String basename = basename("~{vcfFile}", ".vcf.gz")
-    String customCommand
-    String? custom
-    String vepCacheModule
+    String? addParam
     String vepCacheDir
-    String pluginModule
-    String pluginDir
-    String modules = "vep/92.0 tabix/0.2.6 ~{vepCacheModule} ~{pluginModule}"
+    String referenceFasta
+    String modules
     Int jobMemory = 32
     Int threads = 4
-    Int timeout = 6
+    Int timeout = 16
   }
 
   parameter_meta {
-    vcfFile: "vcf input file"
-    customCommand: "If the custom command is to be run"
-    modules: "Module needed to run UMI-tools extract"
-    custom: "Optional input for custom file"
+    vcfFile: "Vcf input file"
+    basename: "Base name"
+    addParam: "Additional vep parameters"
+    vepCacheDir: "Directory of cache files"
+    referenceFasta: "Reference fasta file"
+    modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
-    timeout: "hours before task timeout"
+    timeout: "Hours before task timeout"
   }
 
   command <<<
     set -euo pipefail
-    if [ "~{customCommand}" == "true" ]; then 
-      vep --offline --cache_version 92 --dir_cache ~{vepCacheDir} \
-          -i ~{vcfFile} --plugin dbNSFP,~{pluginDir},genename,clinvar_golden_stars,clinvar_clnsig,1000Gp3_AF,ExAC_AF,gnomAD_exomes_AF,gnomAD_genomes_AF,SIFT_pred,Polyphen2_HDIV_pred,MutationTaster_pred,FATHMM_pred,REVEL_score,CADD_phred,GERP++_RS -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip
-    fi 
 
-    if [ "~{customCommand}" == "false" ]; then 
-      vep --offline --cache_version 92 --dir_cache ~{vepCacheDir} -i ~{vcfFile} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip
-    fi 
+    vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} \
+          -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
+          --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype \
+          --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
+          --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
+          --pick_order canonical,tsl,biotype,rank,ccds,length  \
+          --pubmed --fork 4 --polyphen b --af --af_1kg --af_esp --af_gnomad --regulatory
+    
     tabix -p vcf "~{basename}.vep.vcf.gz"
   >>> 
 
@@ -216,38 +202,37 @@ task vep {
 task tumorOnlyAlign {
   input {
     File vcfFile
-    File vcfIndex
     String basename = basename("~{vcfFile}", ".vcf.gz")
-    String modules = "bcftools/1.9 vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1 vcftools/0.1.16"
+    String modules = "bcftools/1.9 tabix/0.2.6 vcftools/0.1.16"
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 6   
   }
   parameter_meta {
-    vcfFile: "vcf input file"
-    vcfIndex: "index file"
-    basename: "base name"
-    modules: "Module needed to run program"
+    vcfFile: "Vcf input file"
+    basename: "Base name"
+    modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
-    timeout: "hours before task timeout"
+    timeout: "Hours before task timeout"
   }
   command <<<
     set -euo pipefail
+
     vcf-query -l ~{vcfFile} > sample_headers
-    cat sample_headers | grep -v \"GATK\" | tr \"\\n\" \",\" > sample_names
-    zcat ~{vcfFile} | sed 's/QSS\\,Number\\=A/QSS\\,Number\\=\\./' | bgzip -c > "~{basename}_input.vcf.gz"
+    cat sample_headers | grep -v "GATK" | tr "\n" "," > sample_names
+    zcat ~{vcfFile} | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
     tabix -p vcf "~{basename}_input.vcf.gz"
-    if [[ `cat sample_names | tr \",\" \"\\n\" | wc -l` == 2 ]]; then
-      for item in `cat sample_names | tr \",\" \"\\n\"`; do
-        if [[ $item == \"NORMAL\" || $item == *_R_* ]]; then 
+    if [[ `cat sample_names | tr "," "\n" | wc -l` == 2 ]]; then
+      for item in `cat sample_names | tr "," "\n"`; do
+        if [[ $item == "NORMAL" || $item == *_R_* ]]; then 
           NORM=$item; else TUMR=$item;
         fi;
       done
       
-    else TUMR=`cat sample_names | tr -d \",\"`; NORM=\"unmatched\"; fi
-    echo -e \"$TUMR\\n$NORM\" > "~{basename}_header"
-    bcftools merge ~{vcfFile} ~{vcfFile} --force-samples > "~{basename}.temp_tumor.vcf"
+    else TUMR=`cat sample_names | tr -d ","`; NORM="unmatched"; fi
+    echo -e "$TUMR\n$NORM" > "~{basename}_header"
+    bcftools merge "~{basename}_input.vcf.gz" "~{basename}_input.vcf.gz" --force-samples > "~{basename}.temp_tumor.vcf"
     bcftools reheader -s "~{basename}_header" "~{basename}.temp_tumor.vcf" > "~{basename}.unmatched.vcf"
     bgzip -c "~{basename}.unmatched.vcf" > "~{basename}.unmatched.vcf.gz"
     tabix -p vcf "~{basename}.unmatched.vcf.gz"
@@ -268,7 +253,7 @@ task tumorOnlyAlign {
   meta {
     output_meta: {
       umatchedOutputVcf: "vcf file for unmatched input",
-      unmatchedOutputTbi: "index file for unmatched input",
+      unmatchedOutputTbi: "index file for unmatched input"
     }
   }
 }
@@ -276,23 +261,23 @@ task tumorOnlyAlign {
 task getSampleNames {
   input {
     File vcfFile 
-    File vcfIndex
     String basename = basename("~{vcfFile}", ".vcf.gz")
-    String modules = "bedtools/2.27 tabix/0.2.6 vcftools/0.1.16"
+    String modules = "vcftools/0.1.16"
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 6
   }
   parameter_meta {
-    vcfFile: "vcf input file"
-    vcfIndex: "index file"
-    basename: "base name"
-    modules: "Module needed to run UMI-tools extract"
+    vcfFile: "Vcf input file"
+    basename: "Base name"
+    modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
-    timeout: "hours before task timeout"
+    timeout: "Hours before task timeout"
   }
   command <<<
+    set -euo pipefail
+
     vcf-query -l  "~{vcfFile}" > sample_headers_all
     cat sample_headers_all | grep -v "GATK" | tr "\n" "," > sample_names_all
     if [[ `cat sample_names_all | tr "," "\n" | wc -l` == 2 ]]; then
@@ -314,7 +299,7 @@ task getSampleNames {
   }
   meta {
     output_meta: {
-      tumorNormalNames: "names to use in the vcf2maf conversion"
+      tumorNormalNames: "Names to use in the vcf2maf conversion"
     }
   }
 }
@@ -322,7 +307,6 @@ task getSampleNames {
 task vcf2maf {
   input {
     File vcfFile
-    File vcfIndex 
     String basename = basename("~{vcfFile}", ".vcf.gz")
     File tumorNormalNames
     String modules
@@ -332,25 +316,26 @@ task vcf2maf {
     String vcfFilter
     Int jobMemory = 32
     Int threads = 4
-    Int timeout = 6
+    Int timeout = 48
   }
 
   parameter_meta {
-    vcfFile: "vcf input file"
+    vcfFile: "Vcf input file"
     referenceFasta: "Reference fasta file"
     vepPath: "Path to vep script"
-    vepCacheDir: "Dir of cache files"
+    vepCacheDir: "Directory of vep cache files"
     vcfFilter: "Filter for the vep module that is used in vcf2maf"
     tumorNormalNames: "Tumor and normal ID"
-    basename: "base name"
-    modules: "Module needed to run UMI-tools extract"
+    basename: "Base name"
+    modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
-    timeout: "hours before task timeout"
+    timeout: "Hours before task timeout"
   }
 
   command <<< 
     set -euo pipefail
+
     NORM=$(sed -n 1p ~{tumorNormalNames} )
     TUMR=$(sed -n 2p ~{tumorNormalNames} )
 
@@ -361,6 +346,7 @@ task vcf2maf {
             --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} 
   
     bgzip -c ~{basename}.maf > ~{basename}.maf.gz
+
   >>>
 
   runtime {
@@ -375,7 +361,8 @@ task vcf2maf {
   }
   meta {
     output_meta: {
-      mafOutput: "maf output"
+      mafOutput: "Maf output from vcf2maf"
+
     }
   }
 } 
