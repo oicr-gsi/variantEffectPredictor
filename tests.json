@@ -3,7 +3,7 @@
     "description": "VEP workflow test",
     "metrics_calculate": "calculate.sh",
     "metrics_compare": "compare.sh",
-    "output_metrics_dir": "/.mounts/labs/gsi/testdata/variantEffectPredictor/1.0/output_metrics",
+    "output_metrics_dir": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics",
     "parameters": {
       "wdl_options": {
         "write_to_cache": false,
@@ -23,7 +23,8 @@
        "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
        "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
-       "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",      
+       "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa", 
+       "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh37",     
        "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
        "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"
