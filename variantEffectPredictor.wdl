@@ -45,7 +45,7 @@ workflow variantEffectPredictor {
   meta {
     author: "Rishi Shah"
     email: "rshah@oicr.on.ca"
-    description: "Using VEP to a vcf file and providing additional option as well"
+    description: "Variant Effect Predictor Workflow version 2.0"
     dependencies: 
     [
       {
@@ -79,7 +79,7 @@ workflow variantEffectPredictor {
     File outputTbi = vep.vepTbiOutput
     File? outputMaf = vcf2maf.mafOutput
     File? outputTargetVcf = targetBedTask.targetedVcf
-    File? outputTargetTbi = targetBedTask.targetTbi
+    File? outputTargetTbi = targetBedTask.targetedTbi
 
   }
 }
@@ -128,13 +128,13 @@ task targetBedTask {
 
   output {
     File targetedVcf = "~{basename}.targeted.vcf.gz"
-    File targetTbi = "~{basename}.targeted.vcf.gz"
+    File targetedTbi = "~{basename}.targeted.vcf.gz.tbi"
   }
 
   meta {
     output_meta: {
       targetedVcf: "Vcf input targeted with BED file",
-      targetTbi: "Index of the input vcf on target"
+      targetedTbi: "Index of the input vcf on target"
     }
   }
 }
@@ -310,10 +310,15 @@ task vcf2maf {
     String basename = basename("~{vcfFile}", ".vcf.gz")
     File tumorNormalNames
     String modules
+    String species = "homo_sapiens"
     String referenceFasta
+    String ncbiBuild
     String vepPath
     String vepCacheDir
     String vcfFilter
+    Int maxfilterAC = 10
+    Float minHomVaf = 0.7
+    Int bufferSize = 200
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 48
@@ -321,10 +326,15 @@ task vcf2maf {
 
   parameter_meta {
     vcfFile: "Vcf input file"
+    species: "Species name"
     referenceFasta: "Reference fasta file"
+    ncbiBuild: "The assembly version"
     vepPath: "Path to vep script"
     vepCacheDir: "Directory of vep cache files"
     vcfFilter: "Filter for the vep module that is used in vcf2maf"
+    maxfilterAC: "The maximum AC filter"
+    minHomVaf: "The minimum vaf for homozygous calls"
+    bufferSize: "The buffer size"  
     tumorNormalNames: "Tumor and normal ID"
     basename: "Base name"
     modules: "Required environment modules"
@@ -341,9 +351,11 @@ task vcf2maf {
 
     bgzip -c -d ~{vcfFile} > ~{basename}
 
-    vcf2maf --ref-fasta ~{referenceFasta} --input ~{basename} --output-maf ~{basename}.maf \
+    vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
+            --input-vcf ~{basename} --output-maf ~{basename}.maf \
             --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-            --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} 
+            --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+            --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
   
     bgzip -c ~{basename}.maf > ~{basename}.maf.gz
 
