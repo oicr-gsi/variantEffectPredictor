@@ -9,5 +9,6 @@ cd $1
 #find all files, return their md5sums to std out
 ls | sort
 
-find -name *.vcf.gz | xargs zcat | grep -v ^# | md5sum | sort
-find -name *.maf.gz | md5sum | sort
+find . -name '*.vep.vcf.gz' | xargs zcat | grep -v ^# | md5sum | sort
+find . -name '*.targeted.vcf.gz' | xargs -i -n 1 --no-run-if-empty md5sum {} | sort
+find . -name '*.maf.gz' | xargs -i -n 1 --no-run-if-empty md5sum {} | sort
