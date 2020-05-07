@@ -1,6 +1,6 @@
 # variantEffectPredictor
 
-Using VEP to a vcf file and providing additional option as well
+Variant Effect Predictor Workflow version 2.0
 
 ## Overview
 
@@ -32,6 +32,7 @@ Parameter|Value|Description
 `vep.modules`|String|Required environment modules
 `vcf2maf.modules`|String|Required environment modules
 `vcf2maf.referenceFasta`|String|Reference fasta file
+`vcf2maf.ncbiBuild`|String|The assembly version
 `vcf2maf.vepPath`|String|Path to vep script
 `vcf2maf.vepCacheDir`|String|Directory of vep cache files
 `vcf2maf.vcfFilter`|String|Filter for the vep module that is used in vcf2maf
@@ -67,6 +68,10 @@ Parameter|Value|Default|Description
 `getSampleNames.threads`|Int|4|Requested CPU threads
 `getSampleNames.timeout`|Int|6|Hours before task timeout
 `vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
+`vcf2maf.species`|String|"homo_sapiens"|Species name
+`vcf2maf.maxfilterAC`|Int|10|The maximum AC filter
+`vcf2maf.minHomVaf`|Float|0.7|The minimum vaf for homozygous calls
+`vcf2maf.bufferSize`|Int|200|The buffer size
 `vcf2maf.jobMemory`|Int|32|Memory allocated for this job (GB)
 `vcf2maf.threads`|Int|4|Requested CPU threads
 `vcf2maf.timeout`|Int|48|Hours before task timeout
