@@ -221,7 +221,7 @@ task tumorOnlyAlign {
 
     vcf-query -l ~{vcfFile} > sample_headers
     cat sample_headers | grep -v "GATK" | tr "\n" "," > sample_names
-    zcat ~{vcfFile} | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
+    zcat ~{vcfFile} | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | sed 's/AS_FilterStatus\,Number\=A/AS_FilterStatus\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
     tabix -p vcf "~{basename}_input.vcf.gz"
     if [[ `cat sample_names | tr "," "\n" | wc -l` == 2 ]]; then
       for item in `cat sample_names | tr "," "\n"`; do
