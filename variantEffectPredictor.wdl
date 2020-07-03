@@ -225,7 +225,7 @@ task tumorOnlyAlign {
     tabix -p vcf "~{basename}_input.vcf.gz"
     if [[ `cat sample_names | tr "," "\n" | wc -l` == 2 ]]; then
       for item in `cat sample_names | tr "," "\n"`; do
-        if [[ $item == "NORMAL" || $item == *_R_* ]]; then 
+        if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R ]]; then 
           NORM=$item; else TUMR=$item;
         fi;
       done
@@ -281,7 +281,7 @@ task getSampleNames {
     vcf-query -l  "~{vcfFile}" > sample_headers_all
     cat sample_headers_all | grep -v "GATK" | tr "\n" "," > sample_names_all
     if [[ `cat sample_names_all | tr "," "\n" | wc -l` == 2 ]]; then
-      for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *BC*  || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
+      for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == *BC*  || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
     else TUMR=`cat sample_names_all | tr -d ","`; NORM="unmatched"; fi
     echo $NORM > names.txt
     echo $TUMR >> names.txt
