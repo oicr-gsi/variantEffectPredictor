@@ -1,0 +1,224 @@
+# hg19/p13
+- name: hg19
+  version: p13
+  build_type: custom
+  build_args:
+    prereq_type: extract_file
+    prereq_args:
+      output_name: hg19.fa
+      prereq_type: archive
+      prereq_args:
+        sha256: ac73947d38df63ccb00724520a5c31d880c1ca423702ca7ccb7e6c2182a362d9
+        file: ucsc-goldenpath/hg19-20180821T12:56.fa.gz
+    steps:
+      - build_type: custom
+        build_args:
+          prereq_type: archive
+          prereq_args:
+            sha256: b404927655a4aada254ea94ad4da0c8901ed0737e67a0dcabedf673354b1f505
+            file: ucsc-goldenpath/hg19-20090308T14:56.chrom.sizes
+      - command:
+          - /bin/bash
+          - -c
+          - 'cat download | grep -v _ | grep -v chrM | sort -V | sed s/\\t/\\t1\\t/ > hg19.chrom.sizes.bed;cat download | grep chrM | sed s/\\t/\\t1\\t/ >> hg19.chrom.sizes.bed;cat download | grep _ | sort -V | sed s/\\t/\\t1\\t/ >> hg19.chrom.sizes.bed'
+      - build_type: copy
+        build_args:
+          from:
+            - hg19.chrom.sizes.bed
+      - command:
+        - samtools
+        - faidx
+        - hg19.fa
+      - command:
+        - /bin/bash
+        - -c
+        - 'samtools faidx -n 50 hg19.fa chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY chrM chr1_gl000191_random chr1_gl000192_random chr4_ctg9_hap1 chr4_gl000193_random chr4_gl000194_random chr6_apd_hap1 chr6_cox_hap2 chr6_dbb_hap3 chr6_mann_hap4 chr6_mcf_hap5 chr6_qbl_hap6 chr6_ssto_hap7 chr7_gl000195_random chr8_gl000196_random chr8_gl000197_random chr9_gl000198_random chr9_gl000199_random chr9_gl000200_random chr9_gl000201_random chr11_gl000202_random chr17_ctg5_hap1 chr17_gl000203_random chr17_gl000204_random chr17_gl000205_random chr17_gl000206_random chr18_gl000207_random chr19_gl000208_random chr19_gl000209_random chr21_gl000210_random chrUn_gl000211 chrUn_gl000212 chrUn_gl000213 chrUn_gl000214 chrUn_gl000215 chrUn_gl000216 chrUn_gl000217 chrUn_gl000218 chrUn_gl000219 chrUn_gl000220 chrUn_gl000221 chrUn_gl000222 chrUn_gl000223 chrUn_gl000224 chrUn_gl000225 chrUn_gl000226 chrUn_gl000227 chrUn_gl000228 chrUn_gl000229 chrUn_gl000230 chrUn_gl000231 chrUn_gl000232 chrUn_gl000233 chrUn_gl000234 chrUn_gl000235 chrUn_gl000236 chrUn_gl000237 chrUn_gl000238 chrUn_gl000239 chrUn_gl000240 chrUn_gl000241 chrUn_gl000242 chrUn_gl000243 chrUn_gl000244 chrUn_gl000245 chrUn_gl000246 chrUn_gl000247 chrUn_gl000248 chrUn_gl000249 -o hg19_random.fa'
+      - command:
+        - /bin/bash
+        - -c
+        - 'samtools faidx hg19_random.fa'
+      - command:
+        - /bin/bash
+        - -c
+        - 'java -jar $PICARD_ROOT/picard.jar CreateSequenceDictionary REFERENCE=hg19_random.fa OUTPUT=hg19_random.dict'
+      - command:
+        - /bin/bash
+        - -c
+        - 'faSplit byname hg19_random.fa {output_dir}/'
+      - build_type: copy
+        build_args:
+          from:
+            - hg19_random.fa
+            - hg19_random.fa.fai
+            - hg19_random.dict
+      - build_type: verify
+        build_args:
+          # existing OICR specific checksums from
+          # /oicr/data/reference/genomes/homo_sapiens_mc/UCSC/hg19_random/Genomic/references/fasta/original/hg19_random[.fa,.fa.fai]
+          # we dont check .dict file - it is produced so that checksum does not match each time
+          md5: |
+            9a2f1ba93e690c99e6eaad88b43277e3  hg19_random.fa
+            3f774d17ae1b0e78dee74226b4cd29c3  hg19_random.fa.fai
+  depends:
+    - name: samtools
+      version: 1.9
+      required_at: build
+    - name: fasplit
+      version: 1.0
+      required_at: build
+    - name: java
+      version: 8
+      required_at: build
+    - name: picard
+      version: 2.19.2
+      required_at: build 
+
+# vep-hg19-cache/92
+- name: vep-hg19-cache
+  version: 92
+  hidden: false
+  build_type: custom 
+  build_args: 
+    steps: 
+    - build_type: extract
+      build_args:
+        prereq_type: download
+        prereq_args:
+          url: ftp://ftp.ensembl.org/pub/release-92/variation/VEP/homo_sapiens_vep_92_GRCh37.tar.gz
+          md5: e74e5f19dfe779db8c9f9230d5e50836
+    - command: ["mkdir", "-p", "{output_dir}/.vep/homo_sapiens/"]
+    - command: ["mv", "{output_dir}/92_GRCh37/", "{output_dir}/.vep/homo_sapiens/"]
+
+# vep-hg19-exac/0.3.1
+- name: vep-hg19-exac
+  version: 0.3.1
+  hidden: false
+  build_type: custom
+  build_args:
+    prereq_type: download
+    prereq_args:
+      url: ftp://ftp.broadinstitute.org/pub/ExAC_release/release0.3.1/subsets/ExAC_nonTCGA.r0.3.1.sites.vep.vcf.gz
+      md5: 7ab5dd03db27f89f907bb424f00fe461
+      to: ExAC_nonTCGA.r0.3.1.sites.vep.vcf.gz
+    steps:
+      - prereq_type: download
+        prereq_args:
+          url: https://raw.githubusercontent.com/mskcc/vcf2maf/v1.6.16/data/known_somatic_sites.bed
+          md5: 4381b3d24033c6761e83e7486e37c5dd
+          to: known_somatic_sites.bed
+        command: ["vep_hg19_filter_somaticsites", "ExAC_nonTCGA.r0.3.1.sites.vep.vcf.gz", "known_somatic_sites.bed", "{output_dir}/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"]
+  depends:
+    - name: vep-hg19-filter-somaticsites
+      version: 0
+      required_at: build
+
+# hg38/p12
+- name: hg38
+  version: p12
+  build_type: custom
+  build_args:
+    prereq_type: extract_file
+    prereq_args:
+      output_name: hg38.fa
+      prereq_type: archive
+      prereq_args:
+        sha256: be7831701c74a4d518c4f858938c730268cb04d2afc1b5512f3bdba962b813d1
+        file: ucsc-goldenpath/hg38-20180910T11:47.fa.gz
+    steps:
+      - build_type: custom
+        build_args:
+          prereq_type: archive
+          prereq_args:
+            sha256: e311baa897aaf976fb0b7111a0c62dca702ce8e30245723633917f131bb7e77e
+            file: ucsc-goldenpath/hg38.p12-20180910T10:32.chrom.sizes
+      - command:
+          - /bin/bash
+          - -c
+          - 'cat download | grep -v _ | grep -v chrM | sort -V | sed s/\\t/\\t1\\t/ > hg38.chrom.sizes.bed;cat download | grep chrM | sed s/\\t/\\t1\\t/ >> hg38.chrom.sizes.bed;cat download | grep _ | sort -V | sed s/\\t/\\t1\\t/ >> hg38.chrom.sizes.bed'
+      - build_type: copy
+        build_args:
+          from:
+            - hg38.chrom.sizes.bed
+      - command:
+        - samtools
+        - faidx
+        - hg38.fa
+      - command:
+        - /bin/bash
+        - -c
+        - 'samtools faidx -n 50 hg38.fa chr1 chr2 chr3 chr4 chr5 chr6 chr7 chr8 chr9 chr10 chr11 chr12 chr13 chr14 chr15 chr16 chr17 chr18 chr19 chr20 chr21 chr22 chrX chrY chrM chr1_GL383518v1_alt chr1_GL383519v1_alt chr1_GL383520v2_alt chr1_KI270706v1_random chr1_KI270707v1_random chr1_KI270708v1_random chr1_KI270709v1_random chr1_KI270710v1_random chr1_KI270711v1_random chr1_KI270712v1_random chr1_KI270713v1_random chr1_KI270714v1_random chr1_KI270759v1_alt chr1_KI270760v1_alt chr1_KI270761v1_alt chr1_KI270762v1_alt chr1_KI270763v1_alt chr1_KI270764v1_alt chr1_KI270765v1_alt chr1_KI270766v1_alt chr1_KI270892v1_alt chr1_KN196472v1_fix chr1_KN196473v1_fix chr1_KN196474v1_fix chr1_KN538360v1_fix chr1_KN538361v1_fix chr1_KQ031383v1_fix chr1_KQ458382v1_alt chr1_KQ458383v1_alt chr1_KQ458384v1_alt chr1_KQ983255v1_alt chr1_KV880763v1_alt chr1_KZ208904v1_alt chr1_KZ208905v1_alt chr1_KZ208906v1_fix chr1_KZ559100v1_fix chr2_GL383521v1_alt chr2_GL383522v1_alt chr2_GL582966v2_alt chr2_KI270715v1_random chr2_KI270716v1_random chr2_KI270767v1_alt chr2_KI270768v1_alt chr2_KI270769v1_alt chr2_KI270770v1_alt chr2_KI270771v1_alt chr2_KI270772v1_alt chr2_KI270773v1_alt chr2_KI270774v1_alt chr2_KI270775v1_alt chr2_KI270776v1_alt chr2_KI270893v1_alt chr2_KI270894v1_alt chr2_KN538362v1_fix chr2_KN538363v1_fix chr2_KQ031384v1_fix chr2_KQ983256v1_alt chr2_KZ208907v1_alt chr2_KZ208908v1_alt chr3_GL000221v1_random chr3_GL383526v1_alt chr3_JH636055v2_alt chr3_KI270777v1_alt chr3_KI270778v1_alt chr3_KI270779v1_alt chr3_KI270780v1_alt chr3_KI270781v1_alt chr3_KI270782v1_alt chr3_KI270783v1_alt chr3_KI270784v1_alt chr3_KI270895v1_alt chr3_KI270924v1_alt chr3_KI270934v1_alt chr3_KI270935v1_alt chr3_KI270936v1_alt chr3_KI270937v1_alt chr3_KN196475v1_fix chr3_KN196476v1_fix chr3_KN538364v1_fix chr3_KQ031385v1_fix chr3_KQ031386v1_fix chr3_KV766192v1_fix chr3_KZ208909v1_alt chr3_KZ559101v1_alt chr3_KZ559102v1_alt chr3_KZ559103v1_alt chr3_KZ559104v1_fix chr3_KZ559105v1_alt chr4_GL000008v2_random chr4_GL000257v2_alt chr4_GL383527v1_alt chr4_GL383528v1_alt chr4_KI270785v1_alt chr4_KI270786v1_alt chr4_KI270787v1_alt chr4_KI270788v1_alt chr4_KI270789v1_alt chr4_KI270790v1_alt chr4_KI270896v1_alt chr4_KI270925v1_alt chr4_KQ090013v1_alt chr4_KQ090014v1_alt chr4_KQ090015v1_alt chr4_KQ983257v1_fix chr4_KQ983258v1_alt chr4_KV766193v1_alt chr5_GL000208v1_random chr5_GL339449v2_alt chr5_GL383530v1_alt chr5_GL383531v1_alt chr5_GL383532v1_alt chr5_GL949742v1_alt chr5_KI270791v1_alt chr5_KI270792v1_alt chr5_KI270793v1_alt chr5_KI270794v1_alt chr5_KI270795v1_alt chr5_KI270796v1_alt chr5_KI270897v1_alt chr5_KI270898v1_alt chr5_KN196477v1_alt chr5_KV575243v1_alt chr5_KV575244v1_fix chr5_KZ208910v1_alt chr6_GL000250v2_alt chr6_GL000251v2_alt chr6_GL000252v2_alt chr6_GL000253v2_alt chr6_GL000254v2_alt chr6_GL000255v2_alt chr6_GL000256v2_alt chr6_GL383533v1_alt chr6_KB021644v2_alt chr6_KI270758v1_alt chr6_KI270797v1_alt chr6_KI270798v1_alt chr6_KI270799v1_alt chr6_KI270800v1_alt chr6_KI270801v1_alt chr6_KI270802v1_alt chr6_KN196478v1_fix chr6_KQ031387v1_fix chr6_KQ090016v1_fix chr6_KQ090017v1_alt chr6_KV766194v1_fix chr6_KZ208911v1_fix chr7_GL383534v2_alt chr7_KI270803v1_alt chr7_KI270804v1_alt chr7_KI270805v1_alt chr7_KI270806v1_alt chr7_KI270807v1_alt chr7_KI270808v1_alt chr7_KI270809v1_alt chr7_KI270899v1_alt chr7_KQ031388v1_fix chr7_KV880764v1_fix chr7_KV880765v1_fix chr7_KZ208912v1_fix chr7_KZ208913v1_alt chr7_KZ559106v1_alt chr8_KI270810v1_alt chr8_KI270811v1_alt chr8_KI270812v1_alt chr8_KI270813v1_alt chr8_KI270814v1_alt chr8_KI270815v1_alt chr8_KI270816v1_alt chr8_KI270817v1_alt chr8_KI270818v1_alt chr8_KI270819v1_alt chr8_KI270820v1_alt chr8_KI270821v1_alt chr8_KI270822v1_alt chr8_KI270900v1_alt chr8_KI270901v1_alt chr8_KI270926v1_alt chr8_KV880766v1_fix chr8_KV880767v1_fix chr8_KZ208914v1_fix chr8_KZ208915v1_fix chr8_KZ559107v1_alt chr9_GL383539v1_alt chr9_GL383540v1_alt chr9_GL383541v1_alt chr9_GL383542v1_alt chr9_KI270717v1_random chr9_KI270718v1_random chr9_KI270719v1_random chr9_KI270720v1_random chr9_KI270823v1_alt chr9_KN196479v1_fix chr9_KQ090018v1_alt chr9_KQ090019v1_alt chr10_GL383545v1_alt chr10_GL383546v1_alt chr10_KI270824v1_alt chr10_KI270825v1_alt chr10_KN196480v1_fix chr10_KN538365v1_fix chr10_KN538366v1_fix chr10_KN538367v1_fix chr10_KQ090020v1_alt chr10_KQ090021v1_fix chr11_GL383547v1_alt chr11_JH159136v1_alt chr11_JH159137v1_alt chr11_KI270721v1_random chr11_KI270826v1_alt chr11_KI270827v1_alt chr11_KI270829v1_alt chr11_KI270830v1_alt chr11_KI270831v1_alt chr11_KI270832v1_alt chr11_KI270902v1_alt chr11_KI270903v1_alt chr11_KI270927v1_alt chr11_KN196481v1_fix chr11_KN538368v1_alt chr11_KQ090022v1_fix chr11_KQ759759v1_fix chr11_KV766195v1_fix chr11_KZ559108v1_fix chr11_KZ559109v1_fix chr11_KZ559110v1_alt chr11_KZ559111v1_alt chr12_GL383549v1_alt chr12_GL383550v2_alt chr12_GL383551v1_alt chr12_GL383552v1_alt chr12_GL383553v2_alt chr12_GL877875v1_alt chr12_GL877876v1_alt chr12_KI270833v1_alt chr12_KI270834v1_alt chr12_KI270835v1_alt chr12_KI270836v1_alt chr12_KI270837v1_alt chr12_KI270904v1_alt chr12_KN196482v1_fix chr12_KN538369v1_fix chr12_KN538370v1_fix chr12_KQ090023v1_alt chr12_KQ759760v1_fix chr12_KZ208916v1_fix chr12_KZ208917v1_fix chr12_KZ208918v1_alt chr12_KZ559112v1_alt chr13_KI270838v1_alt chr13_KI270839v1_alt chr13_KI270840v1_alt chr13_KI270841v1_alt chr13_KI270842v1_alt chr13_KI270843v1_alt chr13_KN196483v1_fix chr13_KN538371v1_fix chr13_KN538372v1_fix chr13_KN538373v1_fix chr13_KQ090024v1_alt chr13_KQ090025v1_alt chr14_GL000009v2_random chr14_GL000194v1_random chr14_GL000225v1_random chr14_KI270722v1_random chr14_KI270723v1_random chr14_KI270724v1_random chr14_KI270725v1_random chr14_KI270726v1_random chr14_KI270844v1_alt chr14_KI270845v1_alt chr14_KI270846v1_alt chr14_KI270847v1_alt chr14_KZ208919v1_alt chr14_KZ208920v1_fix chr15_GL383554v1_alt chr15_GL383555v2_alt chr15_KI270727v1_random chr15_KI270848v1_alt chr15_KI270849v1_alt chr15_KI270850v1_alt chr15_KI270851v1_alt chr15_KI270852v1_alt chr15_KI270905v1_alt chr15_KI270906v1_alt chr15_KN538374v1_fix chr15_KQ031389v1_alt chr16_GL383556v1_alt chr16_GL383557v1_alt chr16_KI270728v1_random chr16_KI270853v1_alt chr16_KI270854v1_alt chr16_KI270855v1_alt chr16_KI270856v1_alt chr16_KQ031390v1_alt chr16_KQ090026v1_alt chr16_KQ090027v1_alt chr16_KV880768v1_fix chr16_KZ208921v1_alt chr16_KZ559113v1_fix chr17_GL000205v2_random chr17_GL000258v2_alt chr17_GL383563v3_alt chr17_GL383564v2_alt chr17_GL383565v1_alt chr17_GL383566v1_alt chr17_JH159146v1_alt chr17_JH159147v1_alt chr17_JH159148v1_alt chr17_KI270729v1_random chr17_KI270730v1_random chr17_KI270857v1_alt chr17_KI270858v1_alt chr17_KI270859v1_alt chr17_KI270860v1_alt chr17_KI270861v1_alt chr17_KI270862v1_alt chr17_KI270907v1_alt chr17_KI270908v1_alt chr17_KI270909v1_alt chr17_KI270910v1_alt chr17_KV575245v1_fix chr17_KV766196v1_fix chr17_KV766197v1_alt chr17_KV766198v1_alt chr17_KZ559114v1_alt chr18_GL383567v1_alt chr18_GL383568v1_alt chr18_GL383569v1_alt chr18_GL383570v1_alt chr18_GL383571v1_alt chr18_GL383572v1_alt chr18_KI270863v1_alt chr18_KI270864v1_alt chr18_KI270911v1_alt chr18_KI270912v1_alt chr18_KQ090028v1_fix chr18_KQ458385v1_alt chr18_KZ208922v1_fix chr18_KZ559115v1_fix chr18_KZ559116v1_alt chr19_GL000209v2_alt chr19_GL383573v1_alt chr19_GL383574v1_alt chr19_GL383575v2_alt chr19_GL383576v1_alt chr19_GL949746v1_alt chr19_GL949747v2_alt chr19_GL949748v2_alt chr19_GL949749v2_alt chr19_GL949750v2_alt chr19_GL949751v2_alt chr19_GL949752v1_alt chr19_GL949753v2_alt chr19_KI270865v1_alt chr19_KI270866v1_alt chr19_KI270867v1_alt chr19_KI270868v1_alt chr19_KI270882v1_alt chr19_KI270883v1_alt chr19_KI270884v1_alt chr19_KI270885v1_alt chr19_KI270886v1_alt chr19_KI270887v1_alt chr19_KI270888v1_alt chr19_KI270889v1_alt chr19_KI270890v1_alt chr19_KI270891v1_alt chr19_KI270914v1_alt chr19_KI270915v1_alt chr19_KI270916v1_alt chr19_KI270917v1_alt chr19_KI270918v1_alt chr19_KI270919v1_alt chr19_KI270920v1_alt chr19_KI270921v1_alt chr19_KI270922v1_alt chr19_KI270923v1_alt chr19_KI270929v1_alt chr19_KI270930v1_alt chr19_KI270931v1_alt chr19_KI270932v1_alt chr19_KI270933v1_alt chr19_KI270938v1_alt chr19_KN196484v1_fix chr19_KQ458386v1_fix chr19_KV575246v1_alt chr19_KV575247v1_alt chr19_KV575248v1_alt chr19_KV575249v1_alt chr19_KV575250v1_alt chr19_KV575251v1_alt chr19_KV575252v1_alt chr19_KV575253v1_alt chr19_KV575254v1_alt chr19_KV575255v1_alt chr19_KV575256v1_alt chr19_KV575257v1_alt chr19_KV575258v1_alt chr19_KV575259v1_alt chr19_KV575260v1_alt chr20_GL383577v2_alt chr20_KI270869v1_alt chr20_KI270870v1_alt chr20_KI270871v1_alt chr21_GL383578v2_alt chr21_GL383579v2_alt chr21_GL383580v2_alt chr21_GL383581v2_alt chr21_KI270872v1_alt chr21_KI270873v1_alt chr21_KI270874v1_alt chr22_GL383582v2_alt chr22_GL383583v2_alt chr22_KB663609v1_alt chr22_KI270731v1_random chr22_KI270732v1_random chr22_KI270733v1_random chr22_KI270734v1_random chr22_KI270735v1_random chr22_KI270736v1_random chr22_KI270737v1_random chr22_KI270738v1_random chr22_KI270739v1_random chr22_KI270875v1_alt chr22_KI270876v1_alt chr22_KI270877v1_alt chr22_KI270878v1_alt chr22_KI270879v1_alt chr22_KI270928v1_alt chr22_KN196485v1_alt chr22_KN196486v1_alt chr22_KQ458387v1_alt chr22_KQ458388v1_alt chr22_KQ759761v1_alt chr22_KQ759762v1_fix chrUn_GL000195v1 chrUn_GL000213v1 chrUn_GL000214v1 chrUn_GL000216v2 chrUn_GL000218v1 chrUn_GL000219v1 chrUn_GL000220v1 chrUn_GL000224v1 chrUn_GL000226v1 chrUn_KI270302v1 chrUn_KI270303v1 chrUn_KI270304v1 chrUn_KI270305v1 chrUn_KI270310v1 chrUn_KI270311v1 chrUn_KI270312v1 chrUn_KI270315v1 chrUn_KI270316v1 chrUn_KI270317v1 chrUn_KI270320v1 chrUn_KI270322v1 chrUn_KI270329v1 chrUn_KI270330v1 chrUn_KI270333v1 chrUn_KI270334v1 chrUn_KI270335v1 chrUn_KI270336v1 chrUn_KI270337v1 chrUn_KI270338v1 chrUn_KI270340v1 chrUn_KI270362v1 chrUn_KI270363v1 chrUn_KI270364v1 chrUn_KI270366v1 chrUn_KI270371v1 chrUn_KI270372v1 chrUn_KI270373v1 chrUn_KI270374v1 chrUn_KI270375v1 chrUn_KI270376v1 chrUn_KI270378v1 chrUn_KI270379v1 chrUn_KI270381v1 chrUn_KI270382v1 chrUn_KI270383v1 chrUn_KI270384v1 chrUn_KI270385v1 chrUn_KI270386v1 chrUn_KI270387v1 chrUn_KI270388v1 chrUn_KI270389v1 chrUn_KI270390v1 chrUn_KI270391v1 chrUn_KI270392v1 chrUn_KI270393v1 chrUn_KI270394v1 chrUn_KI270395v1 chrUn_KI270396v1 chrUn_KI270411v1 chrUn_KI270412v1 chrUn_KI270414v1 chrUn_KI270417v1 chrUn_KI270418v1 chrUn_KI270419v1 chrUn_KI270420v1 chrUn_KI270422v1 chrUn_KI270423v1 chrUn_KI270424v1 chrUn_KI270425v1 chrUn_KI270429v1 chrUn_KI270435v1 chrUn_KI270438v1 chrUn_KI270442v1 chrUn_KI270448v1 chrUn_KI270465v1 chrUn_KI270466v1 chrUn_KI270467v1 chrUn_KI270468v1 chrUn_KI270507v1 chrUn_KI270508v1 chrUn_KI270509v1 chrUn_KI270510v1 chrUn_KI270511v1 chrUn_KI270512v1 chrUn_KI270515v1 chrUn_KI270516v1 chrUn_KI270517v1 chrUn_KI270518v1 chrUn_KI270519v1 chrUn_KI270521v1 chrUn_KI270522v1 chrUn_KI270528v1 chrUn_KI270529v1 chrUn_KI270530v1 chrUn_KI270538v1 chrUn_KI270539v1 chrUn_KI270544v1 chrUn_KI270548v1 chrUn_KI270579v1 chrUn_KI270580v1 chrUn_KI270581v1 chrUn_KI270582v1 chrUn_KI270583v1 chrUn_KI270584v1 chrUn_KI270587v1 chrUn_KI270588v1 chrUn_KI270589v1 chrUn_KI270590v1 chrUn_KI270591v1 chrUn_KI270593v1 chrUn_KI270741v1 chrUn_KI270742v1 chrUn_KI270743v1 chrUn_KI270744v1 chrUn_KI270745v1 chrUn_KI270746v1 chrUn_KI270747v1 chrUn_KI270748v1 chrUn_KI270749v1 chrUn_KI270750v1 chrUn_KI270751v1 chrUn_KI270752v1 chrUn_KI270753v1 chrUn_KI270754v1 chrUn_KI270755v1 chrUn_KI270756v1 chrUn_KI270757v1 chrX_KI270880v1_alt chrX_KI270881v1_alt chrX_KI270913v1_alt chrX_KV766199v1_alt chrY_KI270740v1_random chrY_KN196487v1_fix chrY_KZ208923v1_fix chrY_KZ208924v1_fix -o hg38_random.fa'
+      - command:
+        - /bin/bash
+        - -c
+        - 'samtools faidx hg38_random.fa'
+      - command:
+        - /bin/bash
+        - -c
+        - 'java -jar $PICARD_ROOT/picard.jar CreateSequenceDictionary REFERENCE=hg38_random.fa OUTPUT=hg38_random.dict'
+      - command:
+        - /bin/bash
+        - -c
+        - 'faSplit byname hg38_random.fa {output_dir}/'
+      - build_type: copy
+        build_args:
+          from:
+            - hg38_random.fa
+            - hg38_random.fa.fai
+            - hg38_random.dict
+      - build_type: verify
+        build_args:
+          # existing OICR specific checksums from
+          # /oicr/data/reference/genomes/homo_sapiens_mc/UCSC/hg38_random/Genomic/references/fasta/original/hg19_random[.fa,.fa.fai]
+          md5: |
+            ccdcc185394a3f01eecf9c68307d6b95  hg38_random.fa
+            e8a80908b4fbcc0edde6adba61c20a8b  hg38_random.fa.fai
+  depends:
+    - name: samtools
+      version: 1.9
+      required_at: build
+    - name: fasplit
+      version: 1.0
+      required_at: build
+    - name: java
+      version: 8
+      required_at: build
+    - name: picard
+      version: 2.19.2
+      required_at: build
+
+# vep-hg38-cache/92
+- name: vep-hg38-cache
+  version: 92
+  hidden: false
+  build_type: custom
+  build_args:
+    steps:
+    - build_type: extract
+      build_args:
+        prereq_type: download
+        prereq_args:
+          url: ftp://ftp.ensembl.org/pub/release-92/variation/VEP/homo_sapiens_vep_92_GRCh38.tar.gz
+          md5: 17230efcb62febe0e0adfef8dd3f2433
+    - command: ["mkdir", "-p", "{output_dir}/.vep/homo_sapiens/"]
+    - command: ["mv", "{output_dir}/92_GRCh38/", "{output_dir}/.vep/homo_sapiens/"]
+
+# vep-hg38-exac/0.3
+- name: vep-hg38-exac
+  version: 0.3
+  build_type: custom
+  build_args:
+    steps:
+     - build_type: copy
+       build_args:
+         to: "ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz"
+         prereq_type: archive
+         prereq_args:
+           md5: c9edd88d9440a605c1632c97ae94adc4
+           file: variantEffectPredictor/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz
+     - build_type: copy
+       build_args:
+         to: "ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz.tbi"
+         prereq_type: archive
+         prereq_args:
+           md5: 894af7091c1e5b4dfdfeaa4e0b873c6b 
+           file: variantEffectPredictor/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz.tbi 
