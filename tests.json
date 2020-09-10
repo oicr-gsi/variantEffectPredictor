@@ -17,8 +17,10 @@
   "parameters": {
     "wdl_inputs": {
        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+       "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
        "variantEffectPredictor.onlyTumor": false,
        "variantEffectPredictor.toMAF": false,
+       "variantEffectPredictor.intervalsToParallelizeBy": "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX",
        "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
        "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
        "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
@@ -36,8 +38,10 @@
     "parameters": {
       "wdl_inputs": {
         "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+        "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
         "variantEffectPredictor.onlyTumor": false,
         "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.intervalsToParallelizeBy": "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX",
         "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
         "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
         "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
@@ -55,8 +59,10 @@
     "parameters": {
       "wdl_inputs": {
         "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/TGL08_0075_Lu_P_EX.mutect2.tumor_only.vcf.gz",
+        "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/TGL08_0075_Lu_P_EX.mutect2.tumor_only.vcf.gz.tbi",
         "variantEffectPredictor.onlyTumor": true,
         "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.intervalsToParallelizeBy": "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX,chrY",
         "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/ensembl_v6_ccds_exons_onebed_intersectRegions_pad50.bed",
         "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
         "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
@@ -75,8 +81,10 @@
     "parameters": {
       "wdl_inputs": {
         "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
+        "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz.tbi",
         "variantEffectPredictor.onlyTumor": false,
         "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.intervalsToParallelizeBy": "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX",
         "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
         "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
         "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
@@ -95,8 +103,10 @@
     "parameters": {
       "wdl_inputs": {
         "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz",
+        "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz.tbi",
         "variantEffectPredictor.onlyTumor": true,
         "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.intervalsToParallelizeBy": "chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX,chrY,chrM",
         "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
         "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
         "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",

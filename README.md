@@ -1,6 +1,6 @@
 # variantEffectPredictor
 
-Variant Effect Predictor Workflow version 2.0
+Variant Effect Predictor Workflow version 2.1
 
 ## Overview
 
@@ -25,6 +25,8 @@ java -jar cromwell.jar run variantEffectPredictor.wdl --inputs inputs.json
 Parameter|Value|Description
 ---|---|---
 `vcfFile`|File|Input VCF file
+`vcfIndex`|File|Input VCF index file
+`intervalsToParallelizeBy`|String|Comma separated list of intervals to split by (e.g. chr1,chr2,chr3,chr4)
 `toMAF`|Boolean|If true, generate the MAF file
 `onlyTumor`|Boolean|If true, run tumor only mode
 `vep.vepCacheDir`|String|Directory of cache files
@@ -52,6 +54,20 @@ Parameter|Value|Default|Description
 `targetBedTask.jobMemory`|Int|32|Memory allocated for this job (GB)
 `targetBedTask.threads`|Int|4|Requested CPU threads
 `targetBedTask.timeout`|Int|6|Hours before task timeout
+`getSampleNames.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
+`getSampleNames.modules`|String|"vcftools/0.1.16"|Required environment modules
+`getSampleNames.jobMemory`|Int|32|Memory allocated for this job (GB)
+`getSampleNames.threads`|Int|4|Requested CPU threads
+`getSampleNames.timeout`|Int|6|Hours before task timeout
+`splitStringToArray.lineSeparator`|String|","|line separator for intervalsToParallelizeBy. 
+`splitStringToArray.jobMemory`|Int|1|Memory allocated to job (in GB).
+`splitStringToArray.threads`|Int|4|Requested CPU threads.
+`splitStringToArray.timeout`|Int|1|Maximum amount of time (in hours) the task can run for.
+`subsetVcf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
+`subsetVcf.modules`|String|"bcftools/1.9"|Required environment modules
+`subsetVcf.jobMemory`|Int|32|Memory allocated to job (in GB).
+`subsetVcf.threads`|Int|4|Requested CPU threads.
+`subsetVcf.timeout`|Int|6|Maximum amount of time (in hours) the task can run for.
 `vep.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vep.addParam`|String?|None|Additional vep parameters
 `vep.jobMemory`|Int|32|Memory allocated for this job (GB)
@@ -62,11 +78,6 @@ Parameter|Value|Default|Description
 `tumorOnlyAlign.jobMemory`|Int|32|Memory allocated for this job (GB)
 `tumorOnlyAlign.threads`|Int|4|Requested CPU threads
 `tumorOnlyAlign.timeout`|Int|6|Hours before task timeout
-`getSampleNames.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
-`getSampleNames.modules`|String|"vcftools/0.1.16"|Required environment modules
-`getSampleNames.jobMemory`|Int|32|Memory allocated for this job (GB)
-`getSampleNames.threads`|Int|4|Requested CPU threads
-`getSampleNames.timeout`|Int|6|Hours before task timeout
 `vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vcf2maf.species`|String|"homo_sapiens"|Species name
 `vcf2maf.maxfilterAC`|Int|10|The maximum AC filter
@@ -75,6 +86,15 @@ Parameter|Value|Default|Description
 `vcf2maf.jobMemory`|Int|32|Memory allocated for this job (GB)
 `vcf2maf.threads`|Int|4|Requested CPU threads
 `vcf2maf.timeout`|Int|48|Hours before task timeout
+`mergeMafs.modules`|String|"tabix/0.2.6"|Required environment modules
+`mergeMafs.jobMemory`|Int|24|Memory allocated to job (in GB).
+`mergeMafs.threads`|Int|4|Requested CPU threads.
+`mergeMafs.timeout`|Int|24|Maximum amount of time (in hours) the task can run for.
+`mergeVcfs.modules`|String|"gatk/4.1.7.0"|Required environment modules.
+`mergeVcfs.jobMemory`|Int|24|Memory allocated to job (in GB).
+`mergeVcfs.overhead`|Int|6|Java overhead memory (in GB). jobMemory - overhead == java Xmx/heap memory.
+`mergeVcfs.threads`|Int|4|Requested CPU threads.
+`mergeVcfs.timeout`|Int|24|Maximum amount of time (in hours) the task can run for.
 
 
 ### Outputs

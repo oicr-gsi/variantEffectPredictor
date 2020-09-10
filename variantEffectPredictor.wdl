@@ -73,7 +73,7 @@ workflow variantEffectPredictor {
   meta {
     author: "Rishi Shah, Xuemei Luo"
     email: "rshah@oicr.on.ca xuemei.luo@oicr.on.ca"
-    description: "Variant Effect Predictor Workflow version 2.0"
+    description: "Variant Effect Predictor Workflow version 2.1"
     dependencies: 
     [
       {
@@ -232,6 +232,7 @@ task subsetVcf {
     vcfFile: "Vcf input file"
     vcfIndex: "vcf index file"
     regions: "interval regions"
+    basename: "Base name"
     modules: "Required environment modules"
     jobMemory: "Memory allocated to job (in GB)."
     threads: "Requested CPU threads."
