@@ -45,7 +45,7 @@ workflow variantEffectPredictor {
       }
       call vcf2maf {
         input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf,subsetVcf.subsetVcf]),
-             tumorNormalNames = select_first([getSampleNames.tumorNormalNames,getSampleNames.tumorNormalNames])
+             tumorNormalNames = select_first([getSampleNames.tumorNormalNames])
         } 
       }
   }
