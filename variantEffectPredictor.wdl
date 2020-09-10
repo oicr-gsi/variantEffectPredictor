@@ -2,7 +2,9 @@ version 1.0
 workflow variantEffectPredictor {
   input {
     File vcfFile
+    File vcfIndex
     File? targetBed
+    String intervalsToParallelizeBy
     Boolean toMAF
     Boolean onlyTumor
   }
@@ -14,37 +16,60 @@ workflow variantEffectPredictor {
     }
   }
 
-  call vep {
-      input: vcfFile =  select_first([targetBedTask.targetedVcf, vcfFile]),
+  call splitStringToArray {
+      input: intervalsToParallelizeBy = intervalsToParallelizeBy
+  }
+
+  scatter (intervals in splitStringToArray.out) {
+    call subsetVcf {
+      input: vcfFile = select_first([targetBedTask.targetedVcf, vcfFile]),
+             vcfIndex = select_first([targetBedTask.targetedTbi, vcfIndex]),
+             regions = intervals[0]
+    }
+
+    call vep {
+      input: vcfFile = subsetVcf.subsetVcf
+    }
+
+    if (toMAF == true) {
+      if (onlyTumor == true) {
+        call tumorOnlyAlign {
+          input: vcfFile = subsetVcf.subsetVcf   
+        }
+      }
+      call getSampleNames {
+        input: vcfFile = vcfFile
+      }
+      call vcf2maf {
+        input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf,subsetVcf.subsetVcf]),
+             tumorNormalNames = getSampleNames.tumorNormalNames
+        } 
+      }
   }
 
   if (toMAF == true) {
-    if (onlyTumor == true) {
-      call tumorOnlyAlign {
-        input: vcfFile = select_first([targetBedTask.targetedVcf, vcfFile])    
-      }
+    call mergeMafs {
+      input: mafs = vcf2maf.mafOutput
     }
+  }
+  
+  call mergeVcfs {
+    input: vcfs = vep.vepVcfOutput
+  }
 
-    call getSampleNames {
-      input: vcfFile = vcfFile
-    }
-
-    call vcf2maf {
-      input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf,targetBedTask.targetedVcf, vcfFile]),
-             tumorNormalNames = getSampleNames.tumorNormalNames
-      } 
-    }
 
   parameter_meta {
     vcfFile: "Input VCF file"
+    vcfIndex: "Input VCF index file"
     targetBed: "Target bed file"
+    intervalsToParallelizeBy: "Comma separated list of intervals to split by (e.g. chr1,chr2,chr3,chr4)"
     toMAF: "If true, generate the MAF file"
     onlyTumor: "If true, run tumor only mode"
   }
 
   meta {
-    author: "Rishi Shah"
-    email: "rshah@oicr.on.ca"
+    author: "Rishi Shah, Xuemei Luo"
+    email: "rshah@oicr.on.ca xuemei.luo@oicr.on.ca"
     description: "Variant Effect Predictor Workflow version 2.0"
     dependencies: 
     [
@@ -75,9 +100,9 @@ workflow variantEffectPredictor {
   }
 
   output {
-    File outputVcf = vep.vepVcfOutput
-    File outputTbi = vep.vepTbiOutput
-    File? outputMaf = vcf2maf.mafOutput
+    File outputVcf = mergeVcfs.mergedVcf
+    File outputTbi = mergeVcfs.mergedVcfTbi
+    File? outputMaf = mergeMafs.mergedMaf
     File? outputTargetVcf = targetBedTask.targetedVcf
     File? outputTargetTbi = targetBedTask.targetedTbi
 
@@ -139,6 +164,78 @@ task targetBedTask {
   }
 }
 
+
+task splitStringToArray {
+  input {
+    String intervalsToParallelizeBy
+    String lineSeparator = ","
+    Int jobMemory = 1
+    Int threads = 4
+    Int timeout = 1
+  }
+
+  command <<<
+    echo "~{intervalsToParallelizeBy}" | tr '~{lineSeparator}' '\n'
+  >>>
+
+  output {
+    Array[Array[String]] out = read_tsv(stdout())
+  }
+
+  runtime {
+    memory: "~{jobMemory} GB"
+    cpu: "~{threads}"
+    timeout: "~{timeout}"
+  }
+
+  parameter_meta {
+    intervalsToParallelizeBy: "Interval string to split (e.g. chr1,chr2,chr3,chr4)."
+    lineSeparator: "line separator for intervalsToParallelizeBy. "
+    jobMemory: "Memory allocated to job (in GB)."
+    threads: "Requested CPU threads."
+    timeout: "Maximum amount of time (in hours) the task can run for."
+  }
+}
+
+task subsetVcf {
+  input {
+    File vcfFile
+    File vcfIndex
+    String basename = basename("~{vcfFile}", ".vcf.gz")
+    String regions
+    String modules = "bcftools/1.9"  
+    Int jobMemory = 32
+    Int threads = 4
+    Int timeout = 6
+  }
+  command <<<
+    set -euo pipefail
+
+    bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz 
+  >>>
+
+  output {
+    File subsetVcf = "~{basename}.vcf.gz"
+  }
+
+  runtime {
+    modules: "~{modules}"
+    memory: "~{jobMemory} GB"
+    cpu: "~{threads}"
+    timeout: "~{timeout}"
+  }
+
+  parameter_meta {
+    vcfFile: "Vcf input file"
+    vcfIndex: "vcf index file"
+    regions: "interval regions"
+    modules: "Required environment modules"
+    jobMemory: "Memory allocated to job (in GB)."
+    threads: "Requested CPU threads."
+    timeout: "Maximum amount of time (in hours) the task can run for."
+  }
+}
+
 task vep {
   input {
     File vcfFile 
@@ -175,7 +272,6 @@ task vep {
           --pick_order canonical,tsl,biotype,rank,ccds,length  \
           --pubmed --fork 4 --polyphen b --af --af_1kg --af_esp --af_gnomad --regulatory
     
-    tabix -p vcf "~{basename}.vep.vcf.gz"
   >>> 
 
   runtime {
@@ -187,14 +283,11 @@ task vep {
 
   output {
     File vepVcfOutput = "~{basename}.vep.vcf.gz"
-    File vepTbiOutput = "~{basename}.vep.vcf.gz.tbi"
-
   }
 
   meta {
     output_meta: {
-      vepVcfOutput: "VEP Vcf output",
-      vepTbiOutput: "VEP Tbi output"
+      vepVcfOutput: "VEP Vcf output"
     }
   }
 }
@@ -356,9 +449,6 @@ task vcf2maf {
             --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
             --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
             --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
-  
-    bgzip -c ~{basename}.maf > ~{basename}.maf.gz
-
   >>>
 
   runtime {
@@ -369,7 +459,7 @@ task vcf2maf {
   }
 
   output {
-    File mafOutput = "~{basename}.maf.gz"
+    File mafOutput = "~{basename}.maf"
   }
   meta {
     output_meta: {
@@ -377,4 +467,101 @@ task vcf2maf {
 
     }
   }
-} 
+}
+
+task mergeMafs {
+  input {
+    Array[File] mafs
+    String modules = "tabix/0.2.6"
+    Int jobMemory = 24
+    Int threads = 4
+    Int timeout = 24
+  }
+
+  String basename = basename(mafs[0], ".maf")
+
+  command <<<
+    set -euo pipefail
+
+    head -n 2 ~{mafs[0]} > ~{basename}
+    cat ~{sep=" " mafs} | grep -v ^# | grep -v "Hugo_Symbol" >> ~{basename}
+    bgzip -c ~{basename} > ~{basename}.maf.gz
+
+  >>>
+
+  runtime {
+    modules: "~{modules}"
+    memory: "~{jobMemory} GB"
+    cpu: "~{threads}"
+    timeout: "~{timeout}"
+  }
+
+  output {
+    File mergedMaf = "~{basename}.maf.gz"
+  }
+
+  parameter_meta {
+    mafs: "mafs from scatter to merge together."
+    modules: "Required environment modules"
+    jobMemory:  "Memory allocated to job (in GB)."
+    threads: "Requested CPU threads."
+    timeout: "Maximum amount of time (in hours) the task can run for."
+  }
+
+  meta {
+    output_meta: {
+      mergedMaf: "Merged maf"
+    }
+  }
+}
+
+task mergeVcfs {
+  input {
+    String modules
+    Array[File] vcfs
+    Int jobMemory = 24
+    Int overhead = 6
+    Int threads = 4
+    Int timeout = 24
+  }
+
+  String basename = basename(vcfs[0], ".vcf.gz")
+
+  command <<<
+    set -euo pipefail
+
+    gatk --java-options "-Xmx~{jobMemory - overhead}G" MergeVcfs \
+    -I ~{sep=" -I " vcfs} \
+    -O ~{basename}.vcf.gz
+  >>>
+
+  runtime {
+    memory: "~{jobMemory} GB"
+    cpu: "~{threads}"
+    timeout: "~{timeout}"
+    modules: "~{modules}"
+  }
+
+  output {
+    File mergedVcf = "~{basename}.vcf.gz"
+    File mergedVcfTbi = "~{basename}.vcf.gz.tbi"
+  }
+
+  parameter_meta {
+    modules: "Required environment modules."
+    vcfs: "Vcf's from scatter to merge together."
+    jobMemory:  "Memory allocated to job (in GB)."
+    overhead: "Java overhead memory (in GB). jobMemory - overhead == java Xmx/heap memory."
+    threads: "Requested CPU threads."
+    timeout: "Maximum amount of time (in hours) the task can run for."
+  }
+
+  meta {
+    output_meta: {
+      mergedVcf: "Merged vcf",
+      mergedVcfTbi: "Merged vcf index"
+    }
+  }
+
+}
+
