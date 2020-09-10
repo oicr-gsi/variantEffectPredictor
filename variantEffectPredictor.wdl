@@ -16,6 +16,12 @@ workflow variantEffectPredictor {
     }
   }
 
+  if (toMAF == true) {
+    call getSampleNames {
+        input: vcfFile = vcfFile
+    } 
+  }
+
   call splitStringToArray {
       input: intervalsToParallelizeBy = intervalsToParallelizeBy
   }
@@ -37,19 +43,16 @@ workflow variantEffectPredictor {
           input: vcfFile = subsetVcf.subsetVcf   
         }
       }
-      call getSampleNames {
-        input: vcfFile = vcfFile
-      }
       call vcf2maf {
         input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf,subsetVcf.subsetVcf]),
-             tumorNormalNames = getSampleNames.tumorNormalNames
+             tumorNormalNames = select_first([getSampleNames.tumorNormalNames,getSampleNames.tumorNormalNames])
         } 
       }
   }
 
   if (toMAF == true) {
     call mergeMafs {
-      input: mafs = vcf2maf.mafOutput
+      input: mafs = select_all(vcf2maf.mafOutput)
     }
   }
   
@@ -517,8 +520,8 @@ task mergeMafs {
 
 task mergeVcfs {
   input {
-    String modules
-    Array[File] vcfs
+    String modules = "gatk/4.1.7.0"
+    Array[File] vcfs    
     Int jobMemory = 24
     Int overhead = 6
     Int threads = 4
