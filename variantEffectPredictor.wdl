@@ -4,7 +4,6 @@ workflow variantEffectPredictor {
     File vcfFile
     File vcfIndex
     File? targetBed
-    String intervalsToParallelizeBy
     Boolean toMAF
     Boolean onlyTumor
   }
@@ -22,11 +21,11 @@ workflow variantEffectPredictor {
     } 
   }
 
-  call splitStringToArray {
-      input: intervalsToParallelizeBy = intervalsToParallelizeBy
+  call chromosomeArray {
+      input: vcfFile = select_first([targetBedTask.targetedVcf, vcfFile])
   }
 
-  scatter (intervals in splitStringToArray.out) {
+  scatter (intervals in chromosomeArray.out) {
     call subsetVcf {
       input: vcfFile = select_first([targetBedTask.targetedVcf, vcfFile]),
              vcfIndex = select_first([targetBedTask.targetedTbi, vcfIndex]),
@@ -65,7 +64,6 @@ workflow variantEffectPredictor {
     vcfFile: "Input VCF file"
     vcfIndex: "Input VCF index file"
     targetBed: "Target bed file"
-    intervalsToParallelizeBy: "Comma separated list of intervals to split by (e.g. chr1,chr2,chr3,chr4)"
     toMAF: "If true, generate the MAF file"
     onlyTumor: "If true, run tumor only mode"
   }
@@ -168,17 +166,16 @@ task targetBedTask {
 }
 
 
-task splitStringToArray {
+task chromosomeArray {
   input {
-    String intervalsToParallelizeBy
-    String lineSeparator = ","
+    File vcfFile
     Int jobMemory = 1
     Int threads = 4
     Int timeout = 1
   }
 
   command <<<
-    echo "~{intervalsToParallelizeBy}" | tr '~{lineSeparator}' '\n'
+    zcat vcfFile | grep -v ^# | cut -f 1 | sort -V | uniq
   >>>
 
   output {
@@ -192,8 +189,7 @@ task splitStringToArray {
   }
 
   parameter_meta {
-    intervalsToParallelizeBy: "Interval string to split (e.g. chr1,chr2,chr3,chr4)."
-    lineSeparator: "line separator for intervalsToParallelizeBy. "
+    vcfFile: "Vcf input file"
     jobMemory: "Memory allocated to job (in GB)."
     threads: "Requested CPU threads."
     timeout: "Maximum amount of time (in hours) the task can run for."

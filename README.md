@@ -26,7 +26,6 @@ Parameter|Value|Description
 ---|---|---
 `vcfFile`|File|Input VCF file
 `vcfIndex`|File|Input VCF index file
-`intervalsToParallelizeBy`|String|Comma separated list of intervals to split by (e.g. chr1,chr2,chr3,chr4)
 `toMAF`|Boolean|If true, generate the MAF file
 `onlyTumor`|Boolean|If true, run tumor only mode
 `vep.vepCacheDir`|String|Directory of cache files
@@ -59,10 +58,9 @@ Parameter|Value|Default|Description
 `getSampleNames.jobMemory`|Int|32|Memory allocated for this job (GB)
 `getSampleNames.threads`|Int|4|Requested CPU threads
 `getSampleNames.timeout`|Int|6|Hours before task timeout
-`splitStringToArray.lineSeparator`|String|","|line separator for intervalsToParallelizeBy. 
-`splitStringToArray.jobMemory`|Int|1|Memory allocated to job (in GB).
-`splitStringToArray.threads`|Int|4|Requested CPU threads.
-`splitStringToArray.timeout`|Int|1|Maximum amount of time (in hours) the task can run for.
+`chromosomeArray.jobMemory`|Int|1|Memory allocated to job (in GB).
+`chromosomeArray.threads`|Int|4|Requested CPU threads.
+`chromosomeArray.timeout`|Int|1|Maximum amount of time (in hours) the task can run for.
 `subsetVcf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `subsetVcf.modules`|String|"bcftools/1.9"|Required environment modules
 `subsetVcf.jobMemory`|Int|32|Memory allocated to job (in GB).
