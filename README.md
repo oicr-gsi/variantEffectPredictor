@@ -72,7 +72,7 @@ Parameter|Value|Default|Description
 `vep.threads`|Int|4|Requested CPU threads
 `vep.timeout`|Int|16|Hours before task timeout
 `tumorOnlyAlign.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
-`tumorOnlyAlign.modules`|String|"bcftools/1.9 tabix/0.2.6 vcftools/0.1.16"|Required environment modules
+`tumorOnlyAlign.modules`|String|"bcftools/1.9 tabix/0.2.6"|Required environment modules
 `tumorOnlyAlign.jobMemory`|Int|32|Memory allocated for this job (GB)
 `tumorOnlyAlign.threads`|Int|4|Requested CPU threads
 `tumorOnlyAlign.timeout`|Int|6|Hours before task timeout

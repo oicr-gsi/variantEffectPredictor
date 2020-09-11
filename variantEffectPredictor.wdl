@@ -39,7 +39,8 @@ workflow variantEffectPredictor {
     if (toMAF == true) {
       if (onlyTumor == true) {
         call tumorOnlyAlign {
-          input: vcfFile = subsetVcf.subsetVcf   
+          input: vcfFile = subsetVcf.subsetVcf,
+                 tumorNormalNames = select_first([getSampleNames.tumorNormalNames])   
         }
       }
       call vcf2maf {
@@ -292,14 +293,14 @@ task vep {
   }
 }
 
-task tumorOnlyAlign {
+task getSampleNames {
   input {
-    File vcfFile
+    File vcfFile 
     String basename = basename("~{vcfFile}", ".vcf.gz")
-    String modules = "bcftools/1.9 tabix/0.2.6 vcftools/0.1.16"
+    String modules = "vcftools/0.1.16"
     Int jobMemory = 32
     Int threads = 4
-    Int timeout = 6   
+    Int timeout = 6
   }
   parameter_meta {
     vcfFile: "Vcf input file"
@@ -312,19 +313,60 @@ task tumorOnlyAlign {
   command <<<
     set -euo pipefail
 
-    vcf-query -l ~{vcfFile} > sample_headers
-    cat sample_headers | grep -v "GATK" | tr "\n" "," > sample_names
+    vcf-query -l  "~{vcfFile}" > sample_headers_all
+    cat sample_headers_all | grep -v "GATK" | tr "\n" "," > sample_names_all
+    if [[ `cat sample_names_all | tr "," "\n" | wc -l` == 2 ]]; then
+      for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == *BC*  || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
+    else TUMR=`cat sample_names_all | tr -d ","`; NORM="unmatched"; fi
+
+    echo $TUMR > names.txt
+    echo $NORM >> names.txt
+
+  >>>
+
+  runtime {
+    modules: "~{modules}"
+    memory:  "~{jobMemory} GB"
+    cpu:     "~{threads}"
+    timeout: "~{timeout}"
+  }
+
+  output {
+    File tumorNormalNames = "names.txt"
+  }
+  meta {
+    output_meta: {
+      tumorNormalNames: "Names to use in the vcf2maf conversion"
+    }
+  }
+}
+
+task tumorOnlyAlign {
+  input {
+    File vcfFile
+    File tumorNormalNames 
+    String basename = basename("~{vcfFile}", ".vcf.gz")
+    String modules = "bcftools/1.9 tabix/0.2.6"
+    Int jobMemory = 32
+    Int threads = 4
+    Int timeout = 6   
+  }
+  parameter_meta {
+    vcfFile: "Vcf input file"
+    tumorNormalNames: "Tumor and normal ID"
+    basename: "Base name"
+    modules: "Required environment modules"
+    jobMemory: "Memory allocated for this job (GB)"
+    threads: "Requested CPU threads"
+    timeout: "Hours before task timeout"
+  }
+  command <<<
+    set -euo pipefail
+
     zcat ~{vcfFile} | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | sed 's/AS_FilterStatus\,Number\=A/AS_FilterStatus\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
     tabix -p vcf "~{basename}_input.vcf.gz"
-    if [[ `cat sample_names | tr "," "\n" | wc -l` == 2 ]]; then
-      for item in `cat sample_names | tr "," "\n"`; do
-        if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R ]]; then 
-          NORM=$item; else TUMR=$item;
-        fi;
-      done
-      
-    else TUMR=`cat sample_names | tr -d ","`; NORM="unmatched"; fi
-    echo -e "$TUMR\n$NORM" > "~{basename}_header"
+
+    cat ~{tumorNormalNames} > "~{basename}_header"
     bcftools merge "~{basename}_input.vcf.gz" "~{basename}_input.vcf.gz" --force-samples > "~{basename}.temp_tumor.vcf"
     bcftools reheader -s "~{basename}_header" "~{basename}.temp_tumor.vcf" > "~{basename}.unmatched.vcf"
     bgzip -c "~{basename}.unmatched.vcf" > "~{basename}.unmatched.vcf.gz"
@@ -351,51 +393,6 @@ task tumorOnlyAlign {
   }
 }
 
-task getSampleNames {
-  input {
-    File vcfFile 
-    String basename = basename("~{vcfFile}", ".vcf.gz")
-    String modules = "vcftools/0.1.16"
-    Int jobMemory = 32
-    Int threads = 4
-    Int timeout = 6
-  }
-  parameter_meta {
-    vcfFile: "Vcf input file"
-    basename: "Base name"
-    modules: "Required environment modules"
-    jobMemory: "Memory allocated for this job (GB)"
-    threads: "Requested CPU threads"
-    timeout: "Hours before task timeout"
-  }
-  command <<<
-    set -euo pipefail
-
-    vcf-query -l  "~{vcfFile}" > sample_headers_all
-    cat sample_headers_all | grep -v "GATK" | tr "\n" "," > sample_names_all
-    if [[ `cat sample_names_all | tr "," "\n" | wc -l` == 2 ]]; then
-      for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == *BC*  || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
-    else TUMR=`cat sample_names_all | tr -d ","`; NORM="unmatched"; fi
-    echo $NORM > names.txt
-    echo $TUMR >> names.txt
-  >>>
-
-  runtime {
-    modules: "~{modules}"
-    memory:  "~{jobMemory} GB"
-    cpu:     "~{threads}"
-    timeout: "~{timeout}"
-  }
-
-  output {
-    File tumorNormalNames = "names.txt"
-  }
-  meta {
-    output_meta: {
-      tumorNormalNames: "Names to use in the vcf2maf conversion"
-    }
-  }
-}
 
 task vcf2maf {
   input {
@@ -439,8 +436,8 @@ task vcf2maf {
   command <<< 
     set -euo pipefail
 
-    NORM=$(sed -n 1p ~{tumorNormalNames} )
-    TUMR=$(sed -n 2p ~{tumorNormalNames} )
+    TUMR=$(sed -n 1p ~{tumorNormalNames} )
+    NORM=$(sed -n 2p ~{tumorNormalNames} )
 
     bgzip -c -d ~{vcfFile} > ~{basename}
 
