@@ -515,7 +515,8 @@ task mergeMafs {
 task mergeVcfs {
   input {
     String modules = "gatk/4.1.7.0"
-    Array[File] vcfs    
+    Array[File] vcfs
+    String? extraArgs
     Int jobMemory = 24
     Int overhead = 6
     Int threads = 4
@@ -528,7 +529,7 @@ task mergeVcfs {
     set -euo pipefail
 
     gatk --java-options "-Xmx~{jobMemory - overhead}G" MergeVcfs \
-    -I ~{sep=" -I " vcfs} \
+    -I ~{sep=" -I " vcfs} ~{extraArgs} \
     -O ~{basename}.vcf.gz
   >>>
 
@@ -547,6 +548,7 @@ task mergeVcfs {
   parameter_meta {
     modules: "Required environment modules."
     vcfs: "Vcf's from scatter to merge together."
+    extraArgs: "Additional arguments to be passed directly to the command."
     jobMemory:  "Memory allocated to job (in GB)."
     overhead: "Java overhead memory (in GB). jobMemory - overhead == java Xmx/heap memory."
     threads: "Requested CPU threads."

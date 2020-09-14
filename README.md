@@ -89,6 +89,7 @@ Parameter|Value|Default|Description
 `mergeMafs.threads`|Int|4|Requested CPU threads.
 `mergeMafs.timeout`|Int|24|Maximum amount of time (in hours) the task can run for.
 `mergeVcfs.modules`|String|"gatk/4.1.7.0"|Required environment modules.
+`mergeVcfs.extraArgs`|String?|None|Additional arguments to be passed directly to the command.
 `mergeVcfs.jobMemory`|Int|24|Memory allocated to job (in GB).
 `mergeVcfs.overhead`|Int|6|Java overhead memory (in GB). jobMemory - overhead == java Xmx/heap memory.
 `mergeVcfs.threads`|Int|4|Requested CPU threads.
