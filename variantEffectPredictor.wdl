@@ -176,7 +176,7 @@ task chromosomeArray {
   }
 
   command <<<
-    zcat ~{vcfFile} | grep -v ^# | cut -f 1 | sort -V | uniq
+    zcat ~{vcfFile} | grep -v ^# | cut -f 1 | uniq
   >>>
 
   output {
