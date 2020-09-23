@@ -1,3 +1,5 @@
+## 2.1.1 - 2020-09-23
+- fixing chromosome order
 ## 2.1 - 2020-09-11
 - run vep and vcf2maf in parallel
 ## 2.0.2 - 2020-07-02
