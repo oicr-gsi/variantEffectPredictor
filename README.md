@@ -28,6 +28,7 @@ Parameter|Value|Description
 `vcfIndex`|File|Input VCF index file
 `toMAF`|Boolean|If true, generate the MAF file
 `onlyTumor`|Boolean|If true, run tumor only mode
+`vep.ncbiBuild`|String|The assembly version
 `vep.vepCacheDir`|String|Directory of cache files
 `vep.referenceFasta`|String|Reference fasta file
 `vep.modules`|String|Required environment modules
@@ -68,6 +69,7 @@ Parameter|Value|Default|Description
 `subsetVcf.timeout`|Int|6|Maximum amount of time (in hours) the task can run for.
 `vep.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vep.addParam`|String?|None|Additional vep parameters
+`vep.species`|String|"homo_sapiens"|Species name
 `vep.jobMemory`|Int|32|Memory allocated for this job (GB)
 `vep.threads`|Int|4|Requested CPU threads
 `vep.timeout`|Int|16|Hours before task timeout
