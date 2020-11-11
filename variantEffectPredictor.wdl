@@ -270,7 +270,7 @@ task vep {
     set -euo pipefail
 
     if [ "~{species}" = "homo_sapiens" ]; then
-      human_only_command_line="--polyphen b --af --af_1kg --af_esp --af_gnomad --regulatory"
+      human_only_command_line="--polyphen b --af --af_1kg --af_esp --af_gnomad"
     else
       human_only_command_line=""
     fi
@@ -282,7 +282,7 @@ task vep {
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
           --pick_order canonical,tsl,biotype,rank,ccds,length  \
           $human_only_command_line \
-          --pubmed --fork 4
+          --pubmed --fork 4 --regulatory
 
   >>> 
 
