@@ -1,3 +1,5 @@
+## 2.1.2 - 2020-11-10
+- supporting non-human species
 ## 2.1.1 - 2020-09-23
 - fixing chromosome order
 ## 2.1 - 2020-09-11

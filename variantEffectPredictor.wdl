@@ -242,6 +242,8 @@ task vep {
     File vcfFile 
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String? addParam
+    String species = "homo_sapiens"
+    String ncbiBuild
     String vepCacheDir
     String referenceFasta
     String modules
@@ -254,6 +256,8 @@ task vep {
     vcfFile: "Vcf input file"
     basename: "Base name"
     addParam: "Additional vep parameters"
+    species: "Species name"
+    ncbiBuild: "The assembly version"
     vepCacheDir: "Directory of cache files"
     referenceFasta: "Reference fasta file"
     modules: "Required environment modules"
@@ -265,14 +269,21 @@ task vep {
   command <<<
     set -euo pipefail
 
-    vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} \
-          -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
+    if [ "~{species}" = "homo_sapiens" ]; then
+      human_only_command_line="--polyphen b --af --af_1kg --af_esp --af_gnomad"
+    else
+      human_only_command_line=""
+    fi
+
+    vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} --species ~{species} \
+          --assembly ~{ncbiBuild} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
           --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype \
           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
           --pick_order canonical,tsl,biotype,rank,ccds,length  \
-          --pubmed --fork 4 --polyphen b --af --af_1kg --af_esp --af_gnomad --regulatory
-    
+          $human_only_command_line \
+          --pubmed --fork 4 --regulatory
+
   >>> 
 
   runtime {

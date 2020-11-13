@@ -23,6 +23,7 @@
        "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
        "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
        "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+       "variantEffectPredictor.vep.ncbiBuild": "GRCh37",
        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
        "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa", 
        "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh37",     
@@ -43,6 +44,7 @@
         "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
         "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
         "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vep.ncbiBuild": "GRCh37",
         "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
         "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
         "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh37",
@@ -63,10 +65,11 @@
         "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/ensembl_v6_ccds_exons_onebed_intersectRegions_pad50.bed",
         "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
         "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
-        "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh37",
+        "variantEffectPredictor.vep.ncbiBuild": "GRCh37",
         "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
         "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
         "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+        "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh37",
         "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
         "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
         "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz"
@@ -84,10 +87,11 @@
         "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
         "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
         "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
-        "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
+        "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
         "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
         "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
         "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+        "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
         "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
         "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
         "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz"
@@ -105,13 +109,37 @@
         "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
         "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
         "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
-        "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
+        "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
         "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
         "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
         "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+        "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
         "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
         "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
         "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz"
+      }
+  }
+},
+{
+    "id": "vepWorkflow_toMAF_tumor_only_mm10",
+    "parameters": {
+      "wdl_inputs": {
+        "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz",
+        "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz.tbi",
+        "variantEffectPredictor.onlyTumor": true,
+        "variantEffectPredictor.toMAF": true,
+        "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-mm10-cache/92 mm10/p6",
+        "variantEffectPredictor.vep.referenceFasta": "$MM10_ROOT/mm10.fa",
+        "variantEffectPredictor.vep.species": "mus_musculus",
+        "variantEffectPredictor.vep.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vep.ncbiBuild": "GRCm38",
+        "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCm38",
+        "variantEffectPredictor.vcf2maf.species": "mus_musculus",
+        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 mm10/p6 vep-mm10-cache/92",
+        "variantEffectPredictor.vcf2maf.referenceFasta": "$MM10_ROOT/mm10.fa",
+        "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+        "variantEffectPredictor.vcf2maf.vcfFilter": "0"
       }
   }
 }
