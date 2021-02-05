@@ -286,7 +286,7 @@ task vep {
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
           --pick_order canonical,tsl,biotype,rank,ccds,length  \
           $human_only_command_line \
-          --pubmed --fork 4 --polyphen b --af --af_1kg --af_esp --ag_gnomad --regulatory
+          --pubmed --fork 4 --regulatory
 
   >>> 
 
@@ -446,7 +446,6 @@ task vcf2maf {
     vepPath: "Path to vep script"
     vepCacheDir: "Directory of vep cache files"
     vcfFilter: "Filter for the vep module that is used in vcf2maf"
-    retainInfoProvided: ""
     maxfilterAC: "The maximum AC filter"
     minHomVaf: "The minimum vaf for homozygous calls"
     bufferSize: "The buffer size"  
