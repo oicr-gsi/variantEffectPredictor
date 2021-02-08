@@ -142,6 +142,81 @@
         "variantEffectPredictor.vcf2maf.vcfFilter": "0"
       }
   }
+},
+{
+    "id": "vepWorkflow_retainInfoProvided",
+    "parameters": {
+        "wdl_inputs": {
+            "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz",
+            "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz.tbi",
+            "variantEffectPredictor.onlyTumor": true,
+            "variantEffectPredictor.toMAF": true,
+            "variantEffectPredictor.retainInfoProvided": true,
+            "variantEffectPredictor.updateTagValue": false,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-mm10-cache/92 mm10/p6",
+            "variantEffectPredictor.vep.referenceFasta": "$MM10_ROOT/mm10.fa",
+            "variantEffectPredictor.vep.species": "mus_musculus",
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCm38",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCm38",
+            "variantEffectPredictor.vcf2maf.species": "mus_musculus",
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 mm10/p6 vep-mm10-cache/92",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$MM10_ROOT/mm10.fa",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcf2maf.vcfFilter": "0"
+        }
+    }
+},
+{
+    "id": "vepWorkflow_updateTagValue",
+    "parameters": {
+        "wdl_inputs": {
+            "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz",
+            "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz.tbi",
+            "variantEffectPredictor.onlyTumor": true,
+            "variantEffectPredictor.toMAF": true,
+            "variantEffectPredictor.retainInfoProvided": false,
+            "variantEffectPredictor.updateTagValue": true,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-mm10-cache/92 mm10/p6",
+            "variantEffectPredictor.vep.referenceFasta": "$MM10_ROOT/mm10.fa",
+            "variantEffectPredictor.vep.species": "mus_musculus",
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCm38",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCm38",
+            "variantEffectPredictor.vcf2maf.species": "mus_musculus",
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 mm10/p6 vep-mm10-cache/92",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$MM10_ROOT/mm10.fa",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcf2maf.vcfFilter": "0"
+        }
+    }
+},
+{
+    "id": "vepWorkflow_retainInfoProvided_updateTagValue",
+    "parameters": {
+        "wdl_inputs": {
+            "variantEffectPredictor.vcfFile": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz",
+            "variantEffectPredictor.vcfIndex": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz.tbi",
+            "variantEffectPredictor.onlyTumor": true,
+            "variantEffectPredictor.toMAF": true,
+            "variantEffectPredictor.retainInfoProvided": true,
+            "variantEffectPredictor.updateTagValue": true,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-mm10-cache/92 mm10/p6",
+            "variantEffectPredictor.vep.referenceFasta": "$MM10_ROOT/mm10.fa",
+            "variantEffectPredictor.vep.species": "mus_musculus",
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCm38",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCm38",
+            "variantEffectPredictor.vcf2maf.species": "mus_musculus",
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 mm10/p6 vep-mm10-cache/92",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$MM10_ROOT/mm10.fa",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcf2maf.vcfFilter": "0"
+        }
+    }
 }
   ]                                                                                                                                                                                                                                                                                                                                                                                          
 }

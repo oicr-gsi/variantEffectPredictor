@@ -6,7 +6,7 @@ workflow variantEffectPredictor {
     File? targetBed
     Boolean toMAF
     Boolean onlyTumor
-    Boolean retainInfoProvided = true
+    Boolean retainInfoProvided = false
     Boolean updateTagValue = false
   }
 
