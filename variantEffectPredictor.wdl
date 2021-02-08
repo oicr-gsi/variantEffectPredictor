@@ -596,5 +596,3 @@ task mergeVcfs {
   }
 
 }
-
-
