@@ -1,4 +1,4 @@
-## 2.1.2 - 2021-02-08
+## 2.1.3 - 2021-02-08
 - addition of retainInfoProvided and updateTagValue options
 ## 2.1.2 - 2020-11-10
 - supporting non-human species
