@@ -71,6 +71,8 @@ workflow variantEffectPredictor {
     targetBed: "Target bed file"
     toMAF: "If true, generate the MAF file"
     onlyTumor: "If true, run tumor only mode"
+    retainInfoProvided: "Comma-delimited names of INFO fields to retain as extra columns in MAF"
+    updateTagValue: "If true, update tag values in vcf header for CC workflow"
   }
 
   meta {
@@ -375,6 +377,7 @@ task tumorOnlyAlign {
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
     timeout: "Hours before task timeout"
+    updateTagValue: "If true, update tag values in vcf header for CC workflow"
   }
 
   command <<<
@@ -446,6 +449,7 @@ task vcf2maf {
     vepPath: "Path to vep script"
     vepCacheDir: "Directory of vep cache files"
     vcfFilter: "Filter for the vep module that is used in vcf2maf"
+    retainInfoProvided: "Comma-delimited names of INFO fields to retain as extra columns in MAF"
     maxfilterAC: "The maximum AC filter"
     minHomVaf: "The minimum vaf for homozygous calls"
     bufferSize: "The buffer size"  
@@ -596,3 +600,4 @@ task mergeVcfs {
   }
 
 }
+

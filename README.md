@@ -44,6 +44,8 @@ Parameter|Value|Description
 Parameter|Value|Default|Description
 ---|---|---|---
 `targetBed`|File?|None|Target bed file
+`retainInfoProvided`|Boolean|false|Comma-delimited names of INFO fields to retain as extra columns in MAF
+`updateTagValue`|Boolean|false|If true, update tag values in vcf header for CC workflow
 
 
 #### Optional task parameters:
