@@ -6,8 +6,6 @@ workflow variantEffectPredictor {
     File? targetBed
     Boolean toMAF
     Boolean onlyTumor
-    Boolean retainInfoProvided = false
-    Boolean updateTagValue = false
   }
 
   if (defined(targetBed) == true) {
@@ -42,14 +40,12 @@ workflow variantEffectPredictor {
       if (onlyTumor == true) {
         call tumorOnlyAlign {
           input: vcfFile = subsetVcf.subsetVcf,
-                 tumorNormalNames = select_first([getSampleNames.tumorNormalNames]),
-                 updateTagValue = updateTagValue   
+                 tumorNormalNames = select_first([getSampleNames.tumorNormalNames])
         }
       }
       call vcf2maf {
         input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf,subsetVcf.subsetVcf]),
-             tumorNormalNames = select_first([getSampleNames.tumorNormalNames]),
-             retainInfoProvided = retainInfoProvided
+             tumorNormalNames = select_first([getSampleNames.tumorNormalNames])
         } 
       }
   }
@@ -71,8 +67,6 @@ workflow variantEffectPredictor {
     targetBed: "Target bed file"
     toMAF: "If true, generate the MAF file"
     onlyTumor: "If true, run tumor only mode"
-    retainInfoProvided: "Comma-delimited names of INFO fields to retain as extra columns in MAF"
-    updateTagValue: "If true, update tag values in vcf header for CC workflow"
   }
 
   meta {
@@ -367,7 +361,7 @@ task tumorOnlyAlign {
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 6
-    Boolean updateTagValue
+    Boolean updateTagValue = false
   }
   parameter_meta {
     vcfFile: "Vcf input file"
@@ -432,7 +426,7 @@ task vcf2maf {
     String vepPath
     String vepCacheDir
     String vcfFilter
-    Boolean retainInfoProvided
+    Boolean retainInfoProvided = false
     Int maxfilterAC = 10
     Float minHomVaf = 0.7
     Int bufferSize = 200
@@ -600,4 +594,3 @@ task mergeVcfs {
   }
 
 }
-

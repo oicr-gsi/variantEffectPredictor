@@ -44,8 +44,6 @@ Parameter|Value|Description
 Parameter|Value|Default|Description
 ---|---|---|---
 `targetBed`|File?|None|Target bed file
-`retainInfoProvided`|Boolean|false|Comma-delimited names of INFO fields to retain as extra columns in MAF
-`updateTagValue`|Boolean|false|If true, update tag values in vcf header for CC workflow
 
 
 #### Optional task parameters:
@@ -80,8 +78,10 @@ Parameter|Value|Default|Description
 `tumorOnlyAlign.jobMemory`|Int|32|Memory allocated for this job (GB)
 `tumorOnlyAlign.threads`|Int|4|Requested CPU threads
 `tumorOnlyAlign.timeout`|Int|6|Hours before task timeout
+`tumorOnlyAlign.updateTagValue`|Boolean|false|If true, update tag values in vcf header for CC workflow
 `vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vcf2maf.species`|String|"homo_sapiens"|Species name
+`vcf2maf.retainInfoProvided`|Boolean|false|Comma-delimited names of INFO fields to retain as extra columns in MAF
 `vcf2maf.maxfilterAC`|Int|10|The maximum AC filter
 `vcf2maf.minHomVaf`|Float|0.7|The minimum vaf for homozygous calls
 `vcf2maf.bufferSize`|Int|200|The buffer size
