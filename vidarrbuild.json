@@ -1,0 +1,6 @@
+{
+    "names": [
+        "variantEffectPredictor"
+    ],
+    "wdl": "variantEffectPredictor.wdl"
+}

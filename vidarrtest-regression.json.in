@@ -1,0 +1,1355 @@
+[
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": false,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": null,
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": false,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": null,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh37",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": null,
+            "variantEffectPredictor.vcf2maf.species": null,
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCh37",
+            "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_onlyVEP",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_onlyVEP_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_onlyVEP_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_onlyVEP_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_onlyVEP_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_onlyVEP_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_onlyVEP.metrics",
+                "type": "script"
+            }
+        ]
+    },
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": false,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": null,
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": true,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": null,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh37",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": null,
+            "variantEffectPredictor.vcf2maf.species": null,
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/IMP-01710-ARC1.mutect.strelka.snv.indel.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCh37",
+            "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_toMAF_tumor_normal_hg19",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_toMAF_tumor_normal_hg19.metrics",
+                "type": "script"
+            }
+        ]
+    },
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": true,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/ensembl_v6_ccds_exons_onebed_intersectRegions_pad50.bed",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": true,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": null,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg19/p13 vep-hg19-cache/92 vep-hg19-exac/0.3.1",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh37",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": null,
+            "variantEffectPredictor.vcf2maf.species": null,
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG19_EXAC_ROOT/ExAC_nonTCGA.r0.3.1.somatic.sites.vep.vcf.gz",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/TGL08_0075_Lu_P_EX.mutect2.tumor_only.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/TGL08_0075_Lu_P_EX.mutect2.tumor_only.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg19-cache/92 hg19/p13",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCh37",
+            "variantEffectPredictor.vep.referenceFasta": "$HG19_ROOT/hg19_random.fa",
+            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_toMAF_tumor_only_hg19",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg19_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_toMAF_tumor_only_hg19.metrics",
+                "type": "script"
+            }
+        ]
+    },
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": false,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": true,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": null,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": null,
+            "variantEffectPredictor.vcf2maf.species": null,
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_toMAF_tumor_normal_hg38",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_normal_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_toMAF_tumor_normal_hg38.metrics",
+                "type": "script"
+            }
+        ]
+    },
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": true,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": true,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": null,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": null,
+            "variantEffectPredictor.vcf2maf.species": null,
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_toMAF_tumor_only_hg38",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_hg38_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_toMAF_tumor_only_hg38.metrics",
+                "type": "script"
+            }
+        ]
+    },
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": true,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": null,
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": true,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": null,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 mm10/p6 vep-mm10-cache/92",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCm38",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$MM10_ROOT/mm10.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": null,
+            "variantEffectPredictor.vcf2maf.species": "mus_musculus",
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "0",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/HML_0001_Bm_P_WG_m_leukemicBM.filter.deduped.realigned.recalibrated.mutect2.tumor_only.filtered.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-mm10-cache/92 mm10/p6",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCm38",
+            "variantEffectPredictor.vep.referenceFasta": "$MM10_ROOT/mm10.fa",
+            "variantEffectPredictor.vep.species": "mus_musculus",
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_toMAF_tumor_only_mm10",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_mm10_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_mm10_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_mm10_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_mm10_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_toMAF_tumor_only_mm10_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_toMAF_tumor_only_mm10.metrics",
+                "type": "script"
+            }
+        ]
+    },
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": false,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": false,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": false,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": true,
+            "variantEffectPredictor.vcf2maf.species": null,
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_retainInfoProvided",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_retainInfoProvided.metrics",
+                "type": "script"
+            }
+        ]
+    },
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": false,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": false,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": true,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": false,
+            "variantEffectPredictor.vcf2maf.species": null,
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_updateTagValue",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_updateTagValue.metrics",
+                "type": "script"
+            }
+        ]
+    },
+    {
+        "arguments": {
+            "variantEffectPredictor.chromosomeArray.jobMemory": null,
+            "variantEffectPredictor.chromosomeArray.threads": null,
+            "variantEffectPredictor.chromosomeArray.timeout": null,
+            "variantEffectPredictor.getSampleNames.basename": null,
+            "variantEffectPredictor.getSampleNames.jobMemory": null,
+            "variantEffectPredictor.getSampleNames.modules": null,
+            "variantEffectPredictor.getSampleNames.threads": null,
+            "variantEffectPredictor.getSampleNames.timeout": null,
+            "variantEffectPredictor.mergeMafs.jobMemory": null,
+            "variantEffectPredictor.mergeMafs.modules": null,
+            "variantEffectPredictor.mergeMafs.threads": null,
+            "variantEffectPredictor.mergeMafs.timeout": null,
+            "variantEffectPredictor.mergeVcfs.extraArgs": null,
+            "variantEffectPredictor.mergeVcfs.jobMemory": null,
+            "variantEffectPredictor.mergeVcfs.modules": null,
+            "variantEffectPredictor.mergeVcfs.overhead": null,
+            "variantEffectPredictor.mergeVcfs.threads": null,
+            "variantEffectPredictor.mergeVcfs.timeout": null,
+            "variantEffectPredictor.onlyTumor": false,
+            "variantEffectPredictor.subsetVcf.basename": null,
+            "variantEffectPredictor.subsetVcf.jobMemory": null,
+            "variantEffectPredictor.subsetVcf.modules": null,
+            "variantEffectPredictor.subsetVcf.threads": null,
+            "variantEffectPredictor.subsetVcf.timeout": null,
+            "variantEffectPredictor.targetBed": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.targetBedTask.basename": null,
+            "variantEffectPredictor.targetBedTask.jobMemory": null,
+            "variantEffectPredictor.targetBedTask.modules": null,
+            "variantEffectPredictor.targetBedTask.threads": null,
+            "variantEffectPredictor.targetBedTask.timeout": null,
+            "variantEffectPredictor.toMAF": false,
+            "variantEffectPredictor.tumorOnlyAlign.basename": null,
+            "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
+            "variantEffectPredictor.tumorOnlyAlign.modules": null,
+            "variantEffectPredictor.tumorOnlyAlign.threads": null,
+            "variantEffectPredictor.tumorOnlyAlign.timeout": null,
+            "variantEffectPredictor.tumorOnlyAlign.updateTagValue": true,
+            "variantEffectPredictor.vcf2maf.basename": null,
+            "variantEffectPredictor.vcf2maf.bufferSize": null,
+            "variantEffectPredictor.vcf2maf.jobMemory": null,
+            "variantEffectPredictor.vcf2maf.maxfilterAC": null,
+            "variantEffectPredictor.vcf2maf.minHomVaf": null,
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.17 tabix/0.2.6 hg38/p12 vep-hg38-cache/92 vep-hg38-exac/0.3",
+            "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vcf2maf.retainInfoProvided": true,
+            "variantEffectPredictor.vcf2maf.species": null,
+            "variantEffectPredictor.vcf2maf.threads": null,
+            "variantEffectPredictor.vcf2maf.timeout": null,
+            "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz",
+            "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcfFile": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vcfIndex": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz.tbi",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
+            "variantEffectPredictor.vep.addParam": null,
+            "variantEffectPredictor.vep.basename": null,
+            "variantEffectPredictor.vep.jobMemory": null,
+            "variantEffectPredictor.vep.modules": "vep/92.0 tabix/0.2.6 vep-hg38-cache/92 hg38/p12",
+            "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
+            "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
+            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.threads": null,
+            "variantEffectPredictor.vep.timeout": null,
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
+        },
+        "description": "VEP workflow test",
+        "engineArguments": {},
+        "id": "vepWorkflow_retainInfoProvided_updateTagValue",
+        "metadata": {
+            "variantEffectPredictor.outputMaf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTargetVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputTbi": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            },
+            "variantEffectPredictor.outputVcf": {
+                "contents": [
+                    {
+                        "outputDirectory": "@SCRATCH@/@DATE@_Workflow_variantEffectPredictor_vepWorkflow_retainInfoProvided_updateTagValue_@JENKINSID@"
+                    }
+                ],
+                "type": "ALL"
+            }
+        },
+        "validators": [
+            {
+                "metrics_calculate": "@CHECKOUT@/./calculate.sh",
+                "metrics_compare": "@CHECKOUT@/./compare.sh",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.0/output_metrics/vepWorkflow_retainInfoProvided_updateTagValue.metrics",
+                "type": "script"
+            }
+        ]
+    }
+]

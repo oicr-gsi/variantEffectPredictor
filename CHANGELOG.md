@@ -1,3 +1,5 @@
+## 2.1.4 - 2021-06-01
+- migrate to Vidarr
 ## 2.1.3 - 2021-02-08
 - addition of retainInfoProvided and updateTagValue options
 ## 2.1.2 - 2020-11-10
