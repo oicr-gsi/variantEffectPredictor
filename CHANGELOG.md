@@ -1,3 +1,5 @@
+## 2.1.5 - 2022-06-28
+- changing targetBed file type to String
 ## 2.1.4 - 2021-06-01
 - migrate to Vidarr
 ## 2.1.3 - 2021-02-08
