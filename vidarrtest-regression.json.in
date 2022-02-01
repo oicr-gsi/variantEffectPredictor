@@ -311,18 +311,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/ensembl_v6_ccds_exons_onebed_intersectRegions_pad50.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/ensembl_v6_ccds_exons_onebed_intersectRegions_pad50.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -465,18 +454,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -619,18 +597,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -916,18 +883,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -1070,18 +1026,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -1224,18 +1169,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
