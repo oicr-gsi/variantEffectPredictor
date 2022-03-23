@@ -3,7 +3,7 @@ workflow variantEffectPredictor {
   input {
     File vcfFile
     File vcfIndex
-    File? targetBed
+    String? targetBed
     Boolean toMAF
     Boolean onlyTumor
   }

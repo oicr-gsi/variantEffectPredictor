@@ -89,7 +89,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+            "write_to_cache": false,
+            "read_from_cache": false
+        },
         "id": "vepWorkflow_onlyVEP",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
@@ -232,7 +235,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+            "write_to_cache": false,
+            "read_from_cache": false
+        },
         "id": "vepWorkflow_toMAF_tumor_normal_hg19",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
@@ -311,18 +317,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/ensembl_v6_ccds_exons_onebed_intersectRegions_pad50.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/ensembl_v6_ccds_exons_onebed_intersectRegions_pad50.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -386,7 +381,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+            "write_to_cache": false,
+            "read_from_cache": false
+        },
         "id": "vepWorkflow_toMAF_tumor_only_hg19",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
@@ -465,18 +463,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -540,7 +527,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+            "write_to_cache": false,
+            "read_from_cache": false
+        },
         "id": "vepWorkflow_toMAF_tumor_normal_hg38",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
@@ -619,18 +609,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -694,7 +673,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+	    "write_to_cache": false,
+            "read_from_cache": false
+        },
         "id": "vepWorkflow_toMAF_tumor_only_hg38",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
@@ -837,7 +819,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+            "write_to_cache": false,
+            "read_from_cache": false
+        },
         "id": "vepWorkflow_toMAF_tumor_only_mm10",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
@@ -916,18 +901,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -991,7 +965,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+            "write_to_cache": false,
+            "read_from_cache": false	
+	},
         "id": "vepWorkflow_retainInfoProvided",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
@@ -1070,18 +1047,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -1145,7 +1111,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+            "write_to_cache": false,
+            "read_from_cache": false
+	},
         "id": "vepWorkflow_updateTagValue",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
@@ -1224,18 +1193,7 @@
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.threads": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": {
-                "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
-                    "externalIds": [
-                        {
-                            "id": "TEST",
-                            "provider": "TEST"
-                        }
-                    ]
-                },
-                "type": "EXTERNAL"
-            },
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
@@ -1299,7 +1257,10 @@
             "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
         },
         "description": "VEP workflow test",
-        "engineArguments": {},
+        "engineArguments": {
+	    "write_to_cache": false,
+	    "read_from_cache": false
+	},
         "id": "vepWorkflow_retainInfoProvided_updateTagValue",
         "metadata": {
             "variantEffectPredictor.outputMaf": {
