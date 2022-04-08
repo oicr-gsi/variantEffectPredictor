@@ -280,7 +280,7 @@ task vep {
           --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype --mane \
           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
-          --pick_order canonical,tsl,biotype,rank,ccds,length --mane \
+          --pick_order canonical,tsl,biotype,rank,ccds,length \
           $human_only_command_line \
           --pubmed --fork 4 --regulatory
 
