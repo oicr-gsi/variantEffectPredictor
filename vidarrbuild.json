@@ -1,7 +1,0 @@
-{
-    "names": [
-        "variantEffectPredictor",
-	"variantEffectPredictor_by_tumor_group"
-    ],
-    "wdl": "variantEffectPredictor.wdl"
-}
