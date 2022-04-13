@@ -1,3 +1,5 @@
+## 2.1.6 -2022-04-13
+- update to support vep/105
 ## 2.1.2 - 2020-11-10
 - supporting non-human species
 ## 2.1.1 - 2020-09-23
