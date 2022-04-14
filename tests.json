@@ -25,12 +25,11 @@
         "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
         "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
         "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
-        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.21 tabix/0.2.6 hg38/p12 vep-hg38-cache/105 vep-hg38-exac/0.3",
+        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.21 tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
         "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
         "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
         "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
-        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
-        "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz"
+        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/"
       }
   }
 },
@@ -47,12 +46,11 @@
         "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
         "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
         "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
-        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.21 tabix/0.2.6 hg38/p12 vep-hg38-cache/105 vep-hg38-exac/0.3",
+        "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.21 tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
         "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
         "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
         "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
-        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
-        "variantEffectPredictor.vcf2maf.vcfFilter": "$VEP_HG38_EXAC_ROOT/ExAC.r0.3.sites.minus_somatic.hg38.vcf.gz"
+        "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/"
       }
   }
 }
