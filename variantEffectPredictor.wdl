@@ -425,7 +425,6 @@ task vcf2maf {
     String ncbiBuild
     String vepPath
     String vepCacheDir
-    String vcfFilter
     Boolean retainInfoProvided = false
     Float minHomVaf = 0.7
     Int bufferSize = 200
@@ -441,7 +440,6 @@ task vcf2maf {
     ncbiBuild: "The assembly version"
     vepPath: "Path to vep script"
     vepCacheDir: "Directory of vep cache files"
-    vcfFilter: "Filter for the vep module that is used in vcf2maf"
     retainInfoProvided: "Comma-delimited names of INFO fields to retain as extra columns in MAF"
     minHomVaf: "The minimum vaf for homozygous calls"
     bufferSize: "The buffer size"
@@ -466,13 +464,13 @@ task vcf2maf {
         vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
                 --input-vcf ~{basename} --output-maf ~{basename}.maf \
                 --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-                --vep-custom ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+                --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
                 --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} --retain-info MBQ,MMQ,TLOD,set
     else
         vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
                 --input-vcf ~{basename} --output-maf ~{basename}.maf \
                 --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-                --vep-custom ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+                --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
                 --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
     fi
   >>>
