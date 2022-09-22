@@ -3,34 +3,29 @@ This section lists command(s) run by variantEffectPredictor workflow
 
 * Running variantEffectPredictor
 
+=== Description here ===.
 
-A workflow for annotating the SNV and INDEL mutation calls in VCF format, and generating a MAF file of annotated calls.
-### (needs description)
-```
+<<<
     set -euo pipefail
 
     bedtools intersect -header -u \
                        -a ~{vcfFile} \
                        -b ~{targetBed} \
                        > ~{basename}.targeted.vcf
-    
+
     bgzip -c ~{basename}.targeted.vcf > ~{basename}.targeted.vcf.gz
-           
+
     tabix -p vcf ~{basename}.targeted.vcf.gz
-```
-### (needs description)
-```
+  >>>
+<<<
     zcat ~{vcfFile} | grep -v ^# | cut -f 1 | uniq
-```
-### (needs description)
-```
+  >>>
+<<<
     set -euo pipefail
 
-    bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz 
-```
-### (needs description)
-
-```
+    bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz
+  >>>
+<<<
     set -euo pipefail
 
     if [ "~{species}" = "homo_sapiens" ]; then
@@ -41,30 +36,28 @@ A workflow for annotating the SNV and INDEL mutation calls in VCF format, and ge
 
     vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} --species ~{species} \
           --assembly ~{ncbiBuild} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
-          --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype \
+          --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype --mane \
           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
-          --pick_order canonical,tsl,biotype,rank,ccds,length  \
+          --pick_order canonical,tsl,biotype,rank,ccds,length \
           $human_only_command_line \
           --pubmed --fork 4 --regulatory
 
-```
-### (needs description)
-```
+  >>>
+<<<
     set -euo pipefail
 
     vcf-query -l  "~{vcfFile}" > sample_headers_all
     cat sample_headers_all | grep -v "GATK" | tr "\n" "," > sample_names_all
     if [[ `cat sample_names_all | tr "," "\n" | wc -l` == 2 ]]; then
-      for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == *BC*  || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
+      for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
     else TUMR=`cat sample_names_all | tr -d ","`; NORM="unmatched"; fi
 
     echo $TUMR > names.txt
     echo $NORM >> names.txt
 
-```
-### (needs description)
-```
+  >>>
+<<<
     set -euo pipefail
 
     if ~{updateTagValue} ; then
@@ -73,7 +66,7 @@ A workflow for annotating the SNV and INDEL mutation calls in VCF format, and ge
     else
         zcat ~{vcfFile} | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | sed 's/AS_FilterStatus\,Number\=A/AS_FilterStatus\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
     fi
-    
+
     tabix -p vcf "~{basename}_input.vcf.gz"
 
     cat ~{tumorNormalNames} > "~{basename}_header"
@@ -81,9 +74,8 @@ A workflow for annotating the SNV and INDEL mutation calls in VCF format, and ge
     bcftools reheader -s "~{basename}_header" "~{basename}.temp_tumor.vcf" > "~{basename}.unmatched.vcf"
     bgzip -c "~{basename}.unmatched.vcf" > "~{basename}.unmatched.vcf.gz"
     tabix -p vcf "~{basename}.unmatched.vcf.gz"
-```
-### (needs description)
-```
+  >>>
+<<<
     set -euo pipefail
 
     TUMR=$(sed -n 1p ~{tumorNormalNames} )
@@ -96,31 +88,28 @@ A workflow for annotating the SNV and INDEL mutation calls in VCF format, and ge
         vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
                 --input-vcf ~{basename} --output-maf ~{basename}.maf \
                 --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-                --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
-                --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} --retain-info MBQ,MMQ,TLOD,set
+                --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+                --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} --retain-info MBQ,MMQ,TLOD,set
     else
         vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
                 --input-vcf ~{basename} --output-maf ~{basename}.maf \
                 --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-                --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
-                --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
+                --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+                --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
     fi
-```
-### (needs description)
-```
+  >>>
+<<<
     set -euo pipefail
 
     head -n 2 ~{mafs[0]} > ~{basename}
     cat ~{sep=" " mafs} | grep -v ^# | grep -v "Hugo_Symbol" >> ~{basename}
     bgzip -c ~{basename} > ~{basename}.maf.gz
 
-```
-### (needs description)
-```
+  >>>
+<<<
     set -euo pipefail
 
     gatk --java-options "-Xmx~{jobMemory - overhead}G" MergeVcfs \
     -I ~{sep=" -I " vcfs} ~{extraArgs} \
     -O ~{basename}.vcf.gz
-```
- 
+  >>>
