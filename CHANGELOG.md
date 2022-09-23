@@ -1,3 +1,8 @@
+## 2.1.7 - 2022-09-22
+- migrate 2.1.6 to Vidarr
+- fixing getSampleNames
+## 2.1.6 - 2022-04-13
+- update to support vep/105
 ## 2.1.5 - 2022-06-28
 - changing targetBed file type to String
 ## 2.1.4 - 2021-06-01

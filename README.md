@@ -8,7 +8,8 @@ Variant Effect Predictor Workflow version 2.1
 
 * [bedtools 2.27](https://github.com/arq5x/bedtools)
 * [tabix 0.2.6](https://github.com/samtools/tabix)
-* [vep 92.0](https://github.com/Ensembl/ensembl-vep)
+* [vep 105.0](https://github.com/Ensembl/ensembl-vep)
+* [vcf2maf 1.6.21](https://github.com/mskcc/vcf2maf)
 * [vcftools 0.1.16](https://vcftools.github.io/index.html)
 
 
@@ -37,7 +38,6 @@ Parameter|Value|Description
 `vcf2maf.ncbiBuild`|String|The assembly version
 `vcf2maf.vepPath`|String|Path to vep script
 `vcf2maf.vepCacheDir`|String|Directory of vep cache files
-`vcf2maf.vcfFilter`|String|Filter for the vep module that is used in vcf2maf
 
 
 #### Optional workflow parameters:
@@ -82,7 +82,6 @@ Parameter|Value|Default|Description
 `vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vcf2maf.species`|String|"homo_sapiens"|Species name
 `vcf2maf.retainInfoProvided`|Boolean|false|Comma-delimited names of INFO fields to retain as extra columns in MAF
-`vcf2maf.maxfilterAC`|Int|10|The maximum AC filter
 `vcf2maf.minHomVaf`|Float|0.7|The minimum vaf for homozygous calls
 `vcf2maf.bufferSize`|Int|200|The buffer size
 `vcf2maf.jobMemory`|Int|32|Memory allocated for this job (GB)
@@ -111,133 +110,7 @@ Output | Type | Description
 `outputTargetTbi`|File?|Index of the vcf on target for the input vcf (if targetBed is given), non annotated
 
 
-## Commands
- This section lists command(s) run by variantEffectPredictor workflow
- 
- * Running variantEffectPredictor
- 
- 
- A workflow for annotating the SNV and INDEL mutation calls in VCF format, and generating a MAF file of annotated calls.
- ### (needs description)
- ```
-     set -euo pipefail
- 
-     bedtools intersect -header -u \
-                        -a ~{vcfFile} \
-                        -b ~{targetBed} \
-                        > ~{basename}.targeted.vcf
-     
-     bgzip -c ~{basename}.targeted.vcf > ~{basename}.targeted.vcf.gz
-            
-     tabix -p vcf ~{basename}.targeted.vcf.gz
- ```
- ### (needs description)
- ```
-     zcat ~{vcfFile} | grep -v ^# | cut -f 1 | uniq
- ```
- ### (needs description)
- ```
-     set -euo pipefail
- 
-     bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz 
- ```
- ### (needs description)
- 
- ```
-     set -euo pipefail
- 
-     if [ "~{species}" = "homo_sapiens" ]; then
-       human_only_command_line="--polyphen b --af --af_1kg --af_esp --af_gnomad"
-     else
-       human_only_command_line=""
-     fi
- 
-     vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} --species ~{species} \
-           --assembly ~{ncbiBuild} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
-           --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype \
-           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
-           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
-           --pick_order canonical,tsl,biotype,rank,ccds,length  \
-           $human_only_command_line \
-           --pubmed --fork 4 --regulatory
- 
- ```
- ### (needs description)
- ```
-     set -euo pipefail
- 
-     vcf-query -l  "~{vcfFile}" > sample_headers_all
-     cat sample_headers_all | grep -v "GATK" | tr "\n" "," > sample_names_all
-     if [[ `cat sample_names_all | tr "," "\n" | wc -l` == 2 ]]; then
-       for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == *BC*  || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
-     else TUMR=`cat sample_names_all | tr -d ","`; NORM="unmatched"; fi
- 
-     echo $TUMR > names.txt
-     echo $NORM >> names.txt
- 
- ```
- ### (needs description)
- ```
-     set -euo pipefail
- 
-     if ~{updateTagValue} ; then
-         zcat ~{vcfFile} | sed s/Number\=A/Number\=./ | sed s/Number\=R/Number\=./ > "~{basename}_temporary.vcf"
-         cat ~{basename}_temporary.vcf | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | sed 's/AS_FilterStatus\,Number\=A/AS_FilterStatus\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
-     else
-         zcat ~{vcfFile} | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | sed 's/AS_FilterStatus\,Number\=A/AS_FilterStatus\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
-     fi
-     
-     tabix -p vcf "~{basename}_input.vcf.gz"
- 
-     cat ~{tumorNormalNames} > "~{basename}_header"
-     bcftools merge "~{basename}_input.vcf.gz" "~{basename}_input.vcf.gz" --force-samples > "~{basename}.temp_tumor.vcf"
-     bcftools reheader -s "~{basename}_header" "~{basename}.temp_tumor.vcf" > "~{basename}.unmatched.vcf"
-     bgzip -c "~{basename}.unmatched.vcf" > "~{basename}.unmatched.vcf.gz"
-     tabix -p vcf "~{basename}.unmatched.vcf.gz"
- ```
- ### (needs description)
- ```
-     set -euo pipefail
- 
-     TUMR=$(sed -n 1p ~{tumorNormalNames} )
-     NORM=$(sed -n 2p ~{tumorNormalNames} )
- 
-     bgzip -c -d ~{vcfFile} > ~{basename}
- 
-     if ~{retainInfoProvided} ; then
- 
-         vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
-                 --input-vcf ~{basename} --output-maf ~{basename}.maf \
-                 --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-                 --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
-                 --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} --retain-info MBQ,MMQ,TLOD,set
-     else
-         vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
-                 --input-vcf ~{basename} --output-maf ~{basename}.maf \
-                 --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-                 --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
-                 --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
-     fi
- ```
- ### (needs description)
- ```
-     set -euo pipefail
- 
-     head -n 2 ~{mafs[0]} > ~{basename}
-     cat ~{sep=" " mafs} | grep -v ^# | grep -v "Hugo_Symbol" >> ~{basename}
-     bgzip -c ~{basename} > ~{basename}.maf.gz
- 
- ```
- ### (needs description)
- ```
-     set -euo pipefail
- 
-     gatk --java-options "-Xmx~{jobMemory - overhead}G" MergeVcfs \
-     -I ~{sep=" -I " vcfs} ~{extraArgs} \
-     -O ~{basename}.vcf.gz
- ```
-  
- ## Support
+## Support
 
 For support, please file an issue on the [Github project](https://github.com/oicr-gsi) or send an email to gsi@oicr.on.ca .
 
