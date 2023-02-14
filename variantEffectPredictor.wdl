@@ -247,7 +247,7 @@ task vep {
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String? addParam
     String species = "homo_sapiens"
-    Boolean vepStats = false
+    Boolean vepStats = true
     String ncbiBuild
     String vepCacheDir
     String referenceFasta
@@ -265,7 +265,7 @@ task vep {
     ncbiBuild: "The assembly version"
     vepCacheDir: "Directory of cache files"
     referenceFasta: "Reference fasta file"
-    vepStats: "If vepStats is false, running vep with flag '--no_stats'. If vepStats is true, remove flag '--no_stats' from vep"
+    vepStats: "If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'"
     modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
@@ -440,7 +440,7 @@ task vcf2maf {
     String vepPath
     String vepCacheDir
     Boolean retainInfoProvided = false
-    Boolean vepStats = false
+    Boolean vepStats = true
     Float minHomVaf = 0.7
     Int bufferSize = 200
     Int jobMemory = 32
@@ -456,7 +456,7 @@ task vcf2maf {
     vepPath: "Path to vep script"
     vepCacheDir: "Directory of vep cache files"
     retainInfoProvided: "Comma-delimited names of INFO fields to retain as extra columns in MAF"
-    vepStats: "If vepStats is false, running vep with flag '--no_stats'. If vepStats is true, remove flag '--no_stats' from vep"
+    vepStats: "If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'"
     minHomVaf: "The minimum vaf for homozygous calls"
     bufferSize: "The buffer size"
     tumorNormalNames: "Tumor and normal ID"
