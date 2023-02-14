@@ -42,7 +42,7 @@
             "variantEffectPredictor.vcf2maf.bufferSize": null,
             "variantEffectPredictor.vcf2maf.jobMemory": null,
             "variantEffectPredictor.vcf2maf.minHomVaf": null,
-            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.21 tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
             "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
             "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
             "variantEffectPredictor.vcf2maf.retainInfoProvided": null,
@@ -51,6 +51,7 @@
             "variantEffectPredictor.vcf2maf.timeout": null,
             "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
             "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcf2maf.vepStats": null,
             "variantEffectPredictor.vcfFile": {
                 "contents": {
                     "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
@@ -81,10 +82,11 @@
             "variantEffectPredictor.vep.modules": "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12",
             "variantEffectPredictor.vep.ncbiBuild": "GRCh38",
             "variantEffectPredictor.vep.referenceFasta": "$HG38_ROOT/hg38_random.fa",
-            "variantEffectPredictor.vep.species": null,
+            "variantEffectPredictor.vep.species": null,            
             "variantEffectPredictor.vep.threads": null,
             "variantEffectPredictor.vep.timeout": null,
-            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vep.vepStats": null
         },
         "description": "VEP workflow test",
         "engineArguments": {
@@ -186,7 +188,7 @@
             "variantEffectPredictor.vcf2maf.bufferSize": null,
             "variantEffectPredictor.vcf2maf.jobMemory": null,
             "variantEffectPredictor.vcf2maf.minHomVaf": null,
-            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.21 tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
+            "variantEffectPredictor.vcf2maf.modules": "vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
             "variantEffectPredictor.vcf2maf.ncbiBuild": "GRCh38",
             "variantEffectPredictor.vcf2maf.referenceFasta": "$HG38_ROOT/hg38_random.fa",
             "variantEffectPredictor.vcf2maf.retainInfoProvided": null,
@@ -195,6 +197,7 @@
             "variantEffectPredictor.vcf2maf.timeout": null,
             "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
             "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
+            "variantEffectPredictor.vcf2maf.vepStats": null,
             "variantEffectPredictor.vcfFile": {
                 "contents": {
                     "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz",
@@ -228,7 +231,8 @@
             "variantEffectPredictor.vep.species": null,
             "variantEffectPredictor.vep.threads": null,
             "variantEffectPredictor.vep.timeout": null,
-            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep"
+            "variantEffectPredictor.vep.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+            "variantEffectPredictor.vep.vepStats": null
         },
         "description": "VEP workflow test",
         "engineArguments": {

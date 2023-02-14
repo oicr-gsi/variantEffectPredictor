@@ -88,8 +88,8 @@ workflow variantEffectPredictor {
         url: "https://github.com/Ensembl/ensembl-vep"
       },
       {
-        name: "vcf2maf/1.6.21",
-        url: "https://github.com/mskcc/vcf2maf"
+        name: "vcf2maf/1.6.21b",
+        url: "https://github.com/mskcc/vcf2maf/commit/5ed414428046e71833f454d4b64da6c30362a89b"
       },      
       {
         name: "vcftools/0.1.16",
@@ -247,10 +247,11 @@ task vep {
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String? addParam
     String species = "homo_sapiens"
+    Boolean vepStats = false
     String ncbiBuild
     String vepCacheDir
     String referenceFasta
-    String modules
+    String modules = "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12"
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 16
@@ -264,6 +265,7 @@ task vep {
     ncbiBuild: "The assembly version"
     vepCacheDir: "Directory of cache files"
     referenceFasta: "Reference fasta file"
+    vepStats: "If vepStats is false, running vep with flag '--no_stats'. If vepStats is true, remove flag '--no_stats' from vep"
     modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
@@ -279,12 +281,20 @@ task vep {
       human_only_command_line=""
     fi
 
+    if ~{vepStats} ; then
+      vepStats_command_line=""
+    else 
+      vepStats_command_line="--no_stats"
+    fi
+
+
     vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} --species ~{species} \
           --assembly ~{ncbiBuild} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
-          --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype --mane \
+          --no_progress --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype --mane \
           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
           --pick_order canonical,tsl,biotype,rank,ccds,length \
+          $vepStats_command_line \
           $human_only_command_line \
           --pubmed --fork 4 --regulatory
 
@@ -423,13 +433,14 @@ task vcf2maf {
     File vcfFile
     String basename = basename("~{vcfFile}", ".vcf.gz")
     File tumorNormalNames
-    String modules
+    String modules = "vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105"
     String species = "homo_sapiens"
     String referenceFasta
     String ncbiBuild
     String vepPath
     String vepCacheDir
     Boolean retainInfoProvided = false
+    Boolean vepStats = false
     Float minHomVaf = 0.7
     Int bufferSize = 200
     Int jobMemory = 32
@@ -445,6 +456,7 @@ task vcf2maf {
     vepPath: "Path to vep script"
     vepCacheDir: "Directory of vep cache files"
     retainInfoProvided: "Comma-delimited names of INFO fields to retain as extra columns in MAF"
+    vepStats: "If vepStats is false, running vep with flag '--no_stats'. If vepStats is true, remove flag '--no_stats' from vep"
     minHomVaf: "The minimum vaf for homozygous calls"
     bufferSize: "The buffer size"
     tumorNormalNames: "Tumor and normal ID"
@@ -464,19 +476,18 @@ task vcf2maf {
     bgzip -c -d ~{vcfFile} > ~{basename}
 
     if ~{retainInfoProvided} ; then
-
-        vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
-                --input-vcf ~{basename} --output-maf ~{basename}.maf \
-                --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-                --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
-                --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} --retain-info MBQ,MMQ,TLOD,set
+        retainInfo_command_line="--retain-info MBQ,MMQ,TLOD,set"
     else
-        vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
-                --input-vcf ~{basename} --output-maf ~{basename}.maf \
-                --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-                --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
-                --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
+        retainInfo_command_line=""
     fi
+
+    vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
+            --input-vcf ~{basename} --output-maf ~{basename}.maf \
+            --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
+            --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+            --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} \
+            $retainInfo_command_line \
+            --vep-stats ~{vepStats}
   >>>
 
   runtime {
