@@ -432,7 +432,7 @@
             {
                 "metrics_calculate": "@CHECKOUT@/tests/calculate.sh",
                 "metrics_compare": "@CHECKOUT@/tests/compare.sh",
-                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/vepWorkflow_toMAF_tumor_normal_hg38.metrics",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/vepWorkflow_toMAF_tumor_normal_hg38_vepStatsTrue.metrics",
                 "type": "script"
             }
         ]
@@ -578,7 +578,7 @@
             {
                 "metrics_calculate": "@CHECKOUT@/tests/calculate.sh",
                 "metrics_compare": "@CHECKOUT@/tests/compare.sh",
-                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/vepWorkflow_toMAF_tumor_only_hg38.metrics",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/vepWorkflow_toMAF_tumor_only_hg38_vepStatsTrue.metrics",
                 "type": "script"
             }
         ]
