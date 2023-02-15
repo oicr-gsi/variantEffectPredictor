@@ -1,3 +1,6 @@
+## 2.1.8 - 2023-02-14
+- add an option vepStats
+- update the vcf2maf module to 1.6.21b
 ## 2.1.7 - 2022-09-22
 - migrate 2.1.6 to Vidarr
 - fixing getSampleNames

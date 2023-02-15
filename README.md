@@ -9,7 +9,7 @@ Variant Effect Predictor Workflow version 2.1
 * [bedtools 2.27](https://github.com/arq5x/bedtools)
 * [tabix 0.2.6](https://github.com/samtools/tabix)
 * [vep 105.0](https://github.com/Ensembl/ensembl-vep)
-* [vcf2maf 1.6.21](https://github.com/mskcc/vcf2maf)
+* [vcf2maf 1.6.21b](https://github.com/mskcc/vcf2maf/commit/5ed414428046e71833f454d4b64da6c30362a89b)
 * [vcftools 0.1.16](https://vcftools.github.io/index.html)
 
 
@@ -32,8 +32,6 @@ Parameter|Value|Description
 `vep.ncbiBuild`|String|The assembly version
 `vep.vepCacheDir`|String|Directory of cache files
 `vep.referenceFasta`|String|Reference fasta file
-`vep.modules`|String|Required environment modules
-`vcf2maf.modules`|String|Required environment modules
 `vcf2maf.referenceFasta`|String|Reference fasta file
 `vcf2maf.ncbiBuild`|String|The assembly version
 `vcf2maf.vepPath`|String|Path to vep script
@@ -70,6 +68,8 @@ Parameter|Value|Default|Description
 `vep.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vep.addParam`|String?|None|Additional vep parameters
 `vep.species`|String|"homo_sapiens"|Species name
+`vep.vepStats`|Boolean|true|If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'
+`vep.modules`|String|"vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12"|Required environment modules
 `vep.jobMemory`|Int|32|Memory allocated for this job (GB)
 `vep.threads`|Int|4|Requested CPU threads
 `vep.timeout`|Int|16|Hours before task timeout
@@ -80,8 +80,10 @@ Parameter|Value|Default|Description
 `tumorOnlyAlign.timeout`|Int|6|Hours before task timeout
 `tumorOnlyAlign.updateTagValue`|Boolean|false|If true, update tag values in vcf header for CC workflow
 `vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
+`vcf2maf.modules`|String|"vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105"|Required environment modules
 `vcf2maf.species`|String|"homo_sapiens"|Species name
 `vcf2maf.retainInfoProvided`|Boolean|false|Comma-delimited names of INFO fields to retain as extra columns in MAF
+`vcf2maf.vepStats`|Boolean|true|If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'
 `vcf2maf.minHomVaf`|Float|0.7|The minimum vaf for homozygous calls
 `vcf2maf.bufferSize`|Int|200|The buffer size
 `vcf2maf.jobMemory`|Int|32|Memory allocated for this job (GB)
