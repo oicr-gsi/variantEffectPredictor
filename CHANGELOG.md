@@ -1,3 +1,5 @@
+## 2.1.51 - 2023-03-01
+- small update of the version 2.1.5 to fix a bug in the getSampleNames task
 ## 2.1.5 - 2022-06-28
 - changing targetBed file type to String
 ## 2.1.4 - 2021-06-01
