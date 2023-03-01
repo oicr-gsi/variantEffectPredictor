@@ -1,5 +1,13 @@
 ## 2.1.51 - 2023-03-01
 - small update of the version 2.1.5 to fix a bug in the getSampleNames task
+## 2.1.8 - 2023-02-14
+- add an option vepStats
+- update the vcf2maf module to 1.6.21b
+## 2.1.7 - 2022-09-22
+- migrate 2.1.6 to Vidarr
+- fixing getSampleNames
+## 2.1.6 - 2022-04-13
+- update to support vep/105
 ## 2.1.5 - 2022-06-28
 - changing targetBed file type to String
 ## 2.1.4 - 2021-06-01
