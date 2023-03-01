@@ -116,10 +116,9 @@ Output | Type | Description
  
  * Running variantEffectPredictor
  
+ === Description here ===.
  
- A workflow for annotating the SNV and INDEL mutation calls in VCF format, and generating a MAF file of annotated calls.
- ### (needs description)
- ```
+ <<<
      set -euo pipefail
  
      bedtools intersect -header -u \
@@ -130,20 +129,16 @@ Output | Type | Description
      bgzip -c ~{basename}.targeted.vcf > ~{basename}.targeted.vcf.gz
             
      tabix -p vcf ~{basename}.targeted.vcf.gz
- ```
- ### (needs description)
- ```
+   >>>
+ <<<
      zcat ~{vcfFile} | grep -v ^# | cut -f 1 | uniq
- ```
- ### (needs description)
- ```
+   >>>
+ <<<
      set -euo pipefail
  
      bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz 
- ```
- ### (needs description)
- 
- ```
+   >>>
+ <<<
      set -euo pipefail
  
      if [ "~{species}" = "homo_sapiens" ]; then
@@ -161,23 +156,21 @@ Output | Type | Description
            $human_only_command_line \
            --pubmed --fork 4 --regulatory
  
- ```
- ### (needs description)
- ```
+   >>>
+ <<<
      set -euo pipefail
  
      vcf-query -l  "~{vcfFile}" > sample_headers_all
      cat sample_headers_all | grep -v "GATK" | tr "\n" "," > sample_names_all
      if [[ `cat sample_names_all | tr "," "\n" | wc -l` == 2 ]]; then
-       for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == *BC*  || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
+       for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
      else TUMR=`cat sample_names_all | tr -d ","`; NORM="unmatched"; fi
  
      echo $TUMR > names.txt
      echo $NORM >> names.txt
  
- ```
- ### (needs description)
- ```
+   >>>
+ <<<
      set -euo pipefail
  
      if ~{updateTagValue} ; then
@@ -194,9 +187,8 @@ Output | Type | Description
      bcftools reheader -s "~{basename}_header" "~{basename}.temp_tumor.vcf" > "~{basename}.unmatched.vcf"
      bgzip -c "~{basename}.unmatched.vcf" > "~{basename}.unmatched.vcf.gz"
      tabix -p vcf "~{basename}.unmatched.vcf.gz"
- ```
- ### (needs description)
- ```
+   >>>
+ <<< 
      set -euo pipefail
  
      TUMR=$(sed -n 1p ~{tumorNormalNames} )
@@ -218,25 +210,22 @@ Output | Type | Description
                  --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
                  --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
      fi
- ```
- ### (needs description)
- ```
+   >>>
+ <<<
      set -euo pipefail
  
      head -n 2 ~{mafs[0]} > ~{basename}
      cat ~{sep=" " mafs} | grep -v ^# | grep -v "Hugo_Symbol" >> ~{basename}
      bgzip -c ~{basename} > ~{basename}.maf.gz
  
- ```
- ### (needs description)
- ```
+   >>>
+ <<<
      set -euo pipefail
  
      gatk --java-options "-Xmx~{jobMemory - overhead}G" MergeVcfs \
      -I ~{sep=" -I " vcfs} ~{extraArgs} \
      -O ~{basename}.vcf.gz
- ```
-  
+   >>>
  ## Support
 
 For support, please file an issue on the [Github project](https://github.com/oicr-gsi) or send an email to gsi@oicr.on.ca .
