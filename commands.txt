@@ -12,9 +12,9 @@ This section lists command(s) run by variantEffectPredictor workflow
                        -a ~{vcfFile} \
                        -b ~{targetBed} \
                        > ~{basename}.targeted.vcf
-
+    
     bgzip -c ~{basename}.targeted.vcf > ~{basename}.targeted.vcf.gz
-
+           
     tabix -p vcf ~{basename}.targeted.vcf.gz
   >>>
 <<<
@@ -23,7 +23,7 @@ This section lists command(s) run by variantEffectPredictor workflow
 <<<
     set -euo pipefail
 
-    bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz
+    bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz 
   >>>
 <<<
     set -euo pipefail
@@ -34,20 +34,12 @@ This section lists command(s) run by variantEffectPredictor workflow
       human_only_command_line=""
     fi
 
-    if ~{vepStats} ; then
-      vepStats_command_line=""
-    else 
-      vepStats_command_line="--no_stats"
-    fi
-
-
     vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} --species ~{species} \
           --assembly ~{ncbiBuild} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
-          --no_progress --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype --mane \
+          --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype \
           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
-          --pick_order canonical,tsl,biotype,rank,ccds,length \
-          $vepStats_command_line \
+          --pick_order canonical,tsl,biotype,rank,ccds,length  \
           $human_only_command_line \
           --pubmed --fork 4 --regulatory
 
@@ -74,7 +66,7 @@ This section lists command(s) run by variantEffectPredictor workflow
     else
         zcat ~{vcfFile} | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | sed 's/AS_FilterStatus\,Number\=A/AS_FilterStatus\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
     fi
-
+    
     tabix -p vcf "~{basename}_input.vcf.gz"
 
     cat ~{tumorNormalNames} > "~{basename}_header"
@@ -83,7 +75,7 @@ This section lists command(s) run by variantEffectPredictor workflow
     bgzip -c "~{basename}.unmatched.vcf" > "~{basename}.unmatched.vcf.gz"
     tabix -p vcf "~{basename}.unmatched.vcf.gz"
   >>>
-<<<
+<<< 
     set -euo pipefail
 
     TUMR=$(sed -n 1p ~{tumorNormalNames} )
@@ -92,18 +84,19 @@ This section lists command(s) run by variantEffectPredictor workflow
     bgzip -c -d ~{vcfFile} > ~{basename}
 
     if ~{retainInfoProvided} ; then
-        retainInfo_command_line="--retain-info MBQ,MMQ,TLOD,set"
-    else
-        retainInfo_command_line=""
-    fi
 
-    vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
-            --input-vcf ~{basename} --output-maf ~{basename}.maf \
-            --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-            --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
-            --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} \
-            $retainInfo_command_line \
-            --vep-stats ~{vepStats}
+        vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
+                --input-vcf ~{basename} --output-maf ~{basename}.maf \
+                --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
+                --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+                --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} --retain-info MBQ,MMQ,TLOD,set
+    else
+        vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
+                --input-vcf ~{basename} --output-maf ~{basename}.maf \
+                --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
+                --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+                --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
+    fi
   >>>
 <<<
     set -euo pipefail
