@@ -10,7 +10,7 @@ workflow variantEffectPredictor {
 
   if (defined(targetBed) == true) {
     call targetBedTask {
-      input: vcfFile = vcfFile,
+      input: vcfFile = vcfFile, 
              targetBed = targetBed
     }
   }
@@ -18,7 +18,7 @@ workflow variantEffectPredictor {
   if (toMAF == true) {
     call getSampleNames {
         input: vcfFile = vcfFile
-    }
+    } 
   }
 
   call chromosomeArray {
@@ -46,7 +46,7 @@ workflow variantEffectPredictor {
       call vcf2maf {
         input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf,subsetVcf.subsetVcf]),
              tumorNormalNames = select_first([getSampleNames.tumorNormalNames])
-        }
+        } 
       }
   }
 
@@ -55,7 +55,7 @@ workflow variantEffectPredictor {
       input: mafs = select_all(vcf2maf.mafOutput)
     }
   }
-
+  
   call mergeVcfs {
     input: vcfs = vep.vepVcfOutput
   }
@@ -73,7 +73,7 @@ workflow variantEffectPredictor {
     author: "Rishi Shah, Xuemei Luo"
     email: "rshah@oicr.on.ca xuemei.luo@oicr.on.ca"
     description: "Variant Effect Predictor Workflow version 2.1"
-    dependencies:
+    dependencies: 
     [
       {
         name: "bedtools/2.27",
@@ -84,13 +84,9 @@ workflow variantEffectPredictor {
         url: "https://github.com/samtools/tabix"
       },
       {
-        name: "vep/105.0",
+        name: "vep/92.0",
         url: "https://github.com/Ensembl/ensembl-vep"
       },
-      {
-        name: "vcf2maf/1.6.21b",
-        url: "https://github.com/mskcc/vcf2maf/commit/5ed414428046e71833f454d4b64da6c30362a89b"
-      },      
       {
         name: "vcftools/0.1.16",
         url: "https://vcftools.github.io/index.html"
@@ -117,14 +113,14 @@ workflow variantEffectPredictor {
 
 task targetBedTask {
   input {
-    File vcfFile
+    File vcfFile 
     String basename = basename("~{vcfFile}", ".vcf.gz")
     File? targetBed
     String modules = "bedtools/2.27 tabix/0.2.6"
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 6
-
+ 
   }
 
   parameter_meta {
@@ -144,9 +140,9 @@ task targetBedTask {
                        -a ~{vcfFile} \
                        -b ~{targetBed} \
                        > ~{basename}.targeted.vcf
-
+    
     bgzip -c ~{basename}.targeted.vcf > ~{basename}.targeted.vcf.gz
-
+           
     tabix -p vcf ~{basename}.targeted.vcf.gz
   >>>
 
@@ -207,7 +203,7 @@ task subsetVcf {
     File vcfIndex
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String regions
-    String modules = "bcftools/1.9"
+    String modules = "bcftools/1.9"  
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 6
@@ -215,7 +211,7 @@ task subsetVcf {
   command <<<
     set -euo pipefail
 
-    bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz
+    bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz 
   >>>
 
   output {
@@ -243,15 +239,14 @@ task subsetVcf {
 
 task vep {
   input {
-    File vcfFile
+    File vcfFile 
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String? addParam
     String species = "homo_sapiens"
-    Boolean vepStats = true
     String ncbiBuild
     String vepCacheDir
     String referenceFasta
-    String modules = "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12"
+    String modules
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 16
@@ -265,7 +260,6 @@ task vep {
     ncbiBuild: "The assembly version"
     vepCacheDir: "Directory of cache files"
     referenceFasta: "Reference fasta file"
-    vepStats: "If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'"
     modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
@@ -281,24 +275,16 @@ task vep {
       human_only_command_line=""
     fi
 
-    if ~{vepStats} ; then
-      vepStats_command_line=""
-    else 
-      vepStats_command_line="--no_stats"
-    fi
-
-
     vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} --species ~{species} \
           --assembly ~{ncbiBuild} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
-          --no_progress --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype --mane \
+          --no_progress --no_stats --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype \
           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
-          --pick_order canonical,tsl,biotype,rank,ccds,length \
-          $vepStats_command_line \
+          --pick_order canonical,tsl,biotype,rank,ccds,length  \
           $human_only_command_line \
           --pubmed --fork 4 --regulatory
 
-  >>>
+  >>> 
 
   runtime {
     modules: "~{modules}"
@@ -320,7 +306,7 @@ task vep {
 
 task getSampleNames {
   input {
-    File vcfFile
+    File vcfFile 
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String modules = "vcftools/0.1.16"
     Int jobMemory = 32
@@ -369,7 +355,7 @@ task getSampleNames {
 task tumorOnlyAlign {
   input {
     File vcfFile
-    File tumorNormalNames
+    File tumorNormalNames 
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String modules = "bcftools/1.9 tabix/0.2.6"
     Int jobMemory = 32
@@ -397,7 +383,7 @@ task tumorOnlyAlign {
     else
         zcat ~{vcfFile} | sed 's/QSS\,Number\=A/QSS\,Number\=\./' | sed 's/AS_FilterStatus\,Number\=A/AS_FilterStatus\,Number\=\./' | bgzip -c > "~{basename}_input.vcf.gz"
     fi
-
+    
     tabix -p vcf "~{basename}_input.vcf.gz"
 
     cat ~{tumorNormalNames} > "~{basename}_header"
@@ -418,7 +404,7 @@ task tumorOnlyAlign {
     File unmatchedOutputVcf = "~{basename}.unmatched.vcf.gz"
     File unmatchedOutputTbi = "~{basename}.unmatched.vcf.gz.tbi"
   }
-
+  
   meta {
     output_meta: {
       umatchedOutputVcf: "vcf file for unmatched input",
@@ -433,14 +419,15 @@ task vcf2maf {
     File vcfFile
     String basename = basename("~{vcfFile}", ".vcf.gz")
     File tumorNormalNames
-    String modules = "vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105"
+    String modules
     String species = "homo_sapiens"
     String referenceFasta
     String ncbiBuild
     String vepPath
     String vepCacheDir
+    String vcfFilter
     Boolean retainInfoProvided = false
-    Boolean vepStats = true
+    Int maxfilterAC = 10
     Float minHomVaf = 0.7
     Int bufferSize = 200
     Int jobMemory = 32
@@ -455,10 +442,11 @@ task vcf2maf {
     ncbiBuild: "The assembly version"
     vepPath: "Path to vep script"
     vepCacheDir: "Directory of vep cache files"
+    vcfFilter: "Filter for the vep module that is used in vcf2maf"
     retainInfoProvided: "Comma-delimited names of INFO fields to retain as extra columns in MAF"
-    vepStats: "If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'"
+    maxfilterAC: "The maximum AC filter"
     minHomVaf: "The minimum vaf for homozygous calls"
-    bufferSize: "The buffer size"
+    bufferSize: "The buffer size"  
     tumorNormalNames: "Tumor and normal ID"
     basename: "Base name"
     modules: "Required environment modules"
@@ -467,7 +455,7 @@ task vcf2maf {
     timeout: "Hours before task timeout"
   }
 
-  command <<<
+  command <<< 
     set -euo pipefail
 
     TUMR=$(sed -n 1p ~{tumorNormalNames} )
@@ -476,18 +464,19 @@ task vcf2maf {
     bgzip -c -d ~{vcfFile} > ~{basename}
 
     if ~{retainInfoProvided} ; then
-        retainInfo_command_line="--retain-info MBQ,MMQ,TLOD,set"
-    else
-        retainInfo_command_line=""
-    fi
 
-    vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
-            --input-vcf ~{basename} --output-maf ~{basename}.maf \
-            --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
-            --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
-            --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} \
-            $retainInfo_command_line \
-            --vep-stats ~{vepStats}
+        vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
+                --input-vcf ~{basename} --output-maf ~{basename}.maf \
+                --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
+                --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+                --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} --retain-info MBQ,MMQ,TLOD,set
+    else
+        vcf2maf --ref-fasta ~{referenceFasta} --species ~{species} --ncbi-build ~{ncbiBuild} \
+                --input-vcf ~{basename} --output-maf ~{basename}.maf \
+                --tumor-id $TUMR --normal-id $NORM --vcf-tumor-id $TUMR --vcf-normal-id $NORM \
+                --filter-vcf ~{vcfFilter} --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
+                --max-filter-ac ~{maxfilterAC} --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize}
+    fi
   >>>
 
   runtime {
