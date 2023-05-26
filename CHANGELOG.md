@@ -1,3 +1,5 @@
+## 2.2.1 - 2023-05-25
+- add tumor and normal names as parameters
 ## 2.2.0 - 2023-03-01
 - move version 2.1.8 to version 2.2.0
 ## 2.1.8 - 2023-02-14

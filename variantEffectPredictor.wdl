@@ -4,6 +4,8 @@ workflow variantEffectPredictor {
     File vcfFile
     File vcfIndex
     String? targetBed
+    String tumorName
+    String? normalName
     Boolean toMAF
     Boolean onlyTumor
   }
@@ -17,7 +19,9 @@ workflow variantEffectPredictor {
 
   if (toMAF == true) {
     call getSampleNames {
-        input: vcfFile = vcfFile
+        input: tumorName = tumorName,
+               normalName = normalName
+
     }
   }
 
@@ -64,6 +68,8 @@ workflow variantEffectPredictor {
   parameter_meta {
     vcfFile: "Input VCF file"
     vcfIndex: "Input VCF index file"
+    tumorName: "Name of the tumor sample"
+    normalName: "Name of the normal sample"
     targetBed: "Target bed file"
     toMAF: "If true, generate the MAF file"
     onlyTumor: "If true, run tumor only mode"
@@ -320,17 +326,15 @@ task vep {
 
 task getSampleNames {
   input {
-    File vcfFile
-    String basename = basename("~{vcfFile}", ".vcf.gz")
-    String modules = "vcftools/0.1.16"
-    Int jobMemory = 32
+    String tumorName
+    String? normalName
+    Int jobMemory = 1
     Int threads = 4
-    Int timeout = 6
+    Int timeout = 1
   }
   parameter_meta {
-    vcfFile: "Vcf input file"
-    basename: "Base name"
-    modules: "Required environment modules"
+    tumorName: "Name of the tumor sample"
+    normalName: "Name of the normal sample"
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
     timeout: "Hours before task timeout"
@@ -338,11 +342,12 @@ task getSampleNames {
   command <<<
     set -euo pipefail
 
-    vcf-query -l  "~{vcfFile}" > sample_headers_all
-    cat sample_headers_all | grep -v "GATK" | tr "\n" "," > sample_names_all
-    if [[ `cat sample_names_all | tr "," "\n" | wc -l` == 2 ]]; then
-      for item in `cat sample_names_all | tr "," "\n"`; do if [[ $item == "NORMAL" || $item == *_R_* || $item == *_R || $item == "unmatched" ]]; then NORM=$item; else TUMR=$item; fi; done
-    else TUMR=`cat sample_names_all | tr -d ","`; NORM="unmatched"; fi
+    TUMR="~{tumorName}"
+
+    if [ -z "~{normalName}" ]; then
+        NORM="unmatched";
+    else NORM="~{normalName}";
+    fi
 
     echo $TUMR > names.txt
     echo $NORM >> names.txt
@@ -350,7 +355,6 @@ task getSampleNames {
   >>>
 
   runtime {
-    modules: "~{modules}"
     memory:  "~{jobMemory} GB"
     cpu:     "~{threads}"
     timeout: "~{timeout}"
