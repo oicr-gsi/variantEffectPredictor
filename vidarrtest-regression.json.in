@@ -1,6 +1,7 @@
 [
     {
         "arguments": {
+            "variantEffectPredictor.reference": "hg38",
             "variantEffectPredictor.chromosomeArray.jobMemory": null,
             "variantEffectPredictor.chromosomeArray.threads": null,
             "variantEffectPredictor.chromosomeArray.timeout": null,
@@ -149,6 +150,7 @@
     },
     {
         "arguments": {
+            "variantEffectPredictor.reference": "hg38",
             "variantEffectPredictor.chromosomeArray.jobMemory": null,
             "variantEffectPredictor.chromosomeArray.threads": null,
             "variantEffectPredictor.chromosomeArray.timeout": null,
@@ -297,6 +299,7 @@
     },
     {
         "arguments": {
+            "variantEffectPredictor.reference": "hg38",
             "variantEffectPredictor.chromosomeArray.jobMemory": null,
             "variantEffectPredictor.chromosomeArray.threads": null,
             "variantEffectPredictor.chromosomeArray.timeout": null,
@@ -445,6 +448,7 @@
     },
     {
         "arguments": {
+            "variantEffectPredictor.reference": "hg38",
             "variantEffectPredictor.chromosomeArray.jobMemory": null,
             "variantEffectPredictor.chromosomeArray.threads": null,
             "variantEffectPredictor.chromosomeArray.timeout": null,

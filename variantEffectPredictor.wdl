@@ -1,4 +1,16 @@
 version 1.0
+
+struct GenomeResources{
+  String vep_modules
+  String vcf2maf_modules
+  String vepCacheDir
+  String referenceFasta
+  String species
+  String ncbiBuild
+  String vepPath
+}
+
+
 workflow variantEffectPredictor {
   input {
     File vcfFile
@@ -8,7 +20,38 @@ workflow variantEffectPredictor {
     String? normalName
     Boolean toMAF
     Boolean onlyTumor
+    String reference
   }
+
+  Map[String,GenomeResources] resources = {
+    "hg19": {
+       "vep_modules": "vep/105.0 tabix/0.2.6 vep-hg19-cache/105 hg19/p13",
+       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 hg19/p13 vep-hg19-cache/105",
+       "vepCacheDir": "$VEP_HG19_CACHE_ROOT/.vep",
+       "referenceFasta": "$HG19_ROOT/hg19_random.fa",
+       "species": "homo_sapiens",
+       "ncbiBuild": "GRCh37",
+       "vepPath": "$VEP_ROOT/bin/"
+    },
+    "hg38":{
+       "vep_modules": "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12",
+       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
+       "vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
+       "referenceFasta": "$HG38_ROOT/hg38_random.fa",
+       "species": "homo_sapiens",
+       "ncbiBuild": "GRCh38",
+       "vepPath": "$VEP_ROOT/bin/"
+    },
+    "mm10":{
+       "vep_modules": "vep/105.0 tabix/0.2.6 vep-mm10-cache/105 mm10/p6",
+       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 mm10/p6 vep-mm10-cache/105",
+       "vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
+       "referenceFasta": "$MM10_ROOT/mm10.fa",
+       "species": "mus_musculus",
+       "ncbiBuild": "GRCm38",
+       "vepPath": "$VEP_ROOT/bin/"
+    }
+  } 
 
   if (defined(targetBed) == true) {
     call targetBedTask {
@@ -37,7 +80,13 @@ workflow variantEffectPredictor {
     }
 
     call vep {
-      input: vcfFile = subsetVcf.subsetVcf
+      input: 
+        vcfFile = subsetVcf.subsetVcf,
+        modules = resources[reference].vep_modules,
+        vepCacheDir = resources[reference].vepCacheDir,
+        referenceFasta = resources[reference].referenceFasta,
+        species = resources[reference].species,
+        ncbiBuild = resources[reference].ncbiBuild
     }
 
     if (toMAF == true) {
@@ -49,7 +98,13 @@ workflow variantEffectPredictor {
       }
       call vcf2maf {
         input: vcfFile = select_first([tumorOnlyAlign.unmatchedOutputVcf,subsetVcf.subsetVcf]),
-             tumorNormalNames = select_first([getSampleNames.tumorNormalNames])
+             tumorNormalNames = select_first([getSampleNames.tumorNormalNames]),
+             vepCacheDir = resources[reference].vepCacheDir,
+             modules = resources[reference].vcf2maf_modules,
+             referenceFasta = resources[reference].referenceFasta,
+             species = resources[reference].species,
+             ncbiBuild = resources[reference].ncbiBuild,
+             vepPath = resources[reference].vepPath
         }
       }
   }
@@ -73,6 +128,7 @@ workflow variantEffectPredictor {
     targetBed: "Target bed file"
     toMAF: "If true, generate the MAF file"
     onlyTumor: "If true, run tumor only mode"
+    reference: "reference genome for input sample"
   }
 
   meta {
