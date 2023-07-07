@@ -30,13 +30,7 @@ Parameter|Value|Description
 `tumorName`|String|Name of the tumor sample
 `toMAF`|Boolean|If true, generate the MAF file
 `onlyTumor`|Boolean|If true, run tumor only mode
-`vep.ncbiBuild`|String|The assembly version
-`vep.vepCacheDir`|String|Directory of cache files
-`vep.referenceFasta`|String|Reference fasta file
-`vcf2maf.referenceFasta`|String|Reference fasta file
-`vcf2maf.ncbiBuild`|String|The assembly version
-`vcf2maf.vepPath`|String|Path to vep script
-`vcf2maf.vepCacheDir`|String|Directory of vep cache files
+`reference`|String|reference genome for input sample
 
 
 #### Optional workflow parameters:
@@ -67,9 +61,7 @@ Parameter|Value|Default|Description
 `subsetVcf.timeout`|Int|6|Maximum amount of time (in hours) the task can run for.
 `vep.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vep.addParam`|String?|None|Additional vep parameters
-`vep.species`|String|"homo_sapiens"|Species name
 `vep.vepStats`|Boolean|true|If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'
-`vep.modules`|String|"vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12"|Required environment modules
 `vep.jobMemory`|Int|32|Memory allocated for this job (GB)
 `vep.threads`|Int|4|Requested CPU threads
 `vep.timeout`|Int|16|Hours before task timeout
@@ -80,8 +72,6 @@ Parameter|Value|Default|Description
 `tumorOnlyAlign.timeout`|Int|6|Hours before task timeout
 `tumorOnlyAlign.updateTagValue`|Boolean|false|If true, update tag values in vcf header for CC workflow
 `vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
-`vcf2maf.modules`|String|"vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105"|Required environment modules
-`vcf2maf.species`|String|"homo_sapiens"|Species name
 `vcf2maf.retainInfoProvided`|Boolean|false|Comma-delimited names of INFO fields to retain as extra columns in MAF
 `vcf2maf.vepStats`|Boolean|true|If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'
 `vcf2maf.minHomVaf`|Float|0.7|The minimum vaf for homozygous calls

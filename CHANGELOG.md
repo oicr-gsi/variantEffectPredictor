@@ -1,3 +1,5 @@
+## 2.3.0 - 2023-07-05
+- Assembly-specific codes in olive moved to wdl
 ## 2.2.1 - 2023-05-25
 - add tumor and normal names as parameters
 ## 2.2.0 - 2023-03-01
