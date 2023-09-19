@@ -42,13 +42,13 @@ workflow variantEffectPredictor {
        "ncbiBuild": "GRCh38",
        "vepPath": "$VEP_ROOT/bin/"
     },
-    "mm10":{
-       "vep_modules": "vep/105.0 tabix/0.2.6 vep-mm10-cache/105 mm10/p6",
-       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 mm10/p6 vep-mm10-cache/105",
-       "vepCacheDir": "$VEP_MM10_CACHE_ROOT/.vep",
-       "referenceFasta": "$MM10_ROOT/mm10.fa",
+    "mm39":{
+       "vep_modules": "vep/105.0 tabix/0.2.6 vep-mm39-cache/105 mm39/p6",
+       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 mm39/p6 vep-mm39-cache/105",
+       "vepCacheDir": "$VEP_MM39_CACHE_ROOT/.vep",
+       "referenceFasta": "$MM39_ROOT/mm39.fa",
        "species": "mus_musculus",
-       "ncbiBuild": "GRCm38",
+       "ncbiBuild": "GRCm39",
        "vepPath": "$VEP_ROOT/bin/"
     }
   } 
