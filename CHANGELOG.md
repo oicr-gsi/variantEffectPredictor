@@ -1,5 +1,5 @@
 ## 2.3.1 - 2023-09-20
-- Update mouse genome build and reference-specific modules to mm39 (from mm10)
+- Update mouse genome build and reference-specific modules to mm39 (from mm10; Jira Ticket: GBS-4248)
 ## 2.3.0 - 2023-07-05
 - Assembly-specific codes in olive moved to wdl
 ## 2.2.1 - 2023-05-25
