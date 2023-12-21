@@ -72,11 +72,15 @@ workflow variantEffectPredictor {
       input: vcfFile = select_first([targetBedTask.targetedVcf, vcfFile])
   }
 
-  scatter (intervals in chromosomeArray.out) {
+  scatter (interval in flatten(chromosomeArray.out)) {
+    call getChrCoefficient {       
+      input: chromosome = interval
+    }
     call subsetVcf {
       input: vcfFile = select_first([targetBedTask.targetedVcf, vcfFile]),
              vcfIndex = select_first([targetBedTask.targetedTbi, vcfIndex]),
-             regions = intervals[0]
+             regions = interval,
+             scaleCoefficient = getChrCoefficient.coeff
     }
 
     call vep {
@@ -86,14 +90,16 @@ workflow variantEffectPredictor {
         vepCacheDir = resources[reference].vepCacheDir,
         referenceFasta = resources[reference].referenceFasta,
         species = resources[reference].species,
-        ncbiBuild = resources[reference].ncbiBuild
+        ncbiBuild = resources[reference].ncbiBuild,
+        scaleCoefficient = getChrCoefficient.coeff
     }
 
     if (toMAF == true) {
       if (onlyTumor == true) {
         call tumorOnlyAlign {
           input: vcfFile = subsetVcf.subsetVcf,
-                 tumorNormalNames = select_first([getSampleNames.tumorNormalNames])
+                 tumorNormalNames = select_first([getSampleNames.tumorNormalNames]),
+                 scaleCoefficient = getChrCoefficient.coeff
         }
       }
       call vcf2maf {
@@ -104,7 +110,8 @@ workflow variantEffectPredictor {
              referenceFasta = resources[reference].referenceFasta,
              species = resources[reference].species,
              ncbiBuild = resources[reference].ncbiBuild,
-             vepPath = resources[reference].vepPath
+             vepPath = resources[reference].vepPath,
+             scaleCoefficient = getChrCoefficient.coeff
         }
       }
   }
@@ -174,6 +181,49 @@ workflow variantEffectPredictor {
     File? outputTargetVcf = targetBedTask.targetedVcf
     File? outputTargetTbi = targetBedTask.targetedTbi
 
+  }
+}
+
+# ================================================================
+#  Scaling coefficient - use to scale RAM allocation by chromosome
+# ================================================================
+task getChrCoefficient {
+  input {
+    Int memory = 1
+    Int timeout = 1
+    Int largestChrom
+    String chromosome
+    String modules
+    String refFai
+  }
+
+  parameter_meta {
+    refFai: ".fai file for the reference genome, we use it to extract chromosome ids"
+    timeout: "Hours before task timeout"
+    chromosome: "Chromosome to check"
+    memory: "Memory allocated for this job"
+    modules: "Names and versions of modules to load"
+    largestChrom: "Length of the largest chromosome in a genome"
+  }
+
+  command <<<
+    grep -w ^~{chromosome} ~{refFai} | cut -f 2 | awk '{print int(($1/~{largestChrom} + 0.1) * 10)/10}'
+  >>>
+
+  runtime {
+    memory:  "~{memory} GB"
+    modules: "~{modules}"
+    timeout: "~{timeout}"
+  }
+
+  output {
+    String coeff = read_string(stdout())
+  }
+
+  meta {
+    output_meta: {
+      coeff: "Length ratio as relative to the largest chromosome."
+    }
   }
 }
 
@@ -273,6 +323,7 @@ task subsetVcf {
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 6
+    Float scaleCoefficient
   }
   command <<<
     set -euo pipefail
@@ -286,7 +337,7 @@ task subsetVcf {
 
   runtime {
     modules: "~{modules}"
-    memory: "~{jobMemory} GB"
+    memory: "~{round(jobMemory * scaleCoefficient)} GB"
     cpu: "~{threads}"
     timeout: "~{timeout}"
   }
@@ -300,6 +351,7 @@ task subsetVcf {
     jobMemory: "Memory allocated to job (in GB)."
     threads: "Requested CPU threads."
     timeout: "Maximum amount of time (in hours) the task can run for."
+    scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size"
   }
 }
 
@@ -317,6 +369,7 @@ task vep {
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 16
+    Float scaleCoefficient
   }
 
   parameter_meta {
@@ -332,6 +385,7 @@ task vep {
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
     timeout: "Hours before task timeout"
+    scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size"
   }
 
   command <<<
@@ -364,7 +418,7 @@ task vep {
 
   runtime {
     modules: "~{modules}"
-    memory:  "~{jobMemory} GB"
+    memory:  "~{round(jobMemory * scaleCoefficient)} GB"
     cpu:     "~{threads}"
     timeout: "~{timeout}"
   }
@@ -506,6 +560,7 @@ task vcf2maf {
     Int jobMemory = 32
     Int threads = 4
     Int timeout = 48
+    Float scaleCoefficient
   }
 
   parameter_meta {
@@ -525,6 +580,7 @@ task vcf2maf {
     jobMemory: "Memory allocated for this job (GB)"
     threads: "Requested CPU threads"
     timeout: "Hours before task timeout"
+    scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size"
   }
 
   command <<<
@@ -552,7 +608,7 @@ task vcf2maf {
 
   runtime {
     modules: "~{modules}"
-    memory:  "~{jobMemory} GB"
+    memory:  "~{round(jobMemory * scaleCoefficient)} GB"
     cpu:     "~{threads}"
     timeout: "~{timeout}"
   }
