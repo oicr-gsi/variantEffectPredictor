@@ -1,3 +1,5 @@
+## 2.3.2 - 2023-12-21
+- [GRD-730](https://jira.oicr.on.ca/browse/GRD-730) Adding RAM scaling by chromosome size (performance update)
 ## 2.3.1 - 2023-09-20
 - Update mouse genome build and reference-specific modules to mm39 (from mm10; Jira Ticket: GBS-4248)
 ## 2.3.0 - 2023-07-05
