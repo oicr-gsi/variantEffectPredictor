@@ -56,16 +56,19 @@ Parameter|Value|Default|Description
 `subsetVcf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `subsetVcf.modules`|String|"bcftools/1.9"|Required environment modules
 `subsetVcf.jobMemory`|Int|12|Memory allocated to job (in GB).
+`subsetVcf.minMemory`|Int|4|Minimum RAM (in GB) allocated to the task
 `subsetVcf.timeout`|Int|2|Maximum amount of time (in hours) the task can run for.
 `vep.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `vep.addParam`|String?|None|Additional vep parameters
 `vep.vepStats`|Boolean|true|If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'
 `vep.jobMemory`|Int|12|Memory allocated for this job (GB)
+`vep.minMemory`|Int|4|Minimum RAM (in GB) allocated to the task
 `vep.threads`|Int|4|Requested CPU threads
 `vep.timeout`|Int|16|Hours before task timeout
 `tumorOnlyAlign.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
 `tumorOnlyAlign.modules`|String|"bcftools/1.9 tabix/0.2.6"|Required environment modules
 `tumorOnlyAlign.jobMemory`|Int|12|Memory allocated for this job (GB)
+`tumorOnlyAlign.minMemory`|Int|4|Minimum RAM (in GB) allocated to the task
 `tumorOnlyAlign.timeout`|Int|6|Hours before task timeout
 `tumorOnlyAlign.updateTagValue`|Boolean|false|If true, update tag values in vcf header for CC workflow
 `vcf2maf.basename`|String|basename("~{vcfFile}",".vcf.gz")|Base name
@@ -74,6 +77,7 @@ Parameter|Value|Default|Description
 `vcf2maf.minHomVaf`|Float|0.7|The minimum vaf for homozygous calls
 `vcf2maf.bufferSize`|Int|200|The buffer size
 `vcf2maf.jobMemory`|Int|12|Memory allocated for this job (GB)
+`vcf2maf.minMemory`|Int|4|A minimum amount of memory allocated to the task, overrides the scaled RAM setting
 `vcf2maf.threads`|Int|4|Requested CPU threads
 `vcf2maf.timeout`|Int|18|Hours before task timeout
 `mergeMafs.modules`|String|"tabix/0.2.6"|Required environment modules
