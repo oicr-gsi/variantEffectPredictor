@@ -314,9 +314,13 @@ task subsetVcf {
     String regions
     String modules = "bcftools/1.9"
     Int jobMemory = 12
+    Int minMemory = 4
     Int timeout = 2
     Float scaleCoefficient
   }
+
+  Int allocatedMemory = if minMemory > round(jobMemory * scaleCoefficient) then minMemory else round(jobMemory * scaleCoefficient)
+
   command <<<
     set -euo pipefail
     bcftools view -r ~{regions} ~{vcfFile} | bgzip -c > ~{basename}.vcf.gz
@@ -328,7 +332,7 @@ task subsetVcf {
 
   runtime {
     modules: "~{modules}"
-    memory: "~{round(jobMemory * scaleCoefficient)} GB"
+    memory: "~{allocatedMemory} GB"
     timeout: "~{timeout}"
   }
 
@@ -339,6 +343,7 @@ task subsetVcf {
     basename: "Base name"
     modules: "Required environment modules"
     jobMemory: "Memory allocated to job (in GB)."
+    minMemory: "Minimum RAM (in GB) allocated to the task"
     timeout: "Maximum amount of time (in hours) the task can run for."
     scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size"
   }
@@ -356,6 +361,7 @@ task vep {
     String referenceFasta
     String modules = "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12"
     Int jobMemory = 12
+    Int minMemory = 4
     Int threads = 4
     Int timeout = 16
     Float scaleCoefficient
@@ -372,10 +378,13 @@ task vep {
     vepStats: "If vepStats is true, remove flag '--no_stats' from vep. If vepStats is false, running vep with flag '--no_stats'"
     modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
+    minMemory: "Minimum RAM (in GB) allocated to the task"
     threads: "Requested CPU threads"
     timeout: "Hours before task timeout"
     scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size"
   }
+
+  Int allocatedMemory = if minMemory > round(jobMemory * scaleCoefficient) then minMemory else round(jobMemory * scaleCoefficient)
 
   command <<<
     set -euo pipefail
@@ -407,7 +416,7 @@ task vep {
 
   runtime {
     modules: "~{modules}"
-    memory:  "~{round(jobMemory * scaleCoefficient)} GB"
+    memory:  "~{allocatedMemory} GB"
     cpu:     "~{threads}"
     timeout: "~{timeout}"
   }
@@ -473,6 +482,7 @@ task tumorOnlyAlign {
     String basename = basename("~{vcfFile}", ".vcf.gz")
     String modules = "bcftools/1.9 tabix/0.2.6"
     Int jobMemory = 12
+    Int minMemory = 4
     Int timeout = 6
     Float scaleCoefficient
     Boolean updateTagValue = false
@@ -483,10 +493,13 @@ task tumorOnlyAlign {
     basename: "Base name"
     modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
+    minMemory: "Minimum RAM (in GB) allocated to the task"
     timeout: "Hours before task timeout"
     scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size" 
     updateTagValue: "If true, update tag values in vcf header for CC workflow"
   }
+
+  Int allocatedMemory = if minMemory > round(jobMemory * scaleCoefficient) then minMemory else round(jobMemory * scaleCoefficient)
 
   command <<<
     set -euo pipefail
@@ -509,7 +522,7 @@ task tumorOnlyAlign {
 
   runtime {
     modules: "~{modules}"
-    memory:  "~{round(jobMemory * scaleCoefficient)} GB"
+    memory:  "~{allocatedMemory} GB"
     timeout: "~{timeout}"
   }
 
@@ -543,6 +556,7 @@ task vcf2maf {
     Float minHomVaf = 0.7
     Int bufferSize = 200
     Int jobMemory = 12
+    Int minMemory = 4
     Int threads = 4
     Int timeout = 18
     Float scaleCoefficient
@@ -563,10 +577,13 @@ task vcf2maf {
     basename: "Base name"
     modules: "Required environment modules"
     jobMemory: "Memory allocated for this job (GB)"
+    minMemory: "A minimum amount of memory allocated to the task, overrides the scaled RAM setting"
     threads: "Requested CPU threads"
     timeout: "Hours before task timeout"
     scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size"
   }
+
+  Int allocatedMemory = if minMemory > round(jobMemory * scaleCoefficient) then minMemory else round(jobMemory * scaleCoefficient)
 
   command <<<
     set -euo pipefail
@@ -593,7 +610,7 @@ task vcf2maf {
 
   runtime {
     modules: "~{modules}"
-    memory:  "~{round(jobMemory * scaleCoefficient)} GB"
+    memory:  "~{allocatedMemory} GB"
     cpu:     "~{threads}"
     timeout: "~{timeout}"
   }

@@ -1,3 +1,5 @@
+## 2.3.3 - 2024-02-12
+- [GRD-730](https://jira.oicr.on.ca/browse/GRD-730) Adding minMemory parameter to RAM-scaling tasks
 ## 2.3.2 - 2023-12-21
 - [GRD-730](https://jira.oicr.on.ca/browse/GRD-730) Adding RAM scaling by chromosome size (performance update)
 ## 2.3.1 - 2023-09-20
