@@ -7,6 +7,7 @@ struct GenomeResources{
   String referenceFasta
   String species
   String ncbiBuild
+  String customTranscriptFile
   String vepPath
 }
 
@@ -40,6 +41,7 @@ workflow variantEffectPredictor {
        "referenceFasta": "$HG38_ROOT/hg38_random.fa",
        "species": "homo_sapiens",
        "ncbiBuild": "GRCh38",
+       "customTranscriptFile" :"$HG38_ROOT/MANE.GRCh38.v1.3.ensembl_genomic.gtf”,
        "vepPath": "$VEP_ROOT/bin/"
     },
     "mm39":{
@@ -94,6 +96,7 @@ workflow variantEffectPredictor {
         referenceFasta = resources[reference].referenceFasta,
         species = resources[reference].species,
         ncbiBuild = resources[reference].ncbiBuild,
+        customTranscriptFile = resources[reference].customTranscriptFile,
         scaleCoefficient = getChrCoefficient.coeff
     }
 
@@ -357,6 +360,7 @@ task vep {
     String species = "homo_sapiens"
     Boolean vepStats = true
     String ncbiBuild
+    String customTranscriptFile
     String vepCacheDir
     String referenceFasta
     String modules = "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12"
