@@ -32,7 +32,7 @@ workflow variantEffectPredictor {
        "referenceFasta": "$HG19_ROOT/hg19_random.fa",
        "species": "homo_sapiens",
        "ncbiBuild": "GRCh37",
-       "customTranscriptFile" :"$MY_VEP_DIR/MANE.GRCh38.v1.3.ensembl_genomic.gtf",
+       "customTranscriptFile" :"/u/ohamza/variantEffectPredictor/MANE.GRCh38.v1.3.ensembl_genomic.gtf",
        "vepPath": "$VEP_ROOT/bin/"
     },
     "hg38":{
@@ -42,7 +42,7 @@ workflow variantEffectPredictor {
        "referenceFasta": "$HG38_ROOT/hg38_random.fa",
        "species": "homo_sapiens",
        "ncbiBuild": "GRCh38",
-       "customTranscriptFile" :"$MY_VEP_DIR/MANE.GRCh38.v1.3.ensembl_genomic.gtf",
+       "customTranscriptFile" :"/u/ohamza/variantEffectPredictor/MANE.GRCh38.v1.3.ensembl_genomic.gtf",
        "vepPath": "$VEP_ROOT/bin/"
     },
     "mm39":{
@@ -52,7 +52,7 @@ workflow variantEffectPredictor {
        "referenceFasta": "$MM39_ROOT/mm39.fa",
        "species": "mus_musculus",
        "ncbiBuild": "GRCm39",
-       "customTranscriptFile" :"$MY_VEP_DIR/MANE.GRCh38.v1.3.ensembl_genomic.gtf",
+       "customTranscriptFile" :"/u/ohamza/variantEffectPredictor/MANE.GRCh38.v1.3.ensembl_genomic.gtf",
        "vepPath": "$VEP_ROOT/bin/"
     }
   } 
