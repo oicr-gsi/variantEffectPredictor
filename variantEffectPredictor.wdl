@@ -41,7 +41,7 @@ workflow variantEffectPredictor {
        "referenceFasta": "$HG38_ROOT/hg38_random.fa",
        "species": "homo_sapiens",
        "ncbiBuild": "GRCh38",
-       "customTranscriptFile" :"$HG38_ROOT/MANE.GRCh38.v1.3.ensembl_genomic.gtf”,
+       "customTranscriptFile" :"$MY_VEP_DIR/MANE.GRCh38.v1.3.ensembl_genomic.gtf",
        "vepPath": "$VEP_ROOT/bin/"
     },
     "mm39":{
