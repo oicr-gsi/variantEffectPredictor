@@ -8,6 +8,7 @@ struct GenomeResources{
   String species
   String ncbiBuild
   String customTranscriptFile
+  File customTranscriptENSTids
   String vepPath
 }
 
@@ -32,7 +33,8 @@ workflow variantEffectPredictor {
        "referenceFasta": "$HG19_ROOT/hg19_random.fa",
        "species": "homo_sapiens",
        "ncbiBuild": "GRCh37",
-       "customTranscriptFile" :"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.BRAF.transcript.gtf.gz",
+       "customTranscriptFile" :"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.GRCh38.v1.3.ensembl_genomic.filtered.gtf.gz",
+       "customTranscriptENSTids":"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.filtered.ENST.ID.txt",
        "vepPath": "$VEP_ROOT/bin/"
     },
     "hg38":{
@@ -42,7 +44,8 @@ workflow variantEffectPredictor {
        "referenceFasta": "$HG38_ROOT/hg38_random.fa",
        "species": "homo_sapiens",
        "ncbiBuild": "GRCh38",
-       "customTranscriptFile" :"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.BRAF.transcript.gtf.gz",
+       "customTranscriptFile" :"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.GRCh38.v1.3.ensembl_genomic.filtered.gtf.gz",
+       "customTranscriptENSTids":"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.filtered.ENST.ID.txt",
        "vepPath": "$VEP_ROOT/bin/"
     },
     "mm39":{
@@ -52,7 +55,8 @@ workflow variantEffectPredictor {
        "referenceFasta": "$MM39_ROOT/mm39.fa",
        "species": "mus_musculus",
        "ncbiBuild": "GRCm39",
-       "customTranscriptFile" :"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.BRAF.transcript.gtf.gz",
+       "customTranscriptFile" :"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.GRCh38.v1.3.ensembl_genomic.filtered.gtf.gz",
+       "customTranscriptENSTids":"/.mounts/labs/CGI/cap-training/ohamza/VEP/MANE.filtered.ENST.ID.txt",
        "vepPath": "$VEP_ROOT/bin/"
     }
   } 
@@ -566,6 +570,7 @@ task vcf2maf {
     Int threads = 4
     Int timeout = 18
     Float scaleCoefficient
+    File customTranscriptENSTids
   }
 
   parameter_meta {
@@ -587,6 +592,7 @@ task vcf2maf {
     threads: "Requested CPU threads"
     timeout: "Hours before task timeout"
     scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size"
+    customTranscriptENSTids: "File containing MANE Select ENST IDs"
   }
 
   Int allocatedMemory = if minMemory > round(jobMemory * scaleCoefficient) then minMemory else round(jobMemory * scaleCoefficient)
@@ -611,7 +617,8 @@ task vcf2maf {
             --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
             --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} \
             $retainInfo_command_line \
-            --vep-stats ~{vepStats}
+            --vep-stats ~{vepStats} \
+            --custom-enst ~{customTranscriptENSTids}
   >>>
 
   runtime {

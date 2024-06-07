@@ -131,7 +131,8 @@ This ensures that we split only by those chromosomes for which we have records
             --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
             --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} \
             $retainInfo_command_line \
-            --vep-stats ~{vepStats}
+            --vep-stats ~{vepStats} \
+            --custom-enst ~{customTranscriptENSTids}
 ```
 
 ### mergeMafs
