@@ -355,6 +355,7 @@
             "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
             "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
             "variantEffectPredictor.vcf2maf.vepStats": null,
+            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
             "variantEffectPredictor.vcfFile": {
                 "contents": {
                     "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
