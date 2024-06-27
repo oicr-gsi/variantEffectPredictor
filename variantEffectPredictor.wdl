@@ -169,12 +169,27 @@ workflow variantEffectPredictor {
       }
     ]
     output_meta: {
-      outputVcf: "Annotated vcf output file from vep",
-      outputTbi: "Index of the annotated vcf output file from vep",
-      outputMaf: "Maf output file from vcf2maf(if toMAF is true)",
-      outputTargetVcf: "Vcf on target for the input vcf (if targetBed is given), non annotated",
-      outputTargetTbi: "Index of the vcf on target for the input vcf (if targetBed is given), non annotated"
+    outputVcf: {
+        description: "Annotated vcf output file from vep",
+        vidarr_label: "outputVcf"
+    },
+    outputTbi: {
+        description: "Index of the annotated vcf output file from vep",
+        vidarr_label: "outputTbi"
+    },
+    outputMaf: {
+        description: "Maf output file from vcf2maf(if toMAF is true)",
+        vidarr_label: "outputMaf"
+    },
+    outputTargetVcf: {
+        description: "Vcf on target for the input vcf (if targetBed is given), non annotated",
+        vidarr_label: "outputTargetVcf"
+    },
+    outputTargetTbi: {
+        description: "Index of the vcf on target for the input vcf (if targetBed is given), non annotated",
+        vidarr_label: "outputTargetTbi"
     }
+}
   }
 
   output {
