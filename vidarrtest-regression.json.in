@@ -54,7 +54,18 @@
             "variantEffectPredictor.vcf2maf.timeout": null,
             "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
             "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
-            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
+            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
             "variantEffectPredictor.vcf2maf.vepStats": false,
             "variantEffectPredictor.vcfFile": {
                 "contents": {
@@ -205,8 +216,18 @@
             "variantEffectPredictor.vcf2maf.timeout": null,
             "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
             "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
-            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
-
+            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
             "variantEffectPredictor.vcf2maf.vepStats": false,
             "variantEffectPredictor.vcfFile": {
                 "contents": {
@@ -358,7 +379,18 @@
             "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
             "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
             "variantEffectPredictor.vcf2maf.vepStats": null,
-            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
+            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
             "variantEffectPredictor.vcfFile": {
                 "contents": {
                     "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
@@ -508,7 +540,18 @@
             "variantEffectPredictor.vcf2maf.timeout": null,
             "variantEffectPredictor.vcf2maf.vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
             "variantEffectPredictor.vcf2maf.vepPath": "$VEP_ROOT/bin/",
-            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
+            "variantEffectPredictor.vcf2maf.customTranscriptENSTids": {
+                "contents": {
+                    "configuration": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
+                    "externalIds": [
+                        {
+                            "id": "TEST",
+                            "provider": "TEST"
+                        }
+                    ]
+                },
+                "type": "EXTERNAL"
+            },
             "variantEffectPredictor.vcf2maf.vepStats": null,
             "variantEffectPredictor.vcfFile": {
                 "contents": {
