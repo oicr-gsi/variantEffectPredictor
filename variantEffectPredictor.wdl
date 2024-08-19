@@ -8,7 +8,7 @@ struct GenomeResources{
   String species
   String ncbiBuild
   String customTranscriptFile
-  File customTranscriptENSTids
+  String customTranscriptENSTids
   String vepPath
 }
 
@@ -123,6 +123,7 @@ workflow variantEffectPredictor {
              species = resources[reference].species,
              ncbiBuild = resources[reference].ncbiBuild,
              vepPath = resources[reference].vepPath,
+             customTranscriptENSTids = resources[reference].customTranscriptENSTids,
              scaleCoefficient = getChrCoefficient.coeff
         }
       }
@@ -570,7 +571,7 @@ task vcf2maf {
     Int threads = 4
     Int timeout = 18
     Float scaleCoefficient
-    File customTranscriptENSTids
+    String customTranscriptENSTids
   }
 
   parameter_meta {
