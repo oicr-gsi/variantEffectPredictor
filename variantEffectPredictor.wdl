@@ -7,6 +7,8 @@ struct GenomeResources{
   String referenceFasta
   String species
   String ncbiBuild
+  String customTranscriptFile
+  String customTranscriptENSTids
   String vepPath
 }
 
@@ -31,6 +33,8 @@ workflow variantEffectPredictor {
        "referenceFasta": "$HG19_ROOT/hg19_random.fa",
        "species": "homo_sapiens",
        "ncbiBuild": "GRCh37",
+       "customTranscriptFile" :"/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.GRCh38.v1.3.ensembl_genomic.filtered.gtf.gz",
+       "customTranscriptENSTids":"/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
        "vepPath": "$VEP_ROOT/bin/"
     },
     "hg38":{
@@ -40,6 +44,8 @@ workflow variantEffectPredictor {
        "referenceFasta": "$HG38_ROOT/hg38_random.fa",
        "species": "homo_sapiens",
        "ncbiBuild": "GRCh38",
+       "customTranscriptFile" :"/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.GRCh38.v1.3.ensembl_genomic.filtered.gtf.gz",
+       "customTranscriptENSTids":"/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
        "vepPath": "$VEP_ROOT/bin/"
     },
     "mm39":{
@@ -49,6 +55,8 @@ workflow variantEffectPredictor {
        "referenceFasta": "$MM39_ROOT/mm39.fa",
        "species": "mus_musculus",
        "ncbiBuild": "GRCm39",
+       "customTranscriptFile" :"/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.GRCh38.v1.3.ensembl_genomic.filtered.gtf.gz",
+       "customTranscriptENSTids":"/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
        "vepPath": "$VEP_ROOT/bin/"
     }
   } 
@@ -94,6 +102,7 @@ workflow variantEffectPredictor {
         referenceFasta = resources[reference].referenceFasta,
         species = resources[reference].species,
         ncbiBuild = resources[reference].ncbiBuild,
+        customTranscriptFile = resources[reference].customTranscriptFile,
         scaleCoefficient = getChrCoefficient.coeff
     }
 
@@ -114,6 +123,7 @@ workflow variantEffectPredictor {
              species = resources[reference].species,
              ncbiBuild = resources[reference].ncbiBuild,
              vepPath = resources[reference].vepPath,
+             customTranscriptENSTids = resources[reference].customTranscriptENSTids,
              scaleCoefficient = getChrCoefficient.coeff
         }
       }
@@ -372,6 +382,7 @@ task vep {
     String species = "homo_sapiens"
     Boolean vepStats = true
     String ncbiBuild
+    String customTranscriptFile
     String vepCacheDir
     String referenceFasta
     String modules = "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38/p12"
@@ -418,7 +429,7 @@ task vep {
 
 
     vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} --species ~{species} \
-          --assembly ~{ncbiBuild} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
+          --assembly ~{ncbiBuild} --custom ~{customTranscriptFile},,gtf -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
           --no_progress --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype --mane \
           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
@@ -575,6 +586,7 @@ task vcf2maf {
     Int threads = 4
     Int timeout = 18
     Float scaleCoefficient
+    String customTranscriptENSTids
   }
 
   parameter_meta {
@@ -596,6 +608,7 @@ task vcf2maf {
     threads: "Requested CPU threads"
     timeout: "Hours before task timeout"
     scaleCoefficient: "Scaling coefficient for RAM allocation, depends on chromosome size"
+    customTranscriptENSTids: "File containing MANE Select ENST IDs"
   }
 
   Int allocatedMemory = if minMemory > round(jobMemory * scaleCoefficient) then minMemory else round(jobMemory * scaleCoefficient)
@@ -620,7 +633,8 @@ task vcf2maf {
             --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
             --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} \
             $retainInfo_command_line \
-            --vep-stats ~{vepStats}
+            --vep-stats ~{vepStats} \
+            --custom-enst ~{customTranscriptENSTids}
   >>>
 
   runtime {

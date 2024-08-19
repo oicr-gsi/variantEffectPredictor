@@ -60,7 +60,7 @@ This ensures that we split only by those chromosomes for which we have records
 
 
     vep --offline --dir ~{vepCacheDir} -i ~{vcfFile} --fasta ~{referenceFasta} --species ~{species} \
-          --assembly ~{ncbiBuild} -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
+          --assembly ~{ncbiBuild} --custom ~{customTranscriptFile},,gtf -o ~{basename}.vep.vcf.gz --vcf --compress_output bgzip ~{addParam} \
           --no_progress --sift b --ccds --uniprot --hgvs --symbol --numbers --domains --gene_phenotype --mane \
           --canonical --protein --biotype --uniprot --tsl --variant_class --check_existing --total_length \
           --allele_number --no_escape --xref_refseq --failed 1 --flag_pick_allele \
@@ -131,7 +131,8 @@ This ensures that we split only by those chromosomes for which we have records
             --vep-path ~{vepPath} --vep-data ~{vepCacheDir} \
             --min-hom-vaf ~{minHomVaf} --buffer-size ~{bufferSize} \
             $retainInfo_command_line \
-            --vep-stats ~{vepStats}
+            --vep-stats ~{vepStats} \
+            --custom-enst ~{customTranscriptENSTids}
 ```
 
 ### mergeMafs
