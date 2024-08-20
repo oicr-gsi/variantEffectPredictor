@@ -154,7 +154,7 @@ workflow variantEffectPredictor {
   meta {
     author: "Rishi Shah, Xuemei Luo"
     email: "rshah@oicr.on.ca xuemei.luo@oicr.on.ca"
-    description: "Variant Effect Predictor Workflow version 2.2"
+    description: "Variant Effect Predictor Workflow version 2.5.0"
     dependencies:
     [
       {
