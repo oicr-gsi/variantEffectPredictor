@@ -154,7 +154,7 @@ workflow variantEffectPredictor {
   meta {
     author: "Rishi Shah, Xuemei Luo"
     email: "rshah@oicr.on.ca xuemei.luo@oicr.on.ca"
-    description: "Variant Effect Predictor Workflow version 2.5.0"
+    description: "Variant Effect Predictor Workflow aims to generate predictions of the effect caused by mutations such as SNV (single nucleotide variants) or indels. The workflow may run on the entire data set passed to it, but may also limit the analysis to the optionally provided target intervals. variantEffectPredictor workflow may also produce the output in MAF format, if needed."
     dependencies:
     [
       {
