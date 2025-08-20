@@ -20,20 +20,20 @@
             "variantEffectPredictor.mergeVcfs.modules": null,
             "variantEffectPredictor.mergeVcfs.overhead": null,
             "variantEffectPredictor.mergeVcfs.timeout": null,
-            "variantEffectPredictor.normalName": "VAL1_0007_Co_R_WG_TB2018001",
+            "variantEffectPredictor.normalName": "VAL1_Test02",
             "variantEffectPredictor.onlyTumor": false,
             "variantEffectPredictor.subsetVcf.basename": null,
             "variantEffectPredictor.subsetVcf.jobMemory": null,
             "variantEffectPredictor.subsetVcf.minMemory": null,
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
             "variantEffectPredictor.targetBedTask.timeout": null,
             "variantEffectPredictor.toMAF": true,
-            "variantEffectPredictor.tumorName": "VAL1_0007_Co_P_WG_TB2018001_FFPE_IDT_10ng_60s",
+            "variantEffectPredictor.tumorName": "VAL1_Test01",
             "variantEffectPredictor.tumorOnlyAlign.basename": null,
             "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
             "variantEffectPredictor.tumorOnlyAlign.minMemory": null,
@@ -58,7 +58,7 @@
             "variantEffectPredictor.vcf2maf.vepStats": false,
             "variantEffectPredictor.vcfFile": {
                 "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/VAL1_Test.muTect.strelka.snvs.vcf.gz",
                     "externalIds": [
                         {
                             "id": "TEST",
@@ -70,7 +70,7 @@
             },
             "variantEffectPredictor.vcfIndex": {
                 "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz.tbi",
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/VAL1_Test.muTect.strelka.snvs.vcf.gz.tbi",
                     "externalIds": [
                         {
                             "id": "TEST",
@@ -145,7 +145,7 @@
             {
                 "metrics_calculate": "@CHECKOUT@/tests/calculate.sh",
                 "metrics_compare": "@CHECKOUT@/tests/compare.sh",
-                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/vepWorkflow_toMAF_tumor_normal_hg38.metrics",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/workflow_test_01.metrics",
                 "type": "script"
             }
         ]
@@ -178,13 +178,13 @@
             "variantEffectPredictor.subsetVcf.minMemory": null,
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
             "variantEffectPredictor.targetBedTask.timeout": null,
             "variantEffectPredictor.toMAF": true,
-            "variantEffectPredictor.tumorName": "OCT_011419_Lv_M_OCT_011419_TS",
+            "variantEffectPredictor.tumorName": "OCT_Test01",
             "variantEffectPredictor.tumorOnlyAlign.basename": null,
             "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
             "variantEffectPredictor.tumorOnlyAlign.minMemory": null,
@@ -209,7 +209,7 @@
             "variantEffectPredictor.vcf2maf.vepStats": false,
             "variantEffectPredictor.vcfFile": {
                 "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz",
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/OCT_Test.mutect2.tumor_only.vcf.gz",
                     "externalIds": [
                         {
                             "id": "TEST",
@@ -221,7 +221,7 @@
             },
             "variantEffectPredictor.vcfIndex": {
                 "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz.tbi",
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/OCT_Test.mutect2.tumor_only.vcf.gz.tbi",
                     "externalIds": [
                         {
                             "id": "TEST",
@@ -296,7 +296,7 @@
             {
                 "metrics_calculate": "@CHECKOUT@/tests/calculate.sh",
                 "metrics_compare": "@CHECKOUT@/tests/compare.sh",
-                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/vepWorkflow_toMAF_tumor_only_hg38.metrics",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/workflow_test_02.metrics",
                 "type": "script"
             }
         ]
@@ -322,20 +322,20 @@
             "variantEffectPredictor.mergeVcfs.modules": null,
             "variantEffectPredictor.mergeVcfs.overhead": null,
             "variantEffectPredictor.mergeVcfs.timeout": null,
-            "variantEffectPredictor.normalName": "VAL1_0007_Co_R_WG_TB2018001",
+            "variantEffectPredictor.normalName": "VAL1_Test02",
             "variantEffectPredictor.onlyTumor": false,
             "variantEffectPredictor.subsetVcf.basename": null,
             "variantEffectPredictor.subsetVcf.jobMemory": null,
             "variantEffectPredictor.subsetVcf.minMemory": null,
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
             "variantEffectPredictor.targetBedTask.timeout": null,
             "variantEffectPredictor.toMAF": true,
-            "variantEffectPredictor.tumorName": "VAL1_0007_Co_P_WG_TB2018001_FFPE_IDT_10ng_60s",
+            "variantEffectPredictor.tumorName": "VAL1_Test01",
             "variantEffectPredictor.tumorOnlyAlign.basename": null,
             "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
             "variantEffectPredictor.tumorOnlyAlign.minMemory": null,
@@ -360,7 +360,7 @@
             "variantEffectPredictor.vcf2maf.customTranscriptENSTids": "/.mounts/labs/gsi/src/variantEffectPredictor/mane/MANE.filtered.ENST.ID.txt",
             "variantEffectPredictor.vcfFile": {
                 "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz",
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/VAL1_Test.muTect.strelka.snvs.vcf.gz",
                     "externalIds": [
                         {
                             "id": "TEST",
@@ -372,7 +372,7 @@
             },
             "variantEffectPredictor.vcfIndex": {
                 "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/VAL1_0007_Co_P.muTect.strelka.snvs.vcf.gz.tbi",
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/VAL1_Test.muTect.strelka.snvs.vcf.gz.tbi",
                     "externalIds": [
                         {
                             "id": "TEST",
@@ -447,7 +447,7 @@
             {
                 "metrics_calculate": "@CHECKOUT@/tests/calculate.sh",
                 "metrics_compare": "@CHECKOUT@/tests/compare.sh",
-                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/vepWorkflow_toMAF_tumor_normal_hg38_vepStatsTrue.metrics",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/workflow_test_03.metrics",
                 "type": "script"
             }
         ]
@@ -480,13 +480,13 @@
             "variantEffectPredictor.subsetVcf.minMemory": null,
             "variantEffectPredictor.subsetVcf.modules": null,
             "variantEffectPredictor.subsetVcf.timeout": null,
-            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/S31285117_Regions.bed",
+            "variantEffectPredictor.targetBed": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/S31285117_Regions.bed",
             "variantEffectPredictor.targetBedTask.basename": null,
             "variantEffectPredictor.targetBedTask.jobMemory": null,
             "variantEffectPredictor.targetBedTask.modules": null,
             "variantEffectPredictor.targetBedTask.timeout": null,
             "variantEffectPredictor.toMAF": true,
-            "variantEffectPredictor.tumorName": "OCT_011419_Lv_M_OCT_011419_TS",
+            "variantEffectPredictor.tumorName": "OCT_Test01",
             "variantEffectPredictor.tumorOnlyAlign.basename": null,
             "variantEffectPredictor.tumorOnlyAlign.jobMemory": null,
             "variantEffectPredictor.tumorOnlyAlign.minMemory": null,
@@ -511,7 +511,7 @@
             "variantEffectPredictor.vcf2maf.vepStats": null,
             "variantEffectPredictor.vcfFile": {
                 "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz",
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/OCT_Test.mutect2.tumor_only.vcf.gz",
                     "externalIds": [
                         {
                             "id": "TEST",
@@ -523,7 +523,7 @@
             },
             "variantEffectPredictor.vcfIndex": {
                 "contents": {
-                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/input_data/OCT_011419_Lv_M_WG_OCT_011419_TS.mutect2.tumor_only.vcf.gz.tbi",
+                    "configuration": "/.mounts/labs/gsi/testdata/variantEffectPredictor/test_inputs/OCT_Test.mutect2.tumor_only.vcf.gz.tbi",
                     "externalIds": [
                         {
                             "id": "TEST",
@@ -598,7 +598,7 @@
             {
                 "metrics_calculate": "@CHECKOUT@/tests/calculate.sh",
                 "metrics_compare": "@CHECKOUT@/tests/compare.sh",
-                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/vepWorkflow_toMAF_tumor_only_hg38_vepStatsTrue.metrics",
+                "output_metrics": "/.mounts/labs/gsi/testdata/variantEffectPredictor/2.1.6/output_metrics/workflow_test_04.metrics",
                 "type": "script"
             }
         ]
