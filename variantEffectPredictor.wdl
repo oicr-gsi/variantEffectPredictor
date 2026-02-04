@@ -61,7 +61,7 @@ workflow variantEffectPredictor {
     },
     "hg38_noAlt":{
        "vep_modules": "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 hg38-noalt/p12",
-       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
+       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 hg38-noalt/p12 vep-hg38-cache/105",
        "vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
        "referenceFasta": "$HG38_NOALT_ROOT/hg38_noAlt.fa",
        "species": "homo_sapiens",
@@ -72,7 +72,7 @@ workflow variantEffectPredictor {
     },
     "grch38":{
        "vep_modules": "vep/105.0 tabix/0.2.6 vep-hg38-cache/105 grch38/p15",
-       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 hg38/p12 vep-hg38-cache/105",
+       "vcf2maf_modules": "vcf2maf/1.6.21b tabix/0.2.6 grch38/p15 vep-hg38-cache/105",
        "vepCacheDir": "$VEP_HG38_CACHE_ROOT/.vep",
        "referenceFasta": "$GRCH38_ROOT/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna",
        "species": "homo_sapiens",
