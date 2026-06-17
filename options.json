@@ -1,0 +1,6 @@
+{
+  "default_runtime_attributes": {
+    "docker": "g3chen/varianteffectpredictor:2.0",
+    "docker_volume": "/home/ubuntu/Downloads/sample_data:/data"
+  }
+}
